@@ -6,6 +6,8 @@ import HeroSection from "./components/hero/HeroSection";
 import CustomFloatingButton from "./components/general/CustomFloatingButton";
 import { Suspense, useEffect, useState } from "react";
 import PageLoader from "./components/general/PageLoader";
+import OnboardingSteps from "./components/steps/CustomStepper";
+import StepsSection from "./components/steps/StepsSection";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -34,8 +36,9 @@ export default function Home() {
     <Suspense fallback={<PageLoader />}>
       <Box display={"flex"} width={"100vw"} flexDirection={"column"} >
         <CustomAppBar scroll={scroll} />
-        <Stack py={2} mt={"140px"} gap={2}>
+        <Stack py={2} mt={"140px"} gap={2} component={'div'}>
           <HeroSection />
+          <StepsSection />
         </Stack>
         <CustomFloatingButton />
       </Box>

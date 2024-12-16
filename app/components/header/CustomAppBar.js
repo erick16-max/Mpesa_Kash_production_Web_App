@@ -17,7 +17,7 @@ export default function CustomAppBar({scroll}) {
         sx={{
             width: '100%',
             backgroundColor: '#ffffff',
-            boxShadow: scroll ? 1 : 0,
+            boxShadow: scroll ? 0 : 0,
             py:2,
             px: isTablet ? 2 : 10,
             borderBottom: !scroll ? '1px solid transparent' : '1px solid #dedede'

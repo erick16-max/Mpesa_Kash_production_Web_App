@@ -24,7 +24,7 @@ export default function HeroSection() {
   const { isMobile } = useContext(ColorModeContext);
 
   return (
-    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} margin={"auto"} height={500}>
+    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} margin={"auto"} >
       <Grid container spacing={2}>
         <Grid item lg={8} md={12} sm={12} xs={12}>
           <Stack
@@ -56,12 +56,11 @@ export default function HeroSection() {
               gutterBottom
             >
               With our innovative platform, you can easily fund your Deriv
-              account, execute trades, and withdraw your earnings directly
+              account, execute trades using our bots, and withdraw your earnings directly
               through MPESA. Experience fast, secure, and hassle-free
-              transactions tailored for traders in Kenya!
+              transactions with friendly exchange rates tailored for traders in Kenya!
             </Typography>
-                <Stack direction={'row'} p={1} gap={2}>
-                {/* <Chip label={'51k+ Downloads'} /> */}
+                <Stack display={'flex'} width={'100%'} direction={'row'} justifyContent={ isExtraTablet ? 'center' : 'flex-start'} py={1} gap={2}>
                 <CustomDownloadChip />
                 <CustomChipWithRating />
                 </Stack>
