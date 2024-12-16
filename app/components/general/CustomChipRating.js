@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Chip, Box, Rating } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
+import ColorModeContext from '@/theme/ThemeContextProvider';
 
 export default function CustomChipWithRating() {
+  const {isMobile} = useContext(ColorModeContext)
+
   return (
     <Chip
       label={
         <Box display="flex" alignItems="center" gap={0.5}>
           <span>3.8 Ratings</span>
-          <Rating
-            value={3.8}
-            precision={0.1}
-            readOnly
-            size="small"
-          />
+            {
+              isMobile ? (
+                  <StarIcon fontSize='14px' sx={{ color: '#edb21f'}}/>
+              ) : (
+                <Rating
+                  name="text-feedback"
+                  value={3.7}
+                  readOnly
+                  precision={0.5}
+                  size='small'
+              />
+              )
+            }
         </Box>
       }
       sx={{

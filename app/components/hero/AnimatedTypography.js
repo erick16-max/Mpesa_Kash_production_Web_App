@@ -45,9 +45,9 @@ const AnimatedTyping = () => {
         </span>
       ) : (
         <>
-          <span style={{ color: "rgb(237, 178, 31)" }}>Deposit.&nbsp;</span>
-          <span style={{ color: "rgb(0, 186, 117)" }}>Trade.&nbsp;</span>
-          <span style={{ color: "rgb(0, 138, 208)" }}>Withdraw.</span>
+          <span style={{ color: "#edb21f" }}>Deposit.&nbsp;</span>
+          <span style={{ color: "#00ba75" }}>Trade.&nbsp;</span>
+          <span style={{ color: "#008ad0" }}>Withdraw.</span>
         </>
       )}
     </Typography>
