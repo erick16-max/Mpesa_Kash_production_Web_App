@@ -11,7 +11,6 @@ import ForgotPasswordModal from '../forgotpassword/ForgortPassword'
 export default function CustomAppBar({scroll}) {
     const [user, setUser] = useState(false)
     const { isTablet } = useContext(ColorModeContext)
-    console.log(scroll)
   return (
     <AppBar
         position='fixed'

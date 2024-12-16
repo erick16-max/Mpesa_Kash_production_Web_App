@@ -17,10 +17,11 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 export default function HeroSection() {
   const [user, setUser] = useState(false);
   const isExtraTablet = useMediaQuery("(max-width:1220px)");
+  const isExtraMobile = useMediaQuery("(max-width:348px)");
   const { isMobile } = useContext(ColorModeContext);
 
   return (
-    <Box px={isMobile ? 3 : 10} margin={"auto"} height={500}>
+    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} margin={"auto"} height={500}>
       <Grid container spacing={2}>
         <Grid item lg={8} md={12} sm={12} xs={12}>
           <Stack
@@ -37,7 +38,7 @@ export default function HeroSection() {
                 sx={{
                   color: "#014650",
                   fontWeight: 700,
-                  fontSize: isMobile ? 32 : 44,
+                  fontSize: isExtraMobile ? 22 : isMobile ? 26 : 44,
                   height: 50,
                 }}
                 gutterBottom
@@ -47,7 +48,7 @@ export default function HeroSection() {
             </Stack>
             <Typography
               textAlign={isExtraTablet ? "center" : ""}
-              variant="body1"
+              variant={isMobile ? "body2" : "body1"}
               color={"text.primary"}
               gutterBottom
             >

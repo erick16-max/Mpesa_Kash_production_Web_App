@@ -6,6 +6,8 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 const AnimatedTyping = () => {
   const [isTypingComplete, setIsTypingComplete] = useState(false);
     const isExtraTablet = useMediaQuery("(max-width:1220px)");
+      const isExtraMobile = useMediaQuery("(max-width:348px)");
+    
   const { isMobile } = useContext(ColorModeContext);
 
   
@@ -24,7 +26,7 @@ const AnimatedTyping = () => {
       sx={{
         color: "#014650",
         fontWeight: 700,
-        fontSize: isMobile ? 32 : 44,
+        fontSize: isExtraMobile ? 22 : isMobile ? 26 : 44,
         textAlign: isExtraTablet ? 'center' : ''
       }}
       gutterBottom
