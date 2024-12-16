@@ -28,7 +28,8 @@ export default function AuthButtons() {
             height: isMobile ? 46 : 50,
             px: isMobile ? 1 : 3,
             textTransform: 'none',
-            fontWeight: 600
+            fontWeight: 600,
+            minWidth: 80
         }}
         onClick={() => setOpenRegisterModal(true)}
         >

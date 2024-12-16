@@ -16,7 +16,11 @@ export default function Home() {
   };
 
   useEffect(() => {
+
     setLoading(false);
+  }, [])
+
+  useEffect(() => {
     window.addEventListener("scroll", changeNavBg);
     return () => {
       window.removeEventListener("scroll", changeNavBg);
