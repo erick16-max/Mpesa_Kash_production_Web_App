@@ -8,6 +8,9 @@ import { Suspense, useEffect, useState } from "react";
 import PageLoader from "./components/general/PageLoader";
 import OnboardingSteps from "./components/steps/CustomStepper";
 import StepsSection from "./components/steps/StepsSection";
+import WhyUs from "./components/whyus/WhyUs";
+import Partners from "./components/partners/Partners";
+import Footer from "./components/footer/Footer";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -36,9 +39,12 @@ export default function Home() {
     <Suspense fallback={<PageLoader />}>
       <Box display={"flex"} width={"100%"} flexDirection={"column"} >
         <CustomAppBar scroll={scroll} />
-        <Stack py={2} mt={"140px"} gap={2} component={'div'}>
+        <Stack pt={2} mt={"140px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />
           <StepsSection />
+          <WhyUs />
+          <Partners />
+          <Footer />
         </Stack>
         <CustomFloatingButton />
       </Box>

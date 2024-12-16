@@ -24,7 +24,7 @@ export default function HeroSection() {
   const { isMobile } = useContext(ColorModeContext);
 
   return (
-    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
+    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10}>
       <Grid container spacing={2}>
         <Grid item lg={8} md={12} sm={12} xs={12}>
           <Stack
@@ -56,24 +56,31 @@ export default function HeroSection() {
               gutterBottom
             >
               With our innovative platform, you can easily fund your Deriv
-              account, execute trades using our bots, and withdraw your earnings directly
-              through MPESA. Experience fast, secure, and hassle-free
-              transactions with friendly exchange rates tailored for traders in Kenya!
+              account, execute trades using our bots, and withdraw your earnings
+              directly through MPESA. Experience fast, secure, and hassle-free
+              transactions with friendly exchange rates tailored for traders in
+              Kenya!
             </Typography>
-                <Stack display={'flex'} width={'100%'} direction={'row'} justifyContent={ isExtraTablet ? 'center' : 'flex-start'} py={1} gap={2}>
-                <CustomDownloadChip />
-                <CustomChipWithRating />
-                </Stack>
+            <Stack
+              display={"flex"}
+              width={"100%"}
+              direction={"row"}
+              justifyContent={isExtraTablet ? "center" : "flex-start"}
+              py={1}
+              gap={2}
+            >
+              <CustomDownloadChip />
+              <CustomChipWithRating />
+            </Stack>
             <Stack
               mt={8}
               direction={isMobile ? "column" : "row"}
               gap={4}
               justifyContent={isExtraTablet ? "center" : "flex-start"}
-              width={'100%'}
-              alignItems={'center'}
-
+              width={"100%"}
+              alignItems={"center"}
             >
-                            <Button
+              <Button
                 variant="contained"
                 sx={{
                   height: 50,
@@ -89,7 +96,7 @@ export default function HeroSection() {
               >
                 {user ? "Go to Wallet" : "Get Started"}
               </Button>
-              
+
               <Button
                 variant="outlined"
                 sx={{
@@ -111,7 +118,6 @@ export default function HeroSection() {
                   height={20}
                 />
               </Button>
-
             </Stack>
           </Stack>
         </Grid>
