@@ -45,7 +45,7 @@ export function CustomThemeProvider({ children }) {
       },
       secondary: {
         main: "#232425",
-        dark: "#0e0e0e",
+        dark: "#1c1d1e",
       },
       background: {
         default: "#ffffff",

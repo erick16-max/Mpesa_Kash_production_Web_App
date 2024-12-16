@@ -2,7 +2,7 @@ import React from 'react';
 import { Chip, Box, Rating } from '@mui/material';
 import { MdDownload } from "react-icons/md";
 
-export default function CustomDownloadChip() {
+export default function CustomDownloadChip({textColor, bgColor}) {
   return (
     <Chip
       label={
@@ -13,8 +13,8 @@ export default function CustomDownloadChip() {
       }
       sx={{
         padding: '4px 8px',
-        backgroundColor: '#f5f5f5',
-        color: '#333',
+        color: textColor ? textColor : '#333',
+        backgroundColor: bgColor ? bgColor : '#f5f5f5',
         fontWeight: 500,
         fontSize: 14,
         borderRadius: 4,

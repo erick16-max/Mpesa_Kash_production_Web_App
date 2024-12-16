@@ -3,7 +3,7 @@ import { Chip, Box, Rating } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import ColorModeContext from '@/theme/ThemeContextProvider';
 
-export default function CustomChipWithRating() {
+export default function CustomChipWithRating({bgColor, textColor}) {
   const {isMobile} = useContext(ColorModeContext)
 
   return (
@@ -28,8 +28,8 @@ export default function CustomChipWithRating() {
       }
       sx={{
         padding: '4px 8px',
-        backgroundColor: '#f5f5f5',
-        color: '#333',
+        backgroundColor: bgColor ? bgColor : '#f5f5f5',
+        color: textColor ? textColor : '#333',
         fontWeight: 500,
         fontSize: 14,
         borderRadius: 4,
