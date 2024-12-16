@@ -22,7 +22,7 @@ const steps = [
 
 export default function OnboardingSteps() {
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{ flexGrow: 1, margin: 'auto'}}>
       <Grid container spacing={3}>
         {steps.map((step, index) => (
           <Grid

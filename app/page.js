@@ -34,7 +34,7 @@ export default function Home() {
   if (loading) return <PageLoader />;
   return (
     <Suspense fallback={<PageLoader />}>
-      <Box display={"flex"} width={"100vw"} flexDirection={"column"} >
+      <Box display={"flex"} width={"100%"} flexDirection={"column"} >
         <CustomAppBar scroll={scroll} />
         <Stack py={2} mt={"140px"} gap={2} component={'div'}>
           <HeroSection />

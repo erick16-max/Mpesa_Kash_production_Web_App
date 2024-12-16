@@ -24,7 +24,7 @@ export default function HeroSection() {
   const { isMobile } = useContext(ColorModeContext);
 
   return (
-    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} margin={"auto"} >
+    <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
       <Grid container spacing={2}>
         <Grid item lg={8} md={12} sm={12} xs={12}>
           <Stack
