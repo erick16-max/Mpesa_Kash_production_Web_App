@@ -32,7 +32,7 @@ export default function Home() {
   if (loading) return <PageLoader />;
   return (
     <Suspense fallback={<PageLoader />}>
-      <Box display={"flex"} width={"100vw"} flexDirection={"column"} height={'100vh'} sx={{overflowX: 'hidden'}}>
+      <Box display={"flex"} width={"100vw"} flexDirection={"column"} >
         <CustomAppBar scroll={scroll} />
         <Stack py={2} mt={"140px"} gap={2}>
           <HeroSection />
