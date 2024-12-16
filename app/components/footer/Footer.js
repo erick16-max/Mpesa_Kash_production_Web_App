@@ -6,7 +6,6 @@ export default function Footer() {
   return (
     <Box
         width={'100%'}
-        px={10}
         py={2}
         bgcolor={'secondary.main'}
         display={'flex'}
