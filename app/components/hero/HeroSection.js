@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Card,
+  Chip,
   Grid,
   Stack,
   Typography,
@@ -13,6 +14,8 @@ import HeroImage from "../../../public/images/HeroImage3.png";
 import PlaystoreImage from "../../../public/images/playstore.png";
 import AnimatedTypography from "./AnimatedTypography";
 import ColorModeContext from "@/theme/ThemeContextProvider";
+import CustomChipWithRating from "../general/CustomChipRating";
+import CustomDownloadChip from "../general/CustomDownloadChip";
 
 export default function HeroSection() {
   const [user, setUser] = useState(false);
@@ -57,6 +60,11 @@ export default function HeroSection() {
               through MPESA. Experience fast, secure, and hassle-free
               transactions tailored for traders in Kenya!
             </Typography>
+                <Stack direction={'row'} p={1} gap={2}>
+                {/* <Chip label={'51k+ Downloads'} /> */}
+                <CustomDownloadChip />
+                <CustomChipWithRating />
+                </Stack>
             <Stack
               mt={8}
               direction={isMobile ? "column" : "row"}
