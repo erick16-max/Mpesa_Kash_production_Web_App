@@ -16,7 +16,7 @@ export default function CustomAppBar({scroll}) {
     <AppBar
         position='fixed'
         sx={{
-            width: '100%',
+            width: '100vw',
             backgroundColor: '#ffffff',
             boxShadow: scroll ? 1 : 0,
             py:2,
