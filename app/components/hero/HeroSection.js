@@ -74,8 +74,25 @@ export default function HeroSection() {
               alignItems={'center'}
 
             >
-              <Button
+                            <Button
                 variant="contained"
+                sx={{
+                  height: 50,
+                  textTransform: "none",
+                  px: 3,
+                  fontWeight: 600,
+                  width: 220,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  borderRadius: "16px",
+                }}
+              >
+                {user ? "Go to Wallet" : "Get Started"}
+              </Button>
+              
+              <Button
+                variant="outlined"
                 sx={{
                   height: 50,
                   textTransform: "none",
@@ -95,22 +112,7 @@ export default function HeroSection() {
                   height={20}
                 />
               </Button>
-              <Button
-                variant="outlined"
-                sx={{
-                  height: 50,
-                  textTransform: "none",
-                  px: 3,
-                  fontWeight: 600,
-                  width: 220,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  borderRadius: "16px",
-                }}
-              >
-                {user ? "Go to Wallet" : "Get Started"}
-              </Button>
+
             </Stack>
           </Stack>
         </Grid>
