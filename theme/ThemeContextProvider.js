@@ -39,9 +39,9 @@ export function CustomThemeProvider({ children }) {
   const theme = createTheme({
     palette: {
       primary: {
-        light: "#014650",
+        light: "#346b73",
         main: "#014650",
-        dark: "#014650",
+        dark: "#013840",
       },
       secondary: {
         main: "#232425",
