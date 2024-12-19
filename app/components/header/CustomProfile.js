@@ -8,11 +8,11 @@ import { FiBell } from "react-icons/fi";
 export default function CustomProfile() {
   const {isMobile} = useContext(ColorModeContext)
   return (
-    <Stack direction={"row"} gap={2} height={"100%"}>
+    <Stack direction={"row"} gap={2} height={"100%"} alignItems={'center'} >
       <IconButton
         sx={{
-          width: 50,
-          height: 50,
+          width: 40,
+          height: 40,
           borderRadius: 25,
         }}
       >
