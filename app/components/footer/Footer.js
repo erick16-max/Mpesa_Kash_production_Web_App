@@ -38,8 +38,8 @@ export default function Footer() {
         color={"#f5f5f5"}
       >
         <MdCopyright fontSize={15} />
-        <Typography variant="body2" fontWeight={400} fontSize={11} mt={"1px"}>
-          2024 Binary Mpesa Services
+        <Typography variant="body2" color={'divider'} fontWeight={400} fontSize={11} mt={"1px"}>
+          2024 · Binary Mpesa Services Ltd · All rights reserved
         </Typography>
       </Box>
     </Stack>
