@@ -4,6 +4,7 @@ import { Tooltip, Typography, Menu, MenuItem } from '@mui/material';
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { TbPhoneCall } from "react-icons/tb";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function CustomFloatingButton() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -59,11 +60,29 @@ export default function CustomFloatingButton() {
           horizontal: 'right',
         }}
       >
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          component="a"
+          href="tel:+254700849356" // Replace with the actual phone number
+        >
           <TbPhoneCall style={{ marginRight: 8 }} />
           Call Us
         </MenuItem>
-        <MenuItem onClick={handleClose}>
+        <MenuItem
+          onClick={handleClose}
+          component="a"
+          href="https://wa.me/254700849356" 
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FaWhatsapp style={{ marginRight: 8, color: "green" }} />
+          WhatsApp Us
+        </MenuItem>
+        <MenuItem
+          onClick={handleClose}
+          component="a"
+          href="sms:+254700849356" // Replace with the actual phone number
+        >
           <IoChatboxEllipsesOutline style={{ marginRight: 8 }} />
           Message Us
         </MenuItem>
