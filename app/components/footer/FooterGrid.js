@@ -5,6 +5,7 @@ import Image from 'next/image';
 import CustomDownloadChip from '../general/CustomDownloadChip';
 import CustomChipWithRating from '../general/CustomChipRating';
 import ColorModeContext from '@/theme/ThemeContextProvider';
+import Link from 'next/link';
 
 export default function FooterGrid() {
   const { isTablet, isMobile} = useContext(ColorModeContext)
@@ -28,12 +29,11 @@ export default function FooterGrid() {
                 direction={'row'}
               >
                 <CustomDownloadChip 
-                    bgColor={'inherit'}
-                    textColor={'#dedede'}
+                    textColor={'#242423'}
                 />
                 <CustomChipWithRating
-                    bgColor={'inherit'}
-                    textColor={'#dedede'}
+                    textColor={'#242423'}
+
                 />
               </Stack>
                </Stack>
@@ -54,6 +54,8 @@ export default function FooterGrid() {
                   boxShadow: 0,
                   ml: 2,
                 }}
+                 LinkComponent={Link}
+                href="https://play.google.com/store/apps/details?id=com.binary.mpesaservices"
               >
                 Download App
                 <Image

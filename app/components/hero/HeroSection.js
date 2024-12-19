@@ -16,12 +16,13 @@ import AnimatedTypography from "./AnimatedTypography";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import CustomChipWithRating from "../general/CustomChipRating";
 import CustomDownloadChip from "../general/CustomDownloadChip";
+import Link from "next/link";
 
 export default function HeroSection() {
   const [user, setUser] = useState(false);
   const isExtraTablet = useMediaQuery("(max-width:1220px)");
   const isExtraMobile = useMediaQuery("(max-width:348px)");
-  const { isMobile } = useContext(ColorModeContext);
+  const { isMobile, setOpenRegisterModal} = useContext(ColorModeContext);
 
   return (
     <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
@@ -73,7 +74,7 @@ export default function HeroSection() {
               alignItems={'center'}
 
             >
-                            <Button
+              <Button
                 variant="contained"
                 sx={{
                   height: 50,
@@ -86,6 +87,7 @@ export default function HeroSection() {
                   gap: 1,
                   borderRadius: "16px",
                 }}
+                onClick={() => setOpenRegisterModal(true)}
               >
                 {user ? "Go to Wallet" : "Get Started"}
               </Button>
@@ -103,6 +105,8 @@ export default function HeroSection() {
                   gap: 1,
                   borderRadius: "16px",
                 }}
+                LinkComponent={Link}
+                href="https://play.google.com/store/apps/details?id=com.binary.mpesaservices"
               >
                 Download App
                 <Image
