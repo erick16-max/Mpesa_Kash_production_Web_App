@@ -81,8 +81,6 @@ useEffect(() => {
       // Redirect to the protected route or home page
     } catch (error) {
       const cleanError = error.message.replace("Firebase:", "").trim();
-    console.log(error)
-
       setIsError(cleanError);
     } finally {
       setLoading(false);
@@ -157,7 +155,9 @@ useEffect(() => {
                 </Typography>
               </IconButton>
             </Box>
-            {isError &&  <Alert severity="error" sx={{mt: 1, width: '100%', borderRadius: '16px'}}>Invalid credetials -- Please try again!</Alert>}
+            {isError &&  <Alert severity="error" sx={{mt: 1, width: '100%', borderRadius: '16px'}}>
+                {isError || "Something went wrong -- Please try again!"}
+              </Alert>}
             <Stack py={2} mt={1} gap={3} width={'100%'}>
                 <TextField 
                   label='Email'

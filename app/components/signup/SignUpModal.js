@@ -22,6 +22,13 @@ export default function SignUpModal() {
   const {openRegisterModal: open, setOpenRegisterModal: setOpen, setOpenSuccessAlert, openSuccessAlert, setOpenLoginModal} = React.useContext(ColorModeContext)
 
 
+    // connect with deriv
+    const connectWithDeriv = async () => {
+      window.open(
+        `https://oauth.binary.com/oauth2/authorize?app_id=66601`,
+        "_self"
+      );
+    };
   
 
   
@@ -147,7 +154,7 @@ export default function SignUpModal() {
                     height: 54,
                     borderRadius: '16px',
                   }}
-                  type='submit'
+                  onClick={connectWithDeriv}
                 >
                   <Typography variant='body1' textTransform={'none'} fontWeight={500} color={'#f5f5f5'}>
                     Connect with Deriv

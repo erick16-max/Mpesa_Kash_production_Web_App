@@ -4,8 +4,16 @@ import { Button, Divider, Stack, Box, Avatar, Typography, IconButton } from "@mu
 import React, { useContext } from "react";
 import { BiBell, BiSolidDownArrow } from "react-icons/bi";
 import { FiBell } from "react-icons/fi";
+import MenuDropDown from "./MenuDropDown";
+
+
 
 export default function CustomProfile() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+    const handleClick = (event) => {
+      setAnchorEl(event.currentTarget);
+    };
   const {isMobile} = useContext(ColorModeContext)
   return (
     <Stack direction={"row"} gap={2} height={"100%"} alignItems={'center'} >
@@ -20,18 +28,21 @@ export default function CustomProfile() {
       </IconButton>
       <Box height={"60px"} width={"1px"} bgcolor={"divider"}></Box>
 
-      <Stack
+     <Box>
+     <Stack
         direction={"row"}
         justifyContent={"center"}
         alignItems={"center"}
         gap={1}
         p={'4px'}
         sx={{
-            cursor: 'pointer',
+          cursor: 'pointer',
+          borderRadius: '12px',
             "&:hover": {
-                border: '1px solid #b0b0b0',
+                border: '1px solid #b0b0b0'
             }
         }}
+        onClick={handleClick}
       >
         <Avatar
           sx={{
@@ -67,6 +78,12 @@ export default function CustomProfile() {
           </Typography>
         </Stack>
       </Stack>
+      <MenuDropDown
+        anchorEl={anchorEl}
+        setAnchorEl={setAnchorEl}
+        handleClick={handleClick}
+      />
+     </Box>
     </Stack>
   );
 }
