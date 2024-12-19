@@ -5,6 +5,8 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { TbPhoneCall } from "react-icons/tb";
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { FaWhatsapp } from "react-icons/fa";
+import { FcSms } from "react-icons/fc";
+import { FcCallback } from "react-icons/fc";
 
 export default function CustomFloatingButton() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -65,7 +67,7 @@ export default function CustomFloatingButton() {
           component="a"
           href="tel:+254700849356" // Replace with the actual phone number
         >
-          <TbPhoneCall style={{ marginRight: 8 }} />
+          <FcCallback style={{ marginRight: 8 }} />
           Call Us
         </MenuItem>
         <MenuItem
@@ -81,9 +83,9 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="sms:+254700849356" // Replace with the actual phone number
+          href="sms:+254700849356" 
         >
-          <IoChatboxEllipsesOutline style={{ marginRight: 8 }} />
+          <FcSms style={{ marginRight: 8 }} />
           Message Us
         </MenuItem>
       </Menu>
