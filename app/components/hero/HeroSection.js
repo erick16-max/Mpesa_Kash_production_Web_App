@@ -18,12 +18,15 @@ import CustomChipWithRating from "../general/CustomChipRating";
 import CustomDownloadChip from "../general/CustomDownloadChip";
 import Link from "next/link";
 import AppContext from "@/context/AppContext";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
   const {user, setUser, isUser} = useContext(AppContext);
   const isExtraTablet = useMediaQuery("(max-width:1220px)");
   const isExtraMobile = useMediaQuery("(max-width:348px)");
   const { isMobile, setOpenRegisterModal} = useContext(ColorModeContext);
+
+  const router = useRouter()
 
   return (
     <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
@@ -88,7 +91,7 @@ export default function HeroSection() {
                   gap: 1,
                   borderRadius: "16px",
                 }}
-                onClick={() => setOpenRegisterModal(true)}
+                onClick={() => isUser ? router.push('/dashboard') : setOpenRegisterModal(true)}
               >
                 {isUser ? "Go to Dashboard" : "Get Started"}
               </Button>
