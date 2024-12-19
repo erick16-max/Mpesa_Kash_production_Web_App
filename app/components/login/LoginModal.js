@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect} from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { IconButton, Stack, TextField, useMediaQuery, useTheme, Alert, InputAdornment, Card} from '@mui/material';
-import { FcGoogle } from "react-icons/fc";
-import { VscEye, VscEyeClosed  } from "react-icons/vsc";
+import { IconButton, Stack, TextField, useMediaQuery, useTheme, Alert, InputAdornment, Card, CircularProgress} from '@mui/material';
+import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import ColorModeContext from '@/theme/ThemeContextProvider';
 import Link from 'next/link';
+
+import { onAuthStateChanged } from 'firebase/auth';
+import { db, auth } from '@/firebase.config';
+import { useRouter } from 'next/navigation';
+import AppContext from '@/context/AppContext';
+import { signIn } from '@/firebase/Firebase';
 
 
 
@@ -17,15 +22,12 @@ export default function LoginModal() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [seePassword, setSeepassword] = React.useState(false)
-  const {openLoginModal: open, setOpenLoginModal: setOpen, setOpenSuccessAlert, openSuccessAlert, setOpenRegisterModal,setOpenForgotPasswordModal } = React.useContext(ColorModeContext)
+  const {openLoginModal: open, setOpenLoginModal: setOpen, setOpenRegisterModal,setOpenForgotPasswordModal } = React.useContext(ColorModeContext)
 
-
+  const { isMobile } = React.useContext(ColorModeContext);
+  const { user, setUser } = React.useContext(AppContext);
+  const router = useRouter();
   
-
-  
-  // media queries
-  const isMobile = useMediaQuery("(max-width:600px)");
-
 
   const handleClose = () => {
     setOpen(false);
@@ -33,12 +35,7 @@ export default function LoginModal() {
     setEmail("")
   }
 
-  // sign in user
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    console.log('sign in')
-    
-};
+
 
 const goToSignUp = () => {
   setOpen(false)
@@ -49,6 +46,52 @@ const goToForgotPassword = () => {
   setOpen(false)
   setOpenForgotPasswordModal(true)
 }
+
+
+useEffect(() => {
+  // Liten to authentication state changes
+  const unsubscribe = onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // Storse user in localStorage
+      localStorage.setItem("user", JSON.stringify(user));
+      const activeUser = JSON.parse(localStorage.getItem("user"));
+      setUser(activeUser);
+      // router.push("/");
+    } else {
+      // Clear localStorage if no user is signed in
+      localStorage.removeItem("user");
+      setUser(null);
+    }
+  });
+
+  return unsubscribe; // Clean up on unmount
+}, []);
+
+  // login with email/password
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const user = await signIn(email, password);
+      if(user){
+        // router.push("/");
+        setOpen(false)
+      }
+
+      // Redirect to the protected route or home page
+    } catch (error) {
+      const cleanError = error.message.replace("Firebase:", "").trim();
+    console.log(error)
+
+      setIsError(cleanError);
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        setIsError("");
+      }, 4000);
+    }
+  };
+
 
   return (
     
@@ -73,7 +116,7 @@ const goToForgotPassword = () => {
             justifyContent: 'center',
           }}
          component={'form'} 
-         onSubmit={handleSignIn}
+         onSubmit={handleSubmit}
          >
           <Card
             variant={isMobile ? 'outlined' : ""}
@@ -186,7 +229,11 @@ const goToForgotPassword = () => {
                   }}
                   type='submit'
                 >
+                  {loading ? (
+                    <CircularProgress size={20} thickness={4} sx={{color: '#f5f5f5'}}/>
+                  ):(
                   <Typography variant='body1' textTransform={'none'} fontWeight={500} color={'#f5f5f5'}>Log In</Typography>
+                  )}
                 </Button>
                
                 <Box display={'flex'} gap={'2px'} justifyContent={'center'} alignItems={'center'} width={'100%'}>

@@ -7,10 +7,12 @@ import ColorModeContext from '@/theme/ThemeContextProvider'
 import LoginModal from '../login/LoginModal'
 import SignUpModal from '../signup/SignUpModal'
 import ForgotPasswordModal from '../forgotpassword/ForgortPassword'
+import AppContext from '@/context/AppContext'
 
 export default function CustomAppBar({scroll}) {
-    const [user, setUser] = useState(false)
+    const {user, setUser, isUser} = useContext(AppContext)
     const { isTablet } = useContext(ColorModeContext)
+
   return (
     <AppBar
         position='fixed'
@@ -32,7 +34,7 @@ export default function CustomAppBar({scroll}) {
         >
             <LogoBrand />
             {
-                !user ? (
+                !isUser ? (
 
                     <AuthButtons />
                 ) : (

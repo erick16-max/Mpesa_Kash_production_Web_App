@@ -1,36 +1,23 @@
-import { Button, Divider, Stack, Box, Avatar, Typography } from "@mui/material";
-import React from "react";
-import { BiSolidDownArrow } from "react-icons/bi";
+import AppContext from "@/context/AppContext";
+import ColorModeContext from "@/theme/ThemeContextProvider";
+import { Button, Divider, Stack, Box, Avatar, Typography, IconButton } from "@mui/material";
+import React, { useContext } from "react";
+import { BiBell, BiSolidDownArrow } from "react-icons/bi";
+import { FiBell } from "react-icons/fi";
 
 export default function CustomProfile() {
+  const {isMobile} = useContext(ColorModeContext)
   return (
     <Stack direction={"row"} gap={2} height={"100%"}>
-      <Button
-        variant="outlined"
-        color="secondary"
+      <IconButton
         sx={{
-          borderRadius: "16px",
+          width: 50,
           height: 50,
-          px: 3,
-          textTransform: "none",
-          fontWeight: 600,
+          borderRadius: 25,
         }}
       >
-        Deposit
-      </Button>
-      <Button
-        variant="contained"
-        color="secondary"
-        sx={{
-          borderRadius: "16px",
-          height: 50,
-          px: 3,
-          textTransform: "none",
-          fontWeight: 600,
-        }}
-      >
-        Withdraw
-      </Button>
+        <FiBell />
+      </IconButton>
       <Box height={"60px"} width={"1px"} bgcolor={"divider"}></Box>
 
       <Stack
@@ -48,15 +35,18 @@ export default function CustomProfile() {
       >
         <Avatar
           sx={{
-            width: 50,
-            height: 50,
+            width: isMobile ? 30 : 50,
+            height: isMobile ? 30 : 50,
             borderRadius: 25,
             backgroundColor: "#99b5b9",
+            display: isMobile ? 'none' : ''
           }}
         >
-          EG
+          E
         </Avatar>
-        <Stack>
+        <Stack
+          minWidth={80}
+        >
           <Typography variant="body2" color={"text.primary"} fontWeight={500}>
             Erick Gege
           </Typography>

@@ -17,9 +17,10 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 import CustomChipWithRating from "../general/CustomChipRating";
 import CustomDownloadChip from "../general/CustomDownloadChip";
 import Link from "next/link";
+import AppContext from "@/context/AppContext";
 
 export default function HeroSection() {
-  const [user, setUser] = useState(false);
+  const {user, setUser, isUser} = useContext(AppContext);
   const isExtraTablet = useMediaQuery("(max-width:1220px)");
   const isExtraMobile = useMediaQuery("(max-width:348px)");
   const { isMobile, setOpenRegisterModal} = useContext(ColorModeContext);
@@ -89,7 +90,7 @@ export default function HeroSection() {
                 }}
                 onClick={() => setOpenRegisterModal(true)}
               >
-                {user ? "Go to Wallet" : "Get Started"}
+                {isUser ? "Go to Dashboard" : "Get Started"}
               </Button>
               
               <Button

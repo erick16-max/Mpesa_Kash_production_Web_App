@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { deepOrange, amber, grey } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
-import { SessionProvider } from "next-auth/react";
+import { AppContextProvider } from "@/context/AppContext";
 
 const ColorModeContext = React.createContext();
 
@@ -14,10 +14,10 @@ export function CustomThemeProvider({ children }) {
   const isTablet = useMediaQuery("(max-width:900px)");
   const isMobile = useMediaQuery("(max-width:682px)");
 
-  // login modal 
-  const [openLoginModal, setOpenLoginModal] = useState(false)
-  const [openRegisterModal, setOpenRegisterModal] = useState(false)
-  const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false)
+  // login modal
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+  const [openRegisterModal, setOpenRegisterModal] = useState(false);
+  const [openForgotPasswordModal, setOpenForgotPasswordModal] = useState(false);
 
   const toggleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
@@ -70,22 +70,24 @@ export function CustomThemeProvider({ children }) {
     toggleOpenDrawer,
     openDrawer,
     setOpenDrawer,
-    openLoginModal, 
+    openLoginModal,
     setOpenLoginModal,
-    openRegisterModal, 
+    openRegisterModal,
     setOpenRegisterModal,
-    openForgotPasswordModal, setOpenForgotPasswordModal
+    openForgotPasswordModal,
+    setOpenForgotPasswordModal,
   };
 
   return (
-    <SessionProvider>
+    <AppContextProvider>
       <ColorModeContext.Provider value={themeData}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
           {children}
         </ThemeProvider>
+        `
       </ColorModeContext.Provider>
-    </SessionProvider>
+    </AppContextProvider>
   );
 }
 
