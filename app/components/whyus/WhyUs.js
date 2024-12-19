@@ -23,7 +23,8 @@ const whyUsList = [
 ];
 
 export default function WhyUs() {
-  const { isMobile, isTablet} = useContext(ColorModeContext)
+  const { isMobile, isTablet, setOpenRegisterModal} = useContext(ColorModeContext)
+
 
 
   return (
@@ -83,6 +84,7 @@ export default function WhyUs() {
                     gap: 1,
                     borderRadius: "16px",
                     }}
+                  onClick={() => setOpenRegisterModal(true)}
                 >
                     Get Started
                 </Button>
