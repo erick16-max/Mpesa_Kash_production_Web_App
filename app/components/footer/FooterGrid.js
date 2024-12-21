@@ -12,7 +12,7 @@ export default function FooterGrid() {
   return (
     <Grid container spacing={3}>
         <Grid item lg={12} md={12} sm={12} xs={12}>
-            <Stack gap={2} direction={isMobile ? 'column' : 'row'} justifyContent={'space-between'} alignItems={'center'} width={'100%'}>
+            <Stack gap={8} direction={isMobile ? 'column' : 'row'} justifyContent={'space-between'} alignItems={'center'} width={'100%'}>
                <Stack gap={2}>
                <Typography
                      variant={isMobile ? "h5" : "h4"}
