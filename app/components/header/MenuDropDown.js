@@ -7,6 +7,7 @@ import { LuLogOut, LuLayoutDashboard } from "react-icons/lu";
 import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { signOutUser } from '@/firebase/Firebase';
+import { GrTransaction } from "react-icons/gr";
 
 
 export default function MenuDropDown({
@@ -54,6 +55,15 @@ export default function MenuDropDown({
                     <Typography variant="inherit">Dashboard</Typography>
                 </MenuItem>
                
+                <MenuItem onClick={() => {
+                     router.push('/transactions')
+                     handleClose()
+                }}>
+                    <ListItemIcon>
+                        <GrTransaction fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="inherit">Transactions</Typography>
+                </MenuItem>
                 <MenuItem onClick={() => {
                      router.push('/accountsettings')
                      handleClose()
