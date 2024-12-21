@@ -5,16 +5,24 @@ import React, { useContext } from "react";
 import { BiBell, BiSolidDownArrow } from "react-icons/bi";
 import { FiBell } from "react-icons/fi";
 import MenuDropDown from "./MenuDropDown";
+import { usdFormatter, truncateString } from "@/util/LogicFunctions";
 
 
 
 export default function CustomProfile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const {user, isUser, isUserProfile, userProfile} = useContext(AppContext)
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
     };
   const {isMobile} = useContext(ColorModeContext)
+
+
+  const firstLetter = userProfile?.user?.fullname.trim().charAt(0) || "";
+
+
+
   return (
     <Stack direction={"row"} gap={2} height={"100%"} alignItems={'center'} >
       <IconButton
@@ -53,13 +61,13 @@ export default function CustomProfile() {
             display: isMobile ? 'none' : ''
           }}
         >
-          E
+          {firstLetter}
         </Avatar>
         <Stack
           minWidth={80}
         >
           <Typography variant="body2" color={"text.primary"} fontWeight={500}>
-            Erick Gege
+            { isMobile && isUserProfile ? truncateString(userProfile?.user?.fullname, 10) :  truncateString(userProfile?.user?.fullname, 30)}
           </Typography>
           <Typography
             variant="body2"
@@ -68,12 +76,12 @@ export default function CustomProfile() {
             component={"div"}
             sx={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "flex-start",
               alignItems: "center",
               gap: 1,
             }}
           >
-            USD 0.00
+            { isUserProfile ? usdFormatter.format(userProfile?.balance) : ""}
             <BiSolidDownArrow fontSize={10} />
           </Typography>
         </Stack>

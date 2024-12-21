@@ -20,7 +20,7 @@ export default function Footer() {
     >
         <Box
             bgcolor={'secondary.dark'}
-            py={3}
+            py={5}
             width={'100%'}
             px={isTablet ? 2 : 10}
         >
@@ -29,12 +29,12 @@ export default function Footer() {
         <Box
             width={'100%'}
             height={'1px'}
-            bgcolor={'#333435'}
+            bgcolor={'#272829'}
         ></Box>
 
       <Box
         width={"100%"}
-        py={2}
+        py={1}
         bgcolor={"secondary.dark"}
         display={"flex"}
         alignItems={"center"}

@@ -42,7 +42,7 @@ export default function MenuDropDown({
                 'aria-labelledby': 'basic-button',
             }}
         >
-            <Box width={180}>
+            <Box width={200}>
 
                 <MenuItem onClick={() => {
                     router.push('/dashboard')
@@ -55,13 +55,13 @@ export default function MenuDropDown({
                 </MenuItem>
                
                 <MenuItem onClick={() => {
-                     router.push('/settings')
+                     router.push('/accountsettings')
                      handleClose()
                 }}>
                     <ListItemIcon>
                         <IoSettingsOutline fontSize="small" />
                     </ListItemIcon>
-                    <Typography variant="inherit">Settings</Typography>
+                    <Typography variant="inherit">Account Settings</Typography>
                 </MenuItem>
                 <Divider sx={{width: 180}}/>
                 <MenuItem onClick={handleLogout}>
