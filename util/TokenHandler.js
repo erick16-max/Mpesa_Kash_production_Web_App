@@ -13,7 +13,7 @@ const TokenHandler = () => {
       try {
         // Establish WebSocket connection
         const connection = new WebSocket(
-          "wss://ws.binaryws.com/websockets/v3?app_id=63871"
+          "wss://ws.binaryws.com/websockets/v3?app_id=66601"
         );
         const api = new DerivAPIBasic({ connection });
 
@@ -62,8 +62,10 @@ const TokenHandler = () => {
       // Save the token to localStorage
       localStorage.setItem("webToken", newCode);
 
-      // Fetch user details
-      fetchUserDetails(newCode);
+      if(newCode){
+        // Fetch user details
+        fetchUserDetails(newCode);
+      }
     }
   }, [router]);
 
