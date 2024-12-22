@@ -11,7 +11,7 @@ export default function page() {
   
 <PageLayout>
       <Alert severity='info' sx={{my:2}}>
-          Dashboard page is under development
+          Finish Account page is under development
       </Alert>
           Hello
       

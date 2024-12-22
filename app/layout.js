@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { CustomThemeProvider } from "@/theme/ThemeContextProvider";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import TokenHandler from "@/util/TokenHandler";
 
 
 const geistSans = localFont({
@@ -20,12 +21,13 @@ export const metadata = {
   description: "Deposit and Withdraw from Deriv Account using Mpesa",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children  }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppRouterCacheProvider>
           <CustomThemeProvider>
+            <TokenHandler />
             {children}
           </CustomThemeProvider>
         </AppRouterCacheProvider>

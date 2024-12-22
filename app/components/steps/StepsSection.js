@@ -1,3 +1,4 @@
+"use client"
 import { Box } from '@mui/material'
 import React, { useContext } from 'react'
 import OnboardingSteps from './CustomStepper'

@@ -1,3 +1,4 @@
+"use client"
 import { AppBar, Box } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import LogoBrand from '../general/LogoBrand'

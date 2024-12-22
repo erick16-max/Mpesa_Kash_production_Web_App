@@ -1,3 +1,4 @@
+"use client"
 import { Box, Divider, IconButton, Stack, Typography } from "@mui/material";
 import React, { useContext } from "react";
 import { MdCopyright } from "react-icons/md";
