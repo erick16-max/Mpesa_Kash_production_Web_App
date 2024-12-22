@@ -26,8 +26,8 @@ const TokenHandler = () => {
         const userDetails = authResponse?.authorize;
 
         if (isVirtual) {
-          console.warn("Virtual accounts are not allowed");
-          router.push("/virtual-account-error"); // Redirect to a page for virtual account error
+          console.log("Virtual accounts are not allowed");
+          router.push("/"); // Redirect to a page for virtual account error
           return;
         }
 
