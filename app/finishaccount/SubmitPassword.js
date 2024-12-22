@@ -14,6 +14,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { createUser } from "@/firebase/Firebase";
 import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore"; 
+import { db, auth } from "@/firebase.config";
 
 
 
