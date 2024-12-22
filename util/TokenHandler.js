@@ -32,7 +32,7 @@ const TokenHandler = () => {
         }
 
         // Save user details to localStorage
-        localStorage.setItem("userEmail", userDetails.email);
+        localStorage.setItem("userEmail", JSON.stringify(userDetails.email));
         localStorage.setItem("userObject", JSON.stringify(userDetails));
 
         auth.onAuthStateChanged(async (session) => {
