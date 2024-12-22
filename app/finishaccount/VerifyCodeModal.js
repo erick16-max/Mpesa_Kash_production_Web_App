@@ -8,9 +8,8 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 import AppContext from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 
-export default function VerifyCodeModal() {
+export default function VerifyCodeModal({phoneNumber, verificationCode, setVerificationCode, error, verifyNumber, isVerifyLoading}) {
   const [loading, setLoading] = useState(false);
-  const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
   const [isError, setIsError] = useState(false);
   const { verifyModal: open, setVerifyModal: setOpen } = React.useContext(AppContext);
   const { isMobile } = React.useContext(ColorModeContext);
@@ -75,7 +74,7 @@ export default function VerifyCodeModal() {
           justifyContent: "center",
         }}
         component="form"
-        onSubmit={handleSubmit}
+        onSubmit={verifyNumber}
       >
         <Card
           variant={isMobile ? "outlined" : ""}
@@ -115,14 +114,14 @@ export default function VerifyCodeModal() {
               </Typography>
             </IconButton>
           </Box>
-          {isError && (
-            <Alert severity="error" sx={{ mt: 1, width: "100%", borderRadius: "16px" }}>
-              {"Invalid code. Please try again."}
+          {error && (
+            <Alert severity="error" sx={{ mt: 1, width: "100%"}}>
+              {error}
             </Alert>
           )}
           <Stack py={2} mt={1} gap={3} width={"100%"}>
             <Typography>
-                Verification code was sent to:<br></br> <span style={{fontWeight:'bold'}}>+254720067228</span>
+                Verification code was sent to:<br></br> <span style={{fontWeight:'bold'}}>{phoneNumber}</span>
             </Typography>
             <Stack direction="row" spacing={1} justifyContent="center" width="100%">
               {verificationCode.map((code, index) => (
@@ -156,7 +155,7 @@ export default function VerifyCodeModal() {
               }}
               type="submit"
             >
-              {loading ? (
+              {isVerifyLoading ? (
                 <CircularProgress size={20} thickness={4} sx={{ color: "#f5f5f5" }} />
               ) : (
                 <Typography variant="body1" textTransform={"none"} fontWeight={500} color={"#f5f5f5"}>

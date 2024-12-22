@@ -12,6 +12,7 @@ export default function FinishAccountCard() {
       const [phoneNumber, setPhoneNumber] = useState("");
       const [email, setEmail] = useState("");
       const [isNext, setIsNext] = useState(false)
+
     
     const {isMobile} = useContext(ColorModeContext)
     const userObject = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userObject")) : {}
@@ -54,8 +55,11 @@ export default function FinishAccountCard() {
         >Finish Creating your account</Typography>
      </Stack>
       {
-        !isNext ? (
-          <SubmitPassword />
+        isNext ? (
+          <SubmitPassword
+            email={userDerivEmail}
+            userObject={userObject}
+          />
         ) : (
           <VerifyPhoneNumber
           email={email}
@@ -63,6 +67,7 @@ export default function FinishAccountCard() {
           setPhoneNumber={setPhoneNumber}
           phoneNumber={phoneNumber}
           userEmail={userDerivEmail}
+          setIsNext={setIsNext}
         />
         )
       }
