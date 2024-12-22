@@ -1,6 +1,6 @@
 "use client"
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 
 const Auth = () => {
   const router = useRouter();

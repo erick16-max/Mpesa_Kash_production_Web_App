@@ -4,11 +4,14 @@ import React , {useContext, useState} from 'react'
 import PhoneNumberField from './CustomPhoneNumberField'
 import ColorModeContext from '@/theme/ThemeContextProvider'
 import VerifyPhoneNumber from './VerifyPhoneNumber'
+import VerifyCodeModal from './VerifyCodeModal'
+import SubmitPassword from './SubmitPassword'
 
 
 export default function FinishAccountCard() {
       const [phoneNumber, setPhoneNumber] = useState("");
       const [email, setEmail] = useState("");
+      const [isNext, setIsNext] = useState(false)
     
     const {isMobile} = useContext(ColorModeContext)
     const userObject = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userObject")) : {}
@@ -48,15 +51,21 @@ export default function FinishAccountCard() {
           variant='body1'
           fontWeight={700}
           color={'text.secondary'}
-        >Finish Creating an account</Typography>
+        >Finish Creating your account</Typography>
      </Stack>
-      <VerifyPhoneNumber
-        email={email}
-        setEmail={setEmail}
-        setPhoneNumber={setPhoneNumber}
-        phoneNumber={phoneNumber}
-        userEmail={userDerivEmail}
-      />
+      {
+        !isNext ? (
+          <SubmitPassword />
+        ) : (
+          <VerifyPhoneNumber
+          email={email}
+          setEmail={setEmail}
+          setPhoneNumber={setPhoneNumber}
+          phoneNumber={phoneNumber}
+          userEmail={userDerivEmail}
+        />
+        )
+      }
      
     </Card>
 

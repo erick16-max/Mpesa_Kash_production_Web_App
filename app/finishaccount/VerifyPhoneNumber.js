@@ -1,6 +1,7 @@
 import { Stack, Button, TextField } from "@mui/material";
 import React, { useState } from "react";
 import PhoneNumberField from "./CustomPhoneNumberField";
+import VerifyCodeModal from "./VerifyCodeModal";
 
 export default function VerifyPhoneNumber({
     phoneNumber, setPhoneNumber, email, setEmail, userEmail
@@ -46,6 +47,7 @@ export default function VerifyPhoneNumber({
       >
         Continue
       </Button>
+      <VerifyCodeModal />
     </Stack>
   );
 }

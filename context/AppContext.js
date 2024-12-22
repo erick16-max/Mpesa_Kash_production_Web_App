@@ -10,6 +10,7 @@ export const AppContextProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
   const [successAlert, setSuccessAlert] = useState(false)
+  const [verifyModal, setVerifyModal] = useState(false)
 
   const isOnline = useInternetStatus()
 
@@ -72,7 +73,9 @@ export const AppContextProvider = ({ children }) => {
     setUserProfile,
     finishAccount,
     successAlert, 
-    setSuccessAlert
+    setSuccessAlert,
+    verifyModal,
+    setVerifyModal
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;
