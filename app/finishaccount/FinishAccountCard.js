@@ -11,8 +11,8 @@ export default function FinishAccountCard() {
       const [email, setEmail] = useState("");
     
     const {isMobile} = useContext(ColorModeContext)
-    const userObject = JSON.parse(localStorage.getItem("userObject"))
-    const userDerivEmail = JSON.parse(localStorage.getItem("userEmail"))
+    const userObject = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userObject")) : {}
+    const userDerivEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userEmail")) : ""
 
     console.log(userDerivEmail, userObject)
 
