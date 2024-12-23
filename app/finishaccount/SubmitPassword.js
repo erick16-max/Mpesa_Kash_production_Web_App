@@ -70,7 +70,7 @@ export default function SubmitPassword({
   
 
   return (
-    <Stack gap={3} width={"100%"} component={'form'} onSubmit={testFirestore}>
+    <Stack gap={3} width={"100%"} component={'form'} onSubmit={handleCreateUser}>
       {error && <Alert severity="error">{error}</Alert>}
       <TextField
         label="Password"
