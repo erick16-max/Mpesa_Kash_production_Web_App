@@ -7,7 +7,7 @@ import {
   IconButton,
   Alert,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PhoneNumberField from "./CustomPhoneNumberField";
 import VerifyCodeModal from "./VerifyCodeModal";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
@@ -49,14 +49,8 @@ export default function SubmitPassword({
   
       const user = await createUser(email, password);
   
-      // Create the user profile in Firestore. No need to check for existence first.
-      const userProfileRef = doc(db, "users", user?.uid);
-      console.log(user?.uid)
-  
-      // Ensure userObject has at least a UID. This is crucial.
-      const userObjectWithUid = { ...userObject, uid: user.uid, email: user.email };
-  
-      await setDoc(userProfileRef, userObjectWithUid);
+      const userProfile = doc(db, "users" , user?.uid);
+      await setDoc(userProfile, { test: "test" });
   
       router.push("/dashboard");
   
@@ -71,13 +65,12 @@ export default function SubmitPassword({
     }
   };
   
-  
 
- 
+
   
 
   return (
-    <Stack gap={3} width={"100%"} component={'form'} onSubmit={handleCreateUser}>
+    <Stack gap={3} width={"100%"} component={'form'} onSubmit={testFirestore}>
       {error && <Alert severity="error">{error}</Alert>}
       <TextField
         label="Password"
