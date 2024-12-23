@@ -37,42 +37,41 @@ export default function SubmitPassword({
 
 
   const handleCreateUser = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       setLoading(true);
   
-      // Validate if passwords match
       if (password !== confirmPassword) {
         setError("Passwords Mismatch!");
         return;
       }
   
-      // Create the user with email and password
       const user = await createUser(email, password);
+      const userProfileRef = doc(db, "users", user.uid);
   
-      // Check if user's profile exists in Firestore using their UID
-      const userProfileRef = doc(db, "users", user.uid); // Reference to user's document in "users" collection
+      console.log("User UID:", user.uid);
+      console.log("User Object:", userObject);
+  
       const userProfileDoc = await getDoc(userProfileRef);
   
       if (userProfileDoc.exists()) {
+        console.log("User profile exists. Merging...");
         await setDoc(userProfileRef, userObject, { merge: true });
       } else {
-      
-        // Set the user profile in Firestore
+        console.log("Creating new user profile...");
         await setDoc(userProfileRef, userObject);
-  
-        router.push("/dashboard")
       }
+  
+      router.push("/dashboard");
     } catch (error) {
-      setError(error?.message || "Something went wrong! Please try again.");
-      console.error(error);
+      console.error("Error during user creation or Firestore write:", error);
+      setError(error.message || "Something went wrong!");
     } finally {
       setLoading(false);
-      setTimeout(() => {
-        setError("");
-      }, 4000);
+      setTimeout(() => setError(""), 4000);
     }
   };
+  
   
 
  
