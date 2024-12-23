@@ -1,6 +1,7 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
-
 import { db } from "@/firebase.config";
+import { doc, setDoc, updateDoc, collection, query, where, getDocs } from "firebase/firestore"; // Correct Firestore imports
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/router";
 
 export const getUserByEmail = async (email) => {
   try {
@@ -31,3 +32,27 @@ export const getUserByEmail = async (email) => {
   }
 };
 
+export const handleUserProfile = async (user, userObject, webToken, router) => {
+  try {
+    const userRef = doc(db, "users", user.uid); // Reference to the user's document
+    const userData = {
+      webToken,
+      email: user.email,
+      userObject,
+    };
+
+    // Update or set the user profile in Firestore
+    await setDoc(userRef, userData, { merge: true });
+
+    // Redirect based on user state
+    onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        router.push("/dashboard");
+      } else {
+        router.push("/finishaccount");
+      }
+    });
+  } catch (error) {
+    console.error("Error saving user profile:", error.message);
+  }
+};

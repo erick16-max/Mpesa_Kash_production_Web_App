@@ -15,6 +15,7 @@ import { createUser } from "@/firebase/Firebase";
 import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore"; 
 import { db, auth } from "@/firebase.config";
+import { handleUserProfile } from "@/firebase/FirebaseUser";
 
 
 
@@ -47,28 +48,26 @@ export default function SubmitPassword({
       }
   
       const user = await createUser(email, password);
-      const userProfileRef = doc(db, "users", user.uid);
   
-      console.log("User UID:", user.uid);
-      console.log("User Object:", userObject);
+      // Create the user profile in Firestore. No need to check for existence first.
+      const userProfileRef = doc(db, "users", user?.uid);
+      console.log(user?.uid)
   
-      const userProfileDoc = await getDoc(userProfileRef);
+      // Ensure userObject has at least a UID. This is crucial.
+      const userObjectWithUid = { ...userObject, uid: user.uid, email: user.email };
   
-      if (userProfileDoc.exists()) {
-        console.log("User profile exists. Merging...");
-        await setDoc(userProfileRef, userObject, { merge: true });
-      } else {
-        console.log("Creating new user profile...");
-        await setDoc(userProfileRef, userObject);
-      }
+      await setDoc(userProfileRef, userObjectWithUid);
   
       router.push("/dashboard");
+  
     } catch (error) {
-      console.error("Error during user creation or Firestore write:", error);
-      setError(error.message || "Something went wrong!");
+      setError(error?.message || "Something went wrong! Please try again.");
+      console.error("Error creating user:", error); // More specific error logging
     } finally {
       setLoading(false);
-      setTimeout(() => setError(""), 4000);
+      setTimeout(() => {
+        setError("");
+      }, 4000);
     }
   };
   
