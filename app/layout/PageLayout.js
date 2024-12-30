@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import React, { useContext, useState, useEffect } from 'react'
 import PageLoader from '../components/general/PageLoader'
 import CustomAppBar from '../components/header/CustomAppBar'
+import ColorModeContext from '@/theme/ThemeContextProvider'
 
 export default function PageLayout({children }) {
     const {user} = useContext(AppContext)
@@ -15,6 +16,8 @@ export default function PageLayout({children }) {
     const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [scroll, setScroll] = useState(false);
     const {userProfile} = useContext(AppContext)
+    const { isTablet } = useContext(ColorModeContext)
+
   
     const changeNavBg = () => {
       window.scrollY >= 10 ? setScroll(true) : setScroll(false);
@@ -65,7 +68,7 @@ export default function PageLayout({children }) {
      <Stack
       mt={'100px'}
       py={2}
-      px={isSmallScreen ? 1 : 3}
+      px={isTablet ? 2 : 3}
      >
     
       {children }

@@ -71,7 +71,7 @@ export default function WalletCard() {
             sx={{
                 width:isMobile ? '100%' : isTablet ? '100%' : '80%',
                 // maxWidth: 600,
-                height: 220,
+                height: isMobile ? 180 : 220,
                 p: 3,
                 backgroundColor: 'primary.main',
                 justifyContent: 'space-between',

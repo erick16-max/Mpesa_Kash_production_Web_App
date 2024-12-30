@@ -9,7 +9,7 @@ export default function TransactionCard({ transaction }) {
     <Card
         variant="outlined"
       sx={{
-        backgroundColor: "#fff",
+        backgroundColor: "#f5f5f5",
         width: "100%",
         height: 100,
         px: 3,
