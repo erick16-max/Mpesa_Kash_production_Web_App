@@ -4,6 +4,8 @@ import PageLayout from '../layout/PageLayout'
 import Link from 'next/link'
 import WalletCard from './components/WalletCard'
 import Transactions from './components/Transactions'
+import DepositModal from './components/deposit/DepositModal'
+import WithdrawModal from './components/withdraw/WithdrawModal'
 
 export default function page() {
   
@@ -14,6 +16,8 @@ export default function page() {
 <PageLayout>
      <WalletCard />
      <Transactions />
+     <DepositModal />
+     <WithdrawModal />
 </PageLayout>
   )
 }

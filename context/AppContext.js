@@ -11,6 +11,8 @@ export const AppContextProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
   const [successAlert, setSuccessAlert] = useState(false)
   const [verifyModal, setVerifyModal] = useState(false)
+  const [isDepositModelOpen, setIsDepositModelOpen] = useState(false)
+  const [isWithdrawModelOpen, setIsWithdrawModelOpen] = useState(false)
 
   const isOnline = useInternetStatus()
 
@@ -75,7 +77,11 @@ export const AppContextProvider = ({ children }) => {
     successAlert, 
     setSuccessAlert,
     verifyModal,
-    setVerifyModal
+    setVerifyModal,
+    isDepositModelOpen, 
+    setIsDepositModelOpen,
+    isWithdrawModelOpen, 
+    setIsWithdrawModelOpen
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

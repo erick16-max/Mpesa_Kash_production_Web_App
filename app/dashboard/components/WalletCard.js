@@ -14,7 +14,7 @@ import HandWavingImage from "../../../public/images/handwaving.png"
 
 export default function WalletCard() {
     const {isTablet, isMobile} = useContext(ColorModeContext)
-    const {userProfile} = useContext(AppContext)
+    const {userProfile, setIsDepositModelOpen, setIsWithdrawModelOpen} = useContext(AppContext)
   return (
     <Card
        component={'div'}
@@ -171,6 +171,7 @@ export default function WalletCard() {
                     fontWeight: 600
                 }}
                 startIcon={<FaArrowTrendUp />}
+                onClick={() => setIsDepositModelOpen(true)}
             >
                 Deposit
             </Button>
@@ -184,6 +185,7 @@ export default function WalletCard() {
                     fontWeight: 600
                 }}
                 startIcon={<FaArrowTrendDown />}
+                onClick={() => setIsWithdrawModelOpen(true)}
             >
                 Withdraw
             </Button>
