@@ -50,6 +50,7 @@ export default function SubmitPassword({
       const user = await createUser(email, password);
   
       const userProfile = doc(db, "users" , user?.uid);
+      console.log(userObject)
       await setDoc(userProfile, userObject);
   
       router.push("/dashboard");

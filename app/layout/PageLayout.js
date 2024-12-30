@@ -42,9 +42,9 @@ export default function PageLayout({children }) {
     const isUser = user !== null && user && Object?.keys(user).length > 0 ? true : false
 
 
-    //  if(loading || user === null){
-    //     return <PageLoader />
-    //   }
+     if(loading || user === null || userProfile === null){
+        return <PageLoader />
+      }
       
 
    
@@ -67,11 +67,8 @@ export default function PageLayout({children }) {
       py={2}
       px={isSmallScreen ? 1 : 3}
      >
-         <Box
-      p={5}
-    >
+    
       {children }
-    </Box>
    
      </Stack>
    </Box>

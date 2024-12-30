@@ -2,6 +2,8 @@
 import { Alert, Box, useMediaQuery, Stack, useTheme, Typography } from '@mui/material'
 import PageLayout from '../layout/PageLayout'
 import Link from 'next/link'
+import WalletCard from './components/WalletCard'
+import Transactions from './components/Transactions'
 
 export default function page() {
   
@@ -10,15 +12,8 @@ export default function page() {
   return (
   
 <PageLayout>
-      <Alert severity='info' sx={{my:2}}>
-          Dashboard page is under development
-      </Alert>
-          Hello
-      
-        <Link href={'/'}>
-          Go home
-        </Link>
-        
+     <WalletCard />
+     <Transactions />
 </PageLayout>
   )
 }
