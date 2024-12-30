@@ -4,7 +4,7 @@ import { Box, Card, Stack, Typography } from "@mui/material";
 import { usdFormatter } from "@/util/LogicFunctions";
 
 export default function TransactionCard({ transaction }) {
-  console.log(transaction);
+ 
   return (
     <Card
         variant="outlined"

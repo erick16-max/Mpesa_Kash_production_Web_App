@@ -14,6 +14,8 @@ import {
   limit,
   collection,
   onSnapshot,
+  doc, 
+  getFirestore,
 } from "firebase/firestore";
 import { db, auth } from '@/firebase.config';
 
@@ -53,6 +55,7 @@ export default function Transactions() {
   const [transactions, setTransactions] = React.useState([])
   const [withdrawTransactions, setWithdrawTransactions] = React.useState([])
   const [depositTransactions, setDepositTransactions] = React.useState([])
+  const [allTransactions, setAllTransactions] = useState([]); 
 
   // get withdraw transactions
   useEffect(() => {
@@ -79,7 +82,8 @@ export default function Transactions() {
     }
   }, [userProfile]);
 
-
+ 
+// get deposit transactions
   useEffect(() => {
     if (Object.keys(userProfile)?.length > 0) {
       let num = userProfile?.phoneNumber.slice(1);
@@ -103,6 +107,62 @@ export default function Transactions() {
       });
     }
   }, [userProfile]);
+
+
+//get all transactions
+useEffect(() => {
+  if (Object.keys(userProfile)?.length > 0) {
+    let num = userProfile?.phoneNumber.slice(1);
+    let phoneNum = `254${num}`;
+
+    // Fetch both withdraw and deposit transactions
+    const withdrawQuery = query(
+      collection(db, "withdraws"),
+      where("data.phoneNumber", "==", phoneNum),
+      orderBy("data.time", "desc"),
+      limit(12)
+    );
+
+    const depositQuery = query(
+      collection(db, "deposits"),
+      where("data.phoneNumber", "==", phoneNum),
+      orderBy("data.time", "desc"),
+      limit(12)
+    );
+
+    const unsubscribeWithdraw = onSnapshot(withdrawQuery, (snapshot) => {
+      const withdraws = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: "withdraw",
+        data: doc.data().data,
+      }));
+      updateTransactions(withdraws);
+    });
+
+    const unsubscribeDeposit = onSnapshot(depositQuery, (snapshot) => {
+      const deposits = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        type: "deposit",
+        data: doc.data().data,
+      }));
+      updateTransactions(deposits);
+    });
+
+    const updateTransactions = (newData) => {
+      setTransactions((prev) => {
+        const merged = [...prev, ...newData];
+        return merged.sort((a, b) => b.data.time - a.data.time);
+      });
+    };
+
+    // Cleanup subscriptions
+    return () => {
+      unsubscribeWithdraw();
+      unsubscribeDeposit();
+    };
+  }
+}, [userProfile]);
+
 
 
 
@@ -131,10 +191,10 @@ export default function Transactions() {
         </Box>
         <CustomTabPanel value={value} index={0}>
           {
-            transactions.length !== 0 ? (
+            transactions.length === 0 ? (
               <NoTranscations type={'all'}/>
             ):(
-              <TransactionGrid />
+              <TransactionGrid transactionList={transactions}/>
             )
           }
         </CustomTabPanel>
