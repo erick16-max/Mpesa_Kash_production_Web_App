@@ -162,7 +162,7 @@ useEffect(() => {
                 <TextField 
                   label='Email'
                   placeholder='Enter email'
-                  type='text'
+                  type='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required

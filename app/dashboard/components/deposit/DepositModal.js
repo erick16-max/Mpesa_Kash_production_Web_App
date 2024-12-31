@@ -2,8 +2,9 @@ import React, { useContext } from "react";
 import { Box, IconButton, Modal, Slide, Typography } from "@mui/material";
 import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
+import DepositForm from "./DepositForm";
 
-export default function DepositModal() {
+export default function DepositModal({depositRate, rates}) {
   const { isDepositModelOpen, setIsDepositModelOpen } = useContext(AppContext);
   const {isMobile} = useContext(ColorModeContext)
 
@@ -17,7 +18,7 @@ export default function DepositModal() {
         <Box
           sx={{
             backgroundColor: "#ffffff",
-            height: isMobile ? '80vh' : "96vh",
+            height: isMobile ? '90vh' : "96vh",
             width: "100vw",
             position: "fixed", // Ensures it stays at the bottom
             bottom: 0, // Aligns it to the bottom
@@ -53,6 +54,15 @@ export default function DepositModal() {
             >
                x
             </IconButton>
+          </Box>
+          <Box
+            width={'100%'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            display={'flex'}
+            py={2}
+          >
+            <DepositForm depositRate={depositRate} rates={rates}/>
           </Box>
         </Box>
       </Slide>

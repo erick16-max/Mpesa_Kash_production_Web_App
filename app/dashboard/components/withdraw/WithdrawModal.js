@@ -17,7 +17,7 @@ export default function WithdrawModal() {
         <Box
           sx={{
             backgroundColor: "#ffffff",
-            height: isMobile ? '80vh' : "96vh",
+            height: isMobile ? '90vh' : "96vh",
             width: "100vw",
             position: "fixed", // Ensures it stays at the bottom
             bottom: 0, // Aligns it to the bottom
