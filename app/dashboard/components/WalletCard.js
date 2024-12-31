@@ -44,14 +44,14 @@ export default function WalletCard() {
                     alignItems={'center'}
                     gap={1}
                 >
-                    <Typography variant='h6' fontWeight={700}>
+                    <Typography variant={isMobile ? 'body1' : 'h6'} fontWeight={700}>
                         Hi, {userProfile?.user?.fullname}
                     </Typography>
                     {/* <MdWavingHand style={{color: '#4A3228', fontSize: 28}}/> */}
                     <Image 
                         src={HandWavingImage}
-                        width={40}
-                        height={40}
+                        width={isMobile ? 30 : 40}
+                        height={isMobile ? 30 : 40}
                         alt='waving hand'
                         style={{
                             backgroundColor: '#fff'

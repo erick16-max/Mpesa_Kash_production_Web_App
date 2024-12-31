@@ -12,7 +12,11 @@ export default function DepositForm({depositRate, rates}) {
   const {isMobile} = useContext(ColorModeContext)
 
   return (
-    <Box width={'100%'} p={3}>
+    <Box width={'100%'} p={3}
+        display={'flex'}
+        alignItems={'center'}
+        justifyContent={'center'}
+    >
         <Card
       variant={"outlined" }
       sx={{
@@ -23,6 +27,7 @@ export default function DepositForm({depositRate, rates}) {
         flexDirection: "column",
         p: 3,
         gap: 3,
+        boxShadow: 1,
       }}
     >
         <Stack width={'100%'} gap={2} mb={2}>
