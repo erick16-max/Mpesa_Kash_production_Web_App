@@ -71,8 +71,11 @@ export default function SubmitPassword({
 
   const clientID = "66601";
 
-  const signUp = async () => {
-      if(!password || !phoneNumber || !confirmPassword){
+  console.log(password, confirmPassword, phoneNumber);
+
+  const signUp = async (e) => {
+      e.preventDefault()
+      if(phoneNumber === "" || password === "" || confirmPassword === ""){
         alert('all fields are required')
         return
       }
@@ -143,7 +146,7 @@ export default function SubmitPassword({
                 const user = userCredential.user;
                 await setDoc(doc(db, "users", user?.uid), {
                   email: data?.authorize?.email,
-                  phoneNumber: phoneNumber,
+                  phoneNumber: `0${phoneNumber.slice(3)}`,
                   appAuthToken: newCode,
                   appTradeTokens: tokens,
                   balance: data?.authorize?.balance,

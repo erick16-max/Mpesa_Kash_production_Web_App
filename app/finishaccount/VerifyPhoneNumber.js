@@ -13,6 +13,7 @@ export default function VerifyPhoneNumber({
   const [isLoading, setIsLoading] = React.useState(false)
   const [isVerifyLoading, setIsVerifyLoading] = React.useState(false)
   const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
+  const [show, setShow] = React.useState(false)
 
   const sendVerificationSms = async() => {
 
@@ -64,6 +65,7 @@ export default function VerifyPhoneNumber({
   const verifyNumber = async(e) => {
     e.preventDefault()
     try {
+      setShow(true)
       const verifyCode = typeof window !== undefined ? JSON.parse(localStorage.getItem("VerifyUserCode")) : ""
       const singleString = verificationCode.join("");
       
@@ -72,11 +74,17 @@ export default function VerifyPhoneNumber({
         setError("Code is invalid or expired");
         return
       }else{
-        setIsNext(true)
+        setTimeout(() => {
+          setIsNext(true)
+        }, 500)
       }
     } catch (error) {
       console.log(error)
       setError("Something went wrong")
+    }finally{
+      setTimeout(() => {
+        setShow(false)
+      }, 500)
     }
   }
 
