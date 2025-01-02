@@ -118,25 +118,9 @@ export default function SubmitPassword({
         } else if (data?.msg_type == "authorize") {
           if (data?.authorize?.is_virtual === 1) {
             setShow(show);
-            alert('demo account')
+            alert('You cannot sign up with demo account!')
             return
-            // Alert.alert(
-            //   "Warning!!!",
-            //   "You cannot sign up with a Demo Account!!! Login with your real account",
-            //   [
-            //     {
-            //       text: "Login",
-            //       onPress: async () => {
-            //         await session.signOut();
-            //         const url = `${authorizationURL}?app_id=${clientID}`;
-            //         await Linking.openURL(url);
-            //       },
-            //     },
-            //   ],
-            //   {
-            //     cancelable: false,
-            //   }
-            // );
+          
           } else {
             createUserWithEmailAndPassword(
               auth,
