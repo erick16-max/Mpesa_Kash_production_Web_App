@@ -13,7 +13,7 @@ export default function VerifyPhoneNumber({
   const [isLoading, setIsLoading] = React.useState(false)
   const [isVerifyLoading, setIsVerifyLoading] = React.useState(false)
   const [verificationCode, setVerificationCode] = useState(["", "", "", "", "", ""]);
-  const [show, setShow] = React.useState(false)
+ 
 
   const sendVerificationSms = async() => {
 
@@ -23,6 +23,7 @@ export default function VerifyPhoneNumber({
     } 
      
     const formatedNumber = phoneNumber.replace(/[+\s]/g, "")
+    localStorage.setItem('phone', formatedNumber)
 
     try {
       setIsLoading(true)
@@ -42,8 +43,8 @@ export default function VerifyPhoneNumber({
       }
 
       const data = await response.json()
-      console.log(data?.response?.responses);
-      console.log(data?.code)
+      // console.log(data?.response?.responses);
+      // console.log(data?.code)
       if(typeof window !== undefined){
         localStorage.setItem("VerifyUserCode", JSON.stringify(data?.code));
         
@@ -65,7 +66,7 @@ export default function VerifyPhoneNumber({
   const verifyNumber = async(e) => {
     e.preventDefault()
     try {
-      setShow(true)
+      setIsVerifyLoading(true)
       const verifyCode = typeof window !== undefined ? JSON.parse(localStorage.getItem("VerifyUserCode")) : ""
       const singleString = verificationCode.join("");
       
@@ -83,7 +84,7 @@ export default function VerifyPhoneNumber({
       setError("Something went wrong")
     }finally{
       setTimeout(() => {
-        setShow(false)
+        setIsVerifyLoading(false)
       }, 500)
     }
   }

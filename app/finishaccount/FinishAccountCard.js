@@ -18,7 +18,6 @@ export default function FinishAccountCard() {
     const userObject = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userObject")) : {}
     const userDerivEmail = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("userEmail")) : ""
 
-    console.log(userDerivEmail, userObject)
 
   return (
    <Box

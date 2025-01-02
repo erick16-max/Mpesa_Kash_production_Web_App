@@ -21,7 +21,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 export default function SubmitPassword({
-  phoneNumber,
   setPhoneNumber,
   email,
   setEmail,
@@ -68,6 +67,7 @@ export default function SubmitPassword({
   // };
   
   const authorizationURL = "https://oauth.deriv.com/oauth2/authorize";
+  const phoneNumber = localStorage.getItem('phone')
 
   const clientID = "66601";
 
@@ -155,6 +155,8 @@ export default function SubmitPassword({
                 localStorage.removeItem("tokenAuth")
                 localStorage.removeItem("userEmail");
                 localStorage.removeItem("userObject");
+                const phoneNumber = localStorage.removeItem('phone')
+
                 setShow(show);
               })
               .catch((error) => {
