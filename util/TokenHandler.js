@@ -4,6 +4,9 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { db, auth } from "@/firebase.config";
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic.js";
+import { onAuthStateChanged } from "firebase/auth";
+
+import { doc, updateDoc } from "firebase/firestore";
 
 const TokenHandler = () => {
   const router = useRouter();
