@@ -11,7 +11,7 @@ import SubmitPassword from './SubmitPassword'
 export default function FinishAccountCard() {
       const [phoneNumber, setPhoneNumber] = useState("");
       const [email, setEmail] = useState("");
-      const [isNext, setIsNext] = useState(true)
+      const [isNext, setIsNext] = useState(false)
 
     
     const {isMobile} = useContext(ColorModeContext)
