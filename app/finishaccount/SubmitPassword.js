@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { doc, getDoc, setDoc } from "firebase/firestore"; 
 import { db, auth } from "@/firebase.config";
 import { handleUserProfile } from "@/firebase/FirebaseUser";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 
 
