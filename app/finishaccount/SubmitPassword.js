@@ -33,45 +33,141 @@ export default function SubmitPassword({
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [seePassword, setSeepassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [show, setShow] = React.useState(false)
 
   const router = useRouter()
 
 
-  const handleCreateUser = async (e) => {
-    e.preventDefault();
-    try {
-      setLoading(true);
+  // const handleCreateUser = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     setLoading(true);
   
-      if (password !== confirmPassword) {
-        setError("Passwords Mismatch!");
-        return;
+  //     if (password !== confirmPassword) {
+  //       setError("Passwords Mismatch!");
+  //       return;
+  //     }
+  
+  //     const user = await createUser(email, password);
+  
+  //     const userProfile = doc(db, "users" , user?.uid);
+  //     await setDoc(userProfile, userObject);
+  
+  //     router.push("/dashboard");
+  
+  //   } catch (error) {
+  //     setError(error?.message || "Something went wrong! Please try again.");
+  //     console.error("Error creating user:", error); // More specific error logging
+  //   } finally {
+  //     setLoading(false);
+  //     setTimeout(() => {
+  //       setError("");
+  //     }, 4000);
+  //   }
+  // };
+  
+  const authorizationURL = "https://oauth.deriv.com/oauth2/authorize";
+
+  const clientID = "66601";
+
+  const signUp = async () => {
+      if(!password || !phoneNumber || !confirmPassword){
+        alert('all fields are required')
+        return
       }
-  
-      const user = await createUser(email, password);
-  
-      const userProfile = doc(db, "users" , user?.uid);
-      console.log(userObject)
-      await setDoc(userProfile, userObject);
-  
-      router.push("/dashboard");
-  
-    } catch (error) {
-      setError(error?.message || "Something went wrong! Please try again.");
-      console.error("Error creating user:", error); // More specific error logging
-    } finally {
-      setLoading(false);
-      setTimeout(() => {
-        setError("");
-      }, 4000);
-    }
+
+      if(password !== confirmPassword){
+        alert('Password mismatch!')
+        return
+      }
+      setShow(!show);
+   
+      const token = localStorage.getItem("tokenAuth");
+
+      const code = token.split("token1=")[1];
+      const newCode = code.split("&cur1=")[0];
+
+      const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
+      let match;
+      const tokens = {};
+
+      while ((match = regex.exec(token)) !== null) {
+        const [, acctNumber, acctValue, fullToken] = match;
+        tokens[acctValue] = { token: fullToken };
+      }
+
+      const ws = new WebSocket(
+        "wss://ws.derivws.com/websockets/v3?app_id=" + clientID
+      );
+
+      ws.onopen = () => {
+        ws.send(JSON.stringify({ authorize: newCode }));
+      };
+
+      ws.onmessage = async (msg) => {
+        const data = JSON.parse(msg?.data);
+        if (data?.error !== undefined) {
+          setShow(show);
+          alert(data?.error?.message);
+          ws.close();
+        } else if (data?.msg_type == "authorize") {
+          if (data?.authorize?.is_virtual === 1) {
+            setShow(show);
+            alert('demo account')
+            return
+            // Alert.alert(
+            //   "Warning!!!",
+            //   "You cannot sign up with a Demo Account!!! Login with your real account",
+            //   [
+            //     {
+            //       text: "Login",
+            //       onPress: async () => {
+            //         await session.signOut();
+            //         const url = `${authorizationURL}?app_id=${clientID}`;
+            //         await Linking.openURL(url);
+            //       },
+            //     },
+            //   ],
+            //   {
+            //     cancelable: false,
+            //   }
+            // );
+          } else {
+            createUserWithEmailAndPassword(
+              auth,
+              data?.authorize?.email,
+              password
+            )
+              .then(async (userCredential) => {
+                const user = userCredential.user;
+                await setDoc(doc(db, "users", user?.uid), {
+                  email: data?.authorize?.email,
+                  phoneNumber: phoneNumber,
+                  appAuthToken: newCode,
+                  appTradeTokens: tokens,
+                  balance: data?.authorize?.balance,
+                  user: data?.authorize,
+                });
+                localStorage.removeItem("tokenAuth")
+                localStorage.removeItem("userEmail");
+                localStorage.removeItem("userObject");
+                setShow(show);
+              })
+              .catch((error) => {
+                setShow(show);
+                alert(error?.message);
+              });
+          }
+        }
+      };
   };
-  
+
 
 
   
 
   return (
-    <Stack gap={3} width={"100%"} component={'form'} onSubmit={handleCreateUser}>
+    <Stack gap={3} width={"100%"} component={'form'} onSubmit={signUp}>
       {error && <Alert severity="error">{error}</Alert>}
       <TextField
         label="Password"
@@ -134,8 +230,9 @@ export default function SubmitPassword({
           textTransform: "none",
         }}
         type="submit"
+        disabled={show}
       >
-        {loading ? (
+        {show ? (
           <CircularProgress size={20} thickness={4} sx={{ color: "#f5f5f5" }} />
         ) : (
           "Submit"

@@ -74,7 +74,7 @@ useEffect(() => {
       setLoading(true);
       const user = await signIn(email, password);
       if(user){
-        // router.push("/");
+        router.push("/dashboard");
         setOpen(false)
       }
 

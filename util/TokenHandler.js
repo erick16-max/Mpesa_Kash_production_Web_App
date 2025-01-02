@@ -67,9 +67,55 @@ const TokenHandler = () => {
         fetchUserDetails(newCode);
       }
     }
+
+
   }, [router]);
+
+
+  useEffect(() => {
+    const handleUrlChange = async (e) => {
+      const url = window.location.href; 
+      if (url) {
+        const code = url.split("token1=")[1];
+        const newCode = code.split("&cur1=")[0];
+
+        const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
+        let match;
+        const tokens = {};
+
+        while ((match = regex.exec(url)) !== null) {
+          const [, acctNumber, acctValue, fullToken] = match;
+          tokens[acctValue] = { token: fullToken };
+        }
+
+        auth.onAuthStateChanged(async (current) => {
+          if (current) {
+            const userRef = doc(db, "users", current?.uid);
+            await updateDoc(userRef, {
+              appAuthToken: newCode,
+              appTradeTokens: tokens,
+            });
+          } else {
+            localStorage.setItem("tokenAuth", url);
+            const storedToken = localStorage.getItem("tokenAuth");
+            // Perform any additional session handling here if needed
+          }
+        });
+      }
+    };
+
+    // Attach the event listener
+    window.addEventListener("popstate", handleUrlChange); // Using popstate for URL changes
+
+    // Cleanup event listener on component unmount
+    return () => {
+      window.removeEventListener("popstate", handleUrlChange);
+    };
+  }, [router]);
+
 
   return null; // This component does not render any UI
 };
+
 
 export default TokenHandler;
