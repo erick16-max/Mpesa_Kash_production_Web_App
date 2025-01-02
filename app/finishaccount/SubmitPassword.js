@@ -112,13 +112,11 @@ export default function SubmitPassword({
     ws.onmessage = async (msg) => {
       const data = JSON.parse(msg?.data);
       if (data?.error !== undefined) {
-        setShow(false);
         alert(data?.error?.message);
         console.log('deriv error', data?.error?.message);
         ws.close();
       } else if (data?.msg_type === "authorize") {
         if (data?.authorize?.is_virtual === 1) {
-          setShow(false);
           alert('You cannot sign up with a demo account!');
           return;
         } else {
