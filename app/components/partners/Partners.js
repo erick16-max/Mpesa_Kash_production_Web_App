@@ -41,6 +41,7 @@ export default function Partners() {
                         src={DerivLogoImage}
                         width={isMobile ? 100 : 180}
                         height={isMobile ? 40 : 60}
+                        alt='deriv logo'
                         
                     />
                     <Image 
@@ -49,6 +50,7 @@ export default function Partners() {
                         width={isMobile ? 120 : 200}
                         height={isMobile ? 50 : 70}
                         style={{marginTop: 25}}
+                        alt='mpesa logo'
                         
                     />
             </Box>

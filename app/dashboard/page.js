@@ -65,7 +65,7 @@ export default function page() {
      <WalletCard />
      <Transactions />
      <DepositModal depositRate={depositRate} rates={rates}/>
-     <WithdrawModal />
+     <WithdrawModal withdrawRate={withdrawRate} rates={rates} />
 </PageLayout>
   )
 }

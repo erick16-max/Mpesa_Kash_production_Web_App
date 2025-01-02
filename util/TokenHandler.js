@@ -73,7 +73,7 @@ const TokenHandler = () => {
 
     const handleUrlChange = async (e) => {
       const url = window.location.href; 
-      if (url) {
+      if (url.includes("token1=") && url.includes("&cur1=")) {
         const code = url.split("token1=")[1];
         const newCode = code.split("&cur1=")[0];
 

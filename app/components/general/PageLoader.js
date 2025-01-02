@@ -15,7 +15,7 @@ export default function PageLoader() {
         padding: 0,
       }}
     >
-      <div class="honeycomb">
+      <div className="honeycomb">
         <div></div>
         <div></div>
         <div></div>

@@ -17,7 +17,7 @@ export default function DepositModal({depositRate, rates}) {
       <Slide direction="up" in={isDepositModelOpen}>
         <Box
           sx={{
-            backgroundColor: "#ffffff",
+            backgroundColor: "#fefefe",
             height: isMobile ? '90vh' : "96vh",
             width: "100vw",
             position: "fixed", // Ensures it stays at the bottom

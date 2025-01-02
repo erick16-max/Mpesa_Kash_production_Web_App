@@ -7,41 +7,9 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 
 
 
-export default function DepositForm({depositRate, rates}) {
-  const [amount, setAmount] = useState();
-  const [show, setShow] = useState(false);
+export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, amount, setAmount}) {
   const {isMobile} = useContext(ColorModeContext)
   const {userProfile} = useContext(AppContext)
-
-  // make deposit
-  const makeDeposit = async () => {
-    setShow(true);
-    if (Object.keys(userProfile)?.length > 0) {
-      let num = userProfile?.phoneNumber?.slice(1);
-      let phoneNum = `254${num}`;
-      const paymentData = {
-        phone_number: phoneNum,
-        cash: amount,
-        CR: userProfile?.user?.loginid,
-        type: "deposit",
-        deposit: depositRate,
-        depositRate: depositRate
-      };
-      await fetch("https://bservice.binarympesaservices.com/web/stk", {
-        method: "POST",
-        body: JSON.stringify(paymentData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(() => {
-        setShow(false);
-        setAmount("");
-        alert(
-          "Enter your pin in the next screen",
-        );
-      });
-    }
-  };
 
   return (
     <Box width={'100%'} p={3}
@@ -61,13 +29,15 @@ export default function DepositForm({depositRate, rates}) {
         gap: 3,
         boxShadow: 0,
       }}
+      component={'form'}
+      onSubmit={makeWithdraw}
     >
         <Stack width={'100%'} gap={2} mb={2}>
             <Typography
                 variant="body1"
                 color={'primary.main'}
                 fontWeight={600}
-            >1 USD = KES {depositRate}</Typography>
+            >1 USD = KES {withdrawRate}</Typography>
             <Box
                 width={'100%'}
                 display={'flex'}
@@ -80,18 +50,18 @@ export default function DepositForm({depositRate, rates}) {
                 variant="body2"
                 color={'text.primary'}
                 fontWeight={500}
-            >Minimum Deposit = USD {rates?.minDeposit}</Typography>
+            >Minimum Withdraw = USD {rates?.minWithdraw}</Typography>
              <Typography
                 variant="body2"
                 color={'text.primary'}
                 fontWeight={500}
-            >Maxmum Deposit = USD {rates?.maxDeposit}</Typography>
+            >Maxmum Withdraw = USD {rates?.maxWithdraw}</Typography>
             </Box>
             
         </Stack>
       <TextField
         label="Amount in USD"
-        placeholder="Enter amount to deposit"
+        placeholder="Enter amount to withdraw"
         type="number"
         value={amount}
         onChange={(e) => setAmount(e.target.value)}
@@ -118,7 +88,7 @@ export default function DepositForm({depositRate, rates}) {
             fontWeight={500}
             gutterBottom
         >
-            From: {userProfile?.phoneNumber}
+            To: {userProfile?.phoneNumber}
         </Typography>
         <Typography
          variant="h6"
@@ -127,7 +97,7 @@ export default function DepositForm({depositRate, rates}) {
          gutterBottom
          display={!amount ? 'none' : 'block'}
         >
-            Ksh {amount ? parseInt(amount) * parseInt(depositRate) : parseInt(depositRate) * parseInt(rates?.minDeposit)}
+            Ksh {amount ? parseInt(amount) * parseInt(withdrawRate) : parseInt(withdrawRate) * parseInt(rates?.minWithdraw)}
         </Typography>
       </Stack>
       <Button
@@ -139,10 +109,10 @@ export default function DepositForm({depositRate, rates}) {
         borderRadius: '16px'
        }}
        fullWidth
-       disabled={parseInt(amount) < parseInt(rates?.minDeposit) || parseInt(amount) > parseInt(rates?.maxDeposit) || !amount || show}
-       onClick={makeDeposit}
+       disabled={parseInt(amount) < parseInt(rates?.minWithdraw) || parseInt(amount) > parseInt(rates?.maxWithdarw) || !amount || show}
+      type="submit"
       >
-        {show ? (<CircularProgress size={22} thickness={4} sx={{color: '#232425'}}/>) : "Make Deposit"}
+        {show ? (<CircularProgress size={22} thickness={4} sx={{color: '#232425'}}/>) : "Make Withdrawal"}
       </Button>
     </Card>
     </Box>
