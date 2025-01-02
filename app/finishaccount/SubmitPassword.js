@@ -74,85 +74,86 @@ export default function SubmitPassword({
   console.log(password, confirmPassword, phoneNumber);
 
   const signUp = async (e) => {
-      e.preventDefault()
-      if(phoneNumber === "" || password === "" || confirmPassword === ""){
-        alert('all fields are required')
-        return
-      }
-
-      if(password !== confirmPassword){
-        alert('Password mismatch!')
-        return
-      }
-      setShow(!show);
-   
-      const token = localStorage.getItem("tokenAuth");
-
-      const code = token.split("token1=")[1];
-      const newCode = code.split("&cur1=")[0];
-
-      const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
-      let match;
-      const tokens = {};
-
-      while ((match = regex.exec(token)) !== null) {
-        const [, acctNumber, acctValue, fullToken] = match;
-        tokens[acctValue] = { token: fullToken };
-      }
-
-      const ws = new WebSocket(
-        "wss://ws.derivws.com/websockets/v3?app_id=" + clientID
-      );
-
-      ws.onopen = () => {
-        ws.send(JSON.stringify({ authorize: newCode }));
-      };
-
-      ws.onmessage = async (msg) => {
-        const data = JSON.parse(msg?.data);
-        if (data?.error !== undefined) {
-          setShow(show);
-          alert(data?.error?.message);
-          console.log('deriv error', data?.error?.message)
-          ws.close();
-        } else if (data?.msg_type == "authorize") {
-          if (data?.authorize?.is_virtual === 1) {
-            setShow(show);
-            alert('You cannot sign up with demo account!')
-            return
-          
-          } else {
-            createUserWithEmailAndPassword(
-              auth,
-              data?.authorize?.email,
-              password
-            )
-              .then(async (userCredential) => {
-                const user = userCredential.user;
-                await setDoc(doc(db, "users", user?.uid), {
-                  email: data?.authorize?.email,
-                  phoneNumber: `0${phoneNumber.slice(3)}`,
-                  appAuthToken: newCode,
-                  appTradeTokens: tokens,
-                  balance: data?.authorize?.balance,
-                  user: data?.authorize,
-                });
-                localStorage.removeItem("tokenAuth")
-                localStorage.removeItem("userEmail");
-                localStorage.removeItem("userObject");
-                const phoneNumber = localStorage.removeItem('phone')
-
-                setShow(show);
-              })
-              .catch((error) => {
-                setShow(show);
-                alert(error?.message);
-                console.log('fb error', error);
+    e.preventDefault();
+    
+    if (phoneNumber === "" || password === "" || confirmPassword === "") {
+      alert('All fields are required');
+      return;
+    }
+  
+    if (password !== confirmPassword) {
+      alert('Password mismatch!');
+      return;
+    }
+  
+    setShow(true);  // Set show to true before starting the WebSocket logic
+  
+    const token = localStorage.getItem("tokenAuth");
+    const code = token.split("token1=")[1];
+    const newCode = code.split("&cur1=")[0];
+  
+    const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
+    let match;
+    const tokens = {};
+  
+    while ((match = regex.exec(token)) !== null) {
+      const [, acctNumber, acctValue, fullToken] = match;
+      tokens[acctValue] = { token: fullToken };
+    }
+  
+    const ws = new WebSocket(
+      "wss://ws.derivws.com/websockets/v3?app_id=" + clientID
+    );
+  
+    ws.onopen = () => {
+      ws.send(JSON.stringify({ authorize: newCode }));
+    };
+  
+    ws.onmessage = async (msg) => {
+      const data = JSON.parse(msg?.data);
+      if (data?.error !== undefined) {
+        setShow(false);
+        alert(data?.error?.message);
+        console.log('deriv error', data?.error?.message);
+        ws.close();
+      } else if (data?.msg_type === "authorize") {
+        if (data?.authorize?.is_virtual === 1) {
+          setShow(false);
+          alert('You cannot sign up with a demo account!');
+          return;
+        } else {
+          createUserWithEmailAndPassword(
+            auth,
+            data?.authorize?.email,
+            password
+          )
+            .then(async (userCredential) => {
+              const user = userCredential.user;
+              await setDoc(doc(db, "users", user?.uid), {
+                email: data?.authorize?.email,
+                phoneNumber: `0${phoneNumber.slice(3)}`,
+                appAuthToken: newCode,
+                appTradeTokens: tokens,
+                balance: data?.authorize?.balance,
+                user: data?.authorize,
               });
-          }
+              localStorage.removeItem("tokenAuth");
+              localStorage.removeItem("userEmail");
+              localStorage.removeItem("userObject");
+              localStorage.removeItem("phone");
+  
+              setShow(false);  // Hide loading spinner after the process is complete
+            })
+            .catch((error) => {
+              setShow(false);
+              alert(error?.message);
+              console.log('fb error', error);
+            });
         }
-      };
+      }
+    };
   };
+  
 
 
 
