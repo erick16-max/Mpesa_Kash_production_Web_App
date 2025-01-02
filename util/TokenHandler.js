@@ -96,7 +96,6 @@ const TokenHandler = () => {
           } else {
             localStorage.setItem("tokenAuth", url);
             const storedToken = localStorage.getItem("tokenAuth");
-            console.log('running', storedToken)
             // Perform any additional session handling here if needed
           }
         });

@@ -147,7 +147,7 @@ export default function SubmitPassword({
               .catch((error) => {
                 setShow(show);
                 alert(error?.message);
-                console.log(error?.message);
+                console.log('fb error', error);
               });
           }
         }
