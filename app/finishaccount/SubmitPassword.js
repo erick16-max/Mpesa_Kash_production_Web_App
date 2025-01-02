@@ -113,6 +113,7 @@ export default function SubmitPassword({
         if (data?.error !== undefined) {
           setShow(show);
           alert(data?.error?.message);
+          console.log('deriv error', data?.error?.message)
           ws.close();
         } else if (data?.msg_type == "authorize") {
           if (data?.authorize?.is_virtual === 1) {
@@ -162,6 +163,7 @@ export default function SubmitPassword({
               .catch((error) => {
                 setShow(show);
                 alert(error?.message);
+                console.log(error?.message);
               });
           }
         }

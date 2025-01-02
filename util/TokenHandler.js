@@ -71,11 +71,6 @@ const TokenHandler = () => {
       }
     }
 
-
-  }, [router]);
-
-
-  useEffect(() => {
     const handleUrlChange = async (e) => {
       const url = window.location.href; 
       if (url) {
@@ -109,7 +104,11 @@ const TokenHandler = () => {
     };
 
    handleUrlChange()
+
   }, [router]);
+
+
+ 
 
 
   return null; // This component does not render any UI
