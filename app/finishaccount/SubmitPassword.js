@@ -75,22 +75,27 @@ export default function SubmitPassword({
 
   const signUp = async (e) => {
     e.preventDefault();
-    
+  
     if (phoneNumber === "" || password === "" || confirmPassword === "") {
-      alert('All fields are required');
+      alert("All fields are required");
       return;
     }
   
     if (password !== confirmPassword) {
-      alert('Password mismatch!');
+      alert("Password mismatch!");
       return;
     }
   
-    setShow(true);  // Set show to true before starting the WebSocket logic
+    setShow(true); // Show loading spinner
   
     const token = localStorage.getItem("tokenAuth");
-    const code = token.split("token1=")[1];
-    const newCode = code.split("&cur1=")[0];
+    const code = token?.split("token1=")[1]?.split("&cur1=")[0];
+  
+    if (!code) {
+      alert("Invalid token. Please try again.");
+      setShow(false);
+      return;
+    }
   
     const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
     let match;
@@ -102,59 +107,76 @@ export default function SubmitPassword({
     }
   
     const ws = new WebSocket(
-      "wss://ws.derivws.com/websockets/v3?app_id=" + clientID
+      `wss://ws.derivws.com/websockets/v3?app_id=${clientID}`
     );
   
     ws.onopen = () => {
-      ws.send(JSON.stringify({ authorize: newCode }));
+      ws.send(JSON.stringify({ authorize: code }));
     };
   
     ws.onmessage = async (msg) => {
       const data = JSON.parse(msg?.data);
-      if (data?.error !== undefined) {
-        alert(data?.error?.message);
-        console.log('deriv error', data?.error?.message);
-        ws.close();
-      } else if (data?.msg_type === "authorize") {
-        if (data?.authorize?.is_virtual === 1) {
-          alert('You cannot sign up with a demo account!');
-          return;
-        } else {
-          createUserWithEmailAndPassword(
-            auth,
-            data?.authorize?.email,
-            password
-          )
-            .then(async (userCredential) => {
-              const user = userCredential.user;
-              await setDoc(doc(db, "users", user?.uid), {
-                email: data?.authorize?.email,
-                phoneNumber: `0${phoneNumber.slice(3)}`,
-                appAuthToken: newCode,
-                appTradeTokens: tokens,
-                balance: data?.authorize?.balance,
-                user: data?.authorize,
-              });
-              localStorage.removeItem("tokenAuth");
-              localStorage.removeItem("userEmail");
-              localStorage.removeItem("userObject");
-              localStorage.removeItem("phone");
   
-              setShow(false);  // Hide loading spinner after the process is complete
-            })
-            .catch((error) => {
-              setShow(false);
-              alert(error?.message);
-              console.log('fb error', error);
+      if (data?.error) {
+        alert(data?.error?.message);
+        console.error("Deriv WebSocket Error:", data?.error?.message);
+        ws.close();
+        setShow(false);
+        return;
+      }
+  
+      if (data?.msg_type === "authorize") {
+        if (data?.authorize?.is_virtual === 1) {
+          alert("You cannot sign up with a demo account!");
+          setShow(false);
+          ws.close();
+          return;
+        }
+  
+        try {
+          const userCredential = await createUserWithEmailAndPassword(
+            auth,
+            data.authorize.email,
+            password
+          );
+  
+          const user = userCredential.user;
+  
+          if (user?.uid) {
+            await setDoc(doc(db, "users", user.uid), {
+              email: data?.authorize?.email,
+              phoneNumber: `0${phoneNumber.slice(3)}`,
+              appAuthToken: code,
+              appTradeTokens: tokens,
+              balance: data?.authorize?.balance,
+              user: data?.authorize,
             });
+  
+            // Clear localStorage
+            ["tokenAuth", "userEmail", "userObject", "phone"].forEach((item) =>
+              localStorage.removeItem(item)
+            );
+  
+            router.push("/dashboard");
+          } else {
+            throw new Error("User ID is undefined.");
+          }
+        } catch (error) {
+          alert(error?.message);
+          console.error("Firebase Error:", error);
+        } finally {
+          setShow(false);
+          ws.close();
         }
       }
     };
-  };
   
-
-
-
+    ws.onerror = (error) => {
+      console.error("WebSocket Error:", error);
+      alert("Failed to connect to the WebSocket.");
+      setShow(false);
+    };
+  };
   
 
   return (
