@@ -71,7 +71,6 @@ export default function SubmitPassword({
 
   const clientID = "66601";
 
-  console.log(password, confirmPassword, phoneNumber);
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -141,6 +140,7 @@ export default function SubmitPassword({
           );
   
           const user = userCredential.user;
+          console.log(user?.uid)
   
           if (user?.uid) {
             await setDoc(doc(db, "users", user.uid), {
@@ -153,9 +153,9 @@ export default function SubmitPassword({
             });
   
             // Clear localStorage
-            ["tokenAuth", "userEmail", "userObject", "phone"].forEach((item) =>
-              localStorage.removeItem(item)
-            );
+            // ["tokenAuth", "userEmail", "userObject", "phone"].forEach((item) =>
+            //   localStorage.removeItem(item)
+            // );
   
             router.push("/dashboard");
           } else {

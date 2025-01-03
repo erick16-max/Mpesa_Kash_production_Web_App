@@ -15,6 +15,7 @@ import HandWavingImage from "../../../public/images/handwaving.png"
 export default function WalletCard() {
     const {isTablet, isMobile} = useContext(ColorModeContext)
     const {userProfile, setIsDepositModelOpen, setIsWithdrawModelOpen} = useContext(AppContext)
+    console.log(userProfile?.balance)
   return (
     <Card
        component={'div'}
@@ -109,7 +110,6 @@ export default function WalletCard() {
                             variant='h6'
                             color={'#ffffff'}
                             fontWeight={700}
-                            display={userProfile?.balance ? "block" : "none"}
                         >
                             {usdFormatter.format(userProfile?.balance)}
                         </Typography>
