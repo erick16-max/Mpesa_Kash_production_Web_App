@@ -53,6 +53,8 @@ export const useTokenHandler = async () => {
             });
             router.push("/dashboard");
           } else {
+            localStorage.setItem("tokenAuth", url);
+            const storedToken = localStorage.getItem("tokenAuth");
             router.push("/finishaccount");
           }
         });
