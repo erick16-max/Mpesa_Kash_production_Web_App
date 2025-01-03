@@ -35,6 +35,8 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const formatedNumber = phoneNumber.replace(/[+\s]/g, "")
+    localStorage.setItem('phone', formatedNumber)
 
     // Join the code and validate
     const code = verificationCode.join("");

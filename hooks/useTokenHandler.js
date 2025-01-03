@@ -3,10 +3,10 @@
 import { useRouter } from "next/navigation";
 import { db, auth } from "@/firebase.config";
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic.js";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
 
 export const useTokenHandler = async () => {
-  const router = useRouter(); // Use Next.js router for redirection
+  const router = useRouter();
 
   try {
     const url = window.location.href;
@@ -19,7 +19,6 @@ export const useTokenHandler = async () => {
       localStorage.setItem("webToken", newCode);
 
       if (newCode) {
-        // Establish WebSocket connection
         const connection = new WebSocket(
           "wss://ws.binaryws.com/websockets/v3?app_id=66601"
         );
@@ -46,22 +45,34 @@ export const useTokenHandler = async () => {
         auth.onAuthStateChanged(async (session) => {
           if (session) {
             const userRef = doc(db, "users", session?.uid);
-            await updateDoc(userRef, {
-              webToken: newCode,
-              email: userDetails.email,
-              userObject: userDetails,
-            });
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+              // Update existing user document
+              await updateDoc(userRef, {
+                webToken: newCode,
+                email: userDetails.email,
+                userObject: userDetails,
+              });
+            } else {
+              // Create a new user document if it doesn't exist
+              await setDoc(userRef, {
+                webToken: newCode,
+                email: userDetails.email,
+                userObject: userDetails,
+                createdAt: new Date().toISOString(),
+              });
+            }
+
             router.push("/dashboard");
           } else {
             localStorage.setItem("tokenAuth", url);
-            const storedToken = localStorage.getItem("tokenAuth");
-            router.push("/finishaccount");
           }
         });
       }
     }
   } catch (error) {
     console.error("Error fetching user details:", error);
-    router.push("/error"); // Redirect to an error page if needed
+    router.push("/error");
   }
 };
