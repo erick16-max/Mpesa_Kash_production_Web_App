@@ -104,7 +104,7 @@ const TokenHandler = () => {
 
    handleUrlChange()
 
-  }, []);
+  }, [router]);
 
 
  
