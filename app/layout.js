@@ -3,6 +3,7 @@ import "./globals.css";
 import { CustomThemeProvider } from "@/theme/ThemeContextProvider";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import TokenHandler from "@/util/TokenHandler";
+import { useTokenHandler } from "@/hooks/useTokenHandler";
 
 
 const geistSans = localFont({
@@ -22,12 +23,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children  }) {
+  // Handle tokens on entry
+  useTokenHandler();
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AppRouterCacheProvider>
           <CustomThemeProvider>
-            <TokenHandler />
+            {/* <TokenHandler /> */}
             {children}
           </CustomThemeProvider>
         </AppRouterCacheProvider>
