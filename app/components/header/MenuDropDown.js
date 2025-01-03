@@ -55,7 +55,7 @@ export default function MenuDropDown({
                     <Typography variant="inherit">Dashboard</Typography>
                 </MenuItem>
                
-                <MenuItem onClick={() => {
+                {/* <MenuItem onClick={() => {
                      router.push('/transactions')
                      handleClose()
                 }}>
@@ -63,7 +63,7 @@ export default function MenuDropDown({
                         <GrTransaction fontSize="small" />
                     </ListItemIcon>
                     <Typography variant="inherit">Transactions</Typography>
-                </MenuItem>
+                </MenuItem> */}
                 <MenuItem onClick={() => {
                      router.push('/accountsettings')
                      handleClose()
