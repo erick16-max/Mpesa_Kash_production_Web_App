@@ -4,11 +4,13 @@ import PageLayout from '../layout/PageLayout'
 import Link from 'next/link'
 import FinishAccountCard from './FinishAccountCard'
 import ColorModeContext from '@/theme/ThemeContextProvider'
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import CustomAppBar from '../components/header/CustomAppBar'
 
 export default function page() {
   const { isTablet } = useContext(ColorModeContext);
+
+  useEffect(() => { window.location.reload()}, [])
   
 
    
