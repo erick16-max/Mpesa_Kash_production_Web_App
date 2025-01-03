@@ -2,9 +2,13 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PageLoader from "../components/general/PageLoader";
+import { useTokenHandler } from "@/hooks/useTokenHandler";
 
 const page = () => {
   const router = useRouter();
+
+  // Handle tokens on entry
+  useTokenHandler();
 
   useEffect(() => {
     // Redirect the user to /finishaccount directly

@@ -23,8 +23,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children  }) {
-  // Handle tokens on entry
-  useTokenHandler();
+  
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
