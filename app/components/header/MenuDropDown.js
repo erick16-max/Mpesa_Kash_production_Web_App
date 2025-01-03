@@ -8,6 +8,8 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { useRouter } from 'next/navigation';
 import { signOutUser } from '@/firebase/Firebase';
 import { GrTransaction } from "react-icons/gr";
+import { CiHome } from "react-icons/ci";
+import { GoHome } from "react-icons/go";
 
 
 export default function MenuDropDown({
@@ -44,6 +46,15 @@ export default function MenuDropDown({
             }}
         >
             <Box width={200}>
+                <MenuItem onClick={() => {
+                     router.push('/')
+                     handleClose()
+                }}>
+                    <ListItemIcon>
+                        <GoHome fontSize="small" />
+                    </ListItemIcon>
+                    <Typography variant="inherit">Home</Typography>
+                </MenuItem>
 
                 <MenuItem onClick={() => {
                     router.push('/dashboard')
@@ -55,15 +66,7 @@ export default function MenuDropDown({
                     <Typography variant="inherit">Dashboard</Typography>
                 </MenuItem>
                
-                {/* <MenuItem onClick={() => {
-                     router.push('/transactions')
-                     handleClose()
-                }}>
-                    <ListItemIcon>
-                        <GrTransaction fontSize="small" />
-                    </ListItemIcon>
-                    <Typography variant="inherit">Transactions</Typography>
-                </MenuItem> */}
+                
                 <MenuItem onClick={() => {
                      router.push('/accountsettings')
                      handleClose()

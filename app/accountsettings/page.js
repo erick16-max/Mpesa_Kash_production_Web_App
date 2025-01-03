@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 import PageLoader from '../components/general/PageLoader'
 import CustomAppBar from '../components/header/CustomAppBar'
+import AccountCard from './AccountCard'
+import PageLayout from '../layout/PageLayout'
 
 export default function page() {
     const {user} = useContext(AppContext)
@@ -29,37 +31,17 @@ export default function page() {
 
    
   return (
-  
-<Box
-    width={'100%'}
-    display={'flex'}
-    flexDirection={'column'}
-    maxWidth={'1700px'}
-    margin={'auto'}
-   >
-     <Box
-      width={'100%'}
-     >
-        <CustomAppBar/>
-     </Box>
-     <Stack
-      mt={'100px'}
-      py={2}
-      px={isSmallScreen ? 1 : 3}
-     >
-         <Box
-      p={5}
-    >
-      <Alert severity='info' sx={{my:2}}>
-        Account settings page is under development
-  </Alert>
-        Hello, {isUser  && user?.displayName ? user?.displayName : user?.email},{" "}
-    
-        <Link href={'/'}>
-          Go home
-        </Link>
-    </Box>
-     </Stack>
-   </Box>
+  <PageLayout>
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        width={'100%'}
+      >
+        <AccountCard />
+      </Box>
+  </PageLayout>
+
+   
   )
 }
