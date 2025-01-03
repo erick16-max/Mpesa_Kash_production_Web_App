@@ -7,16 +7,19 @@ import ColorModeContext from '@/theme/ThemeContextProvider'
 import { useContext, useEffect } from 'react'
 import CustomAppBar from '../components/header/CustomAppBar'
 
-export default function page() {
+export default function Page() {
   const { isTablet } = useContext(ColorModeContext);
 
-  useEffect(() => { window.location.reload()}, [])
+  useEffect(() => {
+    const hasRefreshed = sessionStorage.getItem('hasRefreshed');
+    if (!hasRefreshed) {
+      sessionStorage.setItem('hasRefreshed', 'true'); // Mark as refreshed
+      window.location.reload(); // Reload the page
+    }
+  }, []);
   
-
-   
   return (
-  
- <Box
+    <Box
       width={"100%"}
       display={"flex"}
       flexDirection={"column"}
@@ -24,12 +27,11 @@ export default function page() {
       margin={"auto"}
     >
       <Box width={"100%"}>
-        <CustomAppBar  />
+        <CustomAppBar />
       </Box>
       <Stack mt={"100px"} py={2} px={isTablet ? 2 : 3}>
-      <FinishAccountCard />
+        <FinishAccountCard />
       </Stack>
     </Box>
-        
-  )
+  );
 }
