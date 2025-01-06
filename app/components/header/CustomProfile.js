@@ -1,6 +1,6 @@
 import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
-import { Button, Divider, Stack, Box, Avatar, Typography, IconButton, Tooltip} from "@mui/material";
+import { Button, Divider, Stack, Box, Avatar, Typography, IconButton, Tooltip, Skeleton} from "@mui/material";
 import React, { useContext } from "react";
 import { BiBell, BiSolidDownArrow } from "react-icons/bi";
 import { FiBell } from "react-icons/fi";
@@ -14,7 +14,7 @@ import { MdOutlineDarkMode } from "react-icons/md";
 
 export default function CustomProfile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const {user, isUser, isUserProfile, userProfile} = useContext(AppContext)
+  const {user, isUser, isUserProfile, userProfile, refreshing} = useContext(AppContext)
 
     const handleClick = (event) => {
       setAnchorEl(event.currentTarget);
@@ -77,21 +77,28 @@ export default function CustomProfile() {
           <Typography variant="body2" color={"text.primary"} fontWeight={500}>
             { isMobile && isUserProfile ? truncateString(userProfile?.user?.fullname, 10) :  truncateString(userProfile?.user?.fullname, 30)}
           </Typography>
-          <Typography
-            variant="body2"
-            color={"text.secondary"}
-            fontWeight={500}
-            component={"div"}
-            sx={{
-              display: "flex",
-              justifyContent: "flex-start",
-              alignItems: "center",
-              gap: 1,
-            }}
-          >
-            { isUserProfile ? usdFormatter.format(userProfile?.balance) : ""}
-            <BiSolidDownArrow fontSize={10} />
-          </Typography>
+          {
+            refreshing ? (
+              <Skeleton variant="rectangular" width={100} height={26} />
+            ) : ( 
+
+              <Typography
+                variant="body2"
+                color={"text.secondary"}
+                fontWeight={500}
+                component={"div"}
+                sx={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                  gap: 1,
+                }}
+              >
+                { isUserProfile ? usdFormatter.format(userProfile?.balance) : ""}
+                <BiSolidDownArrow fontSize={10} />
+              </Typography>
+            )
+          }
         </Stack>
       </Stack>
       <MenuDropDown

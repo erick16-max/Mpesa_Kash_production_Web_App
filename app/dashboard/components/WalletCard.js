@@ -111,7 +111,7 @@ export default function WalletCard() {
                         </Typography>
                         {
                             refreshing ? (
-                                <Skeleton variant="rectangular" width={100} height={20} />
+                                <Skeleton variant="rectangular" width={100} height={26} />
                             ): (
 
                         <Typography
