@@ -78,7 +78,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
       withdrawRate: withdrawRate,
       user: userProfile,
       amount: amount,
-      source: "app",
+      source: "web",
     };
     try {
       setVisible(true);
