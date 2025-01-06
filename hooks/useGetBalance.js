@@ -1,4 +1,4 @@
-'use client'; // For Next.js client-side components
+'use client'; 
 import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, doc, updateDoc } from 'firebase/firestore'; 
 import { Box, Button, Typography, Modal } from '@mui/material'; 
@@ -16,7 +16,7 @@ export default function useGetBalance() {
 
 
   useEffect(() => {
-   if(typeof window !== undefined){
+   if(typeof window !== undefined && auth?.currentUser?.uid){
     const unsub = onSnapshot(
       doc(db, 'users', auth?.currentUser?.uid),
       (snapshot) => {
@@ -62,7 +62,6 @@ export default function useGetBalance() {
             ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
           } else if (data?.msg_type === 'balance') {
             const docRef = doc(db, 'users', auth?.currentUser?.uid);
-            console.log(data?.balance?.balance)
             await updateDoc(docRef, {
               balance: data?.balance?.balance,
             });
