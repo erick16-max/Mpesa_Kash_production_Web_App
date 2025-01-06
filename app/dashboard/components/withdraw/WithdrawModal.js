@@ -110,7 +110,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
           setVisible(false);
           setIsVerifyModelOpen(false);
           setShow(false);
-          setIsError(true)
+          // setIsError(true)
       }
     } catch (error) {
       setVisible(false)
