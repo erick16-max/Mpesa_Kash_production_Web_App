@@ -7,7 +7,7 @@ import VerifyCodeModal from "@/app/finishaccount/VerifyCodeModal";
 import VerifyWithdrawModal from "./VerifyModal";
 
 export default function WithdrawModal({ withdrawRate, rates }) {
-  const { isWithdrawModelOpen, setIsWithdrawModelOpen, userProfile } =
+  const { isWithdrawModelOpen, setIsWithdrawModelOpen, userProfile, setRefreshing } =
     useContext(AppContext);
   const [isVerifyModelOpen, setIsVerifyModelOpen] = useState(false);
   const [code, setCode] = useState("");
@@ -62,7 +62,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
     };
   };
 
-  console.log(isError)
+
 
   // complete withdrawal
   const completeWithdrawal = async (e) => {
@@ -103,6 +103,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
         setIsVerifyModelOpen(false);
         setShow(false);
         setIsSuccess(true)
+        setRefreshing(true)
       }else{
           setAmount("");
           setCode("");
