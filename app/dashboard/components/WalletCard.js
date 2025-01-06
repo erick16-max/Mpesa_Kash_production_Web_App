@@ -1,4 +1,4 @@
-import { Box, Button, Card, Stack, Typography } from '@mui/material'
+import { Box, Button, Card, CircularProgress, Stack, Typography, Skeleton } from '@mui/material'
 import React, { useContext } from 'react'
 import {  MdAccountBalanceWallet  } from "react-icons/md";
 import { IoRefreshCircleOutline } from "react-icons/io5";
@@ -14,9 +14,12 @@ import HandWavingImage from "../../../public/images/handwaving.png"
 
 export default function WalletCard() {
     const {isTablet, isMobile} = useContext(ColorModeContext)
-    const {userProfile, setIsDepositModelOpen, setIsWithdrawModelOpen} = useContext(AppContext)
-    console.log(userProfile?.balance)
-  return (
+    const {userProfile, setIsDepositModelOpen, setIsWithdrawModelOpen, refreshing, setRefreshing} = useContext(AppContext)
+
+    const handleRefresh = () =>{
+        setRefreshing(true)
+    }
+    return (
     <Card
        component={'div'}
     //    variant='outlined'
@@ -106,6 +109,11 @@ export default function WalletCard() {
                             Deriv Balance
                             <MdAccountBalanceWallet  fontSize={28}/>
                         </Typography>
+                        {
+                            refreshing ? (
+                                <Skeleton variant="rectangular" width={100} height={20} />
+                            ): (
+
                         <Typography
                             variant='h6'
                             color={'#ffffff'}
@@ -113,6 +121,8 @@ export default function WalletCard() {
                         >
                             {usdFormatter.format(userProfile?.balance)}
                         </Typography>
+                            )
+                        }
                     </Stack>
 
                     <Button
@@ -124,9 +134,10 @@ export default function WalletCard() {
                             fontWeight: 400,
                             backgroundColor: '#1a5962',
                         }}
-                        endIcon={<BiRefresh />}
+                        endIcon={<BiRefresh style={{display: refreshing ? 'none' : 'block'}}/>}
+                        onClick={handleRefresh}
                     >
-                        Refresh
+                       {refreshing ? 'Refreshing...' : 'Refresh'}
                     </Button>
 
                 </Box>

@@ -13,6 +13,7 @@ export const AppContextProvider = ({ children }) => {
   const [verifyModal, setVerifyModal] = useState(false)
   const [isDepositModelOpen, setIsDepositModelOpen] = useState(false)
   const [isWithdrawModelOpen, setIsWithdrawModelOpen] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
 
   const isOnline = useInternetStatus()
 
@@ -81,7 +82,9 @@ export const AppContextProvider = ({ children }) => {
     isDepositModelOpen, 
     setIsDepositModelOpen,
     isWithdrawModelOpen, 
-    setIsWithdrawModelOpen
+    setIsWithdrawModelOpen,
+    refreshing, 
+    setRefreshing
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

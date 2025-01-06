@@ -14,6 +14,8 @@ export default function WithdrawModal({ withdrawRate, rates }) {
   const [show, setShow] = useState(false);
   const [visible, setVisible] = useState(false);
   const [amount, setAmount] = useState();
+  const [isError, setIsError] = useState(false)
+  const [isSuccess, setIsSuccess] = useState(false)
   
 
   const { isMobile } = useContext(ColorModeContext);
@@ -60,10 +62,11 @@ export default function WithdrawModal({ withdrawRate, rates }) {
     };
   };
 
+  console.log(isError)
 
   // complete withdrawal
-  const completeWithdrawal = async () => {
-    setVisible(true);
+  const completeWithdrawal = async (e) => {
+    e.preventDefault()
     const formattedPhone = userProfile?.phoneNumber.slice(1)
     const withdrawData = {
       phone_number: `254${formattedPhone}`,
@@ -77,46 +80,55 @@ export default function WithdrawModal({ withdrawRate, rates }) {
       amount: amount,
       source: "app",
     };
-    await fetch(
-      "https://bservice.binarympesaservices.com/new_binary/b2c",
-      {
-        method: "POST",
-        body: JSON.stringify(withdrawData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((final) => {
-        if (final?.message) {
-          console.log(final?.message);
-          setAmount("");
-          setCode("");
-          setVisible(false);
-          setIsVerifyModelOpen(false);
-          setShow(false);
-        } else {
-          console.log(final?.error);
-          setAmount("");
-          setCode("");
-          setVisible(false);
-          setIsVerifyModelOpen(false);
-          setShow(false);
+    try {
+      setVisible(true);
+      const response = await fetch("https://bservice.binarympesaservices.com/new_binary/b2c",
+        {
+          method: "POST",
+          body: JSON.stringify(withdrawData),
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      })
-      .catch((error) => {
-        setVisible(false)
-        setIsVerifyModelOpen(false)
-        console.log(error)
-        return
-      })
-      .finally(() => {
-        setIsVerifyModelOpen(false)
-        setVisible(false)
-        setCode("")
-      })
-  };
+      )
+
+      const data = await response.json()
+      console.log(response)
+      console.log(data)
+
+      if(response.ok){
+        setAmount("");
+        setCode("");
+        setVisible(false);
+        setIsVerifyModelOpen(false);
+        setShow(false);
+        setIsSuccess(true)
+      }else{
+          setAmount("");
+          setCode("");
+          setVisible(false);
+          setIsVerifyModelOpen(false);
+          setShow(false);
+          setIsError(true)
+      }
+    } catch (error) {
+      setVisible(false)
+      setIsVerifyModelOpen(false)
+      console.log(error)
+      setIsError(true)
+      
+    }finally{
+      setIsVerifyModelOpen(false)
+      setVisible(false)
+      setCode("")
+      setTimeout(() => {
+        setIsError(false)
+        setIsSuccess(false)
+      }, 4000)
+    }
+
+  
+  }
 
   return (
     <Modal
@@ -177,6 +189,8 @@ export default function WithdrawModal({ withdrawRate, rates }) {
               rates={rates}
               setAmount={setAmount}
               amount={amount}
+              isError={isError}
+              isSuccess={isSuccess}
              />
             <VerifyWithdrawModal
               handleVerify={completeWithdrawal}

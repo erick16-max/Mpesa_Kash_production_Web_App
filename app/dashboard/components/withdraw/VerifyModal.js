@@ -4,8 +4,15 @@ import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import WithdrawForm from "./WithdrawForm";
 
-export default function VerifyWithdrawModal({isVerifyModelOpen, setIsVerifyModelOpen, setCode, code, show, handleVerify}) {
-  const {isMobile} = useContext(ColorModeContext)
+export default function VerifyWithdrawModal({
+  isVerifyModelOpen, 
+  setIsVerifyModelOpen, 
+  setCode, 
+  code, 
+  show,
+   handleVerify
+  }) {
+  const {isMobile, isTablet} = useContext(ColorModeContext)
 
 
   return (
@@ -39,6 +46,7 @@ export default function VerifyWithdrawModal({isVerifyModelOpen, setIsVerifyModel
             gap={3}
             component={'form'}
             onSubmit={handleVerify}
+            mt={isTablet ? 0 : 70}
           >
            <Stack direction={'row'} justifyContent={'space-between'} width={'100%'} alignItems={'center'}>
            <Typography variant="body1" fontWeight={500}>Verify your Withdrawal</Typography>

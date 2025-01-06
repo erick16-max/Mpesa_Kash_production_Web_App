@@ -11,12 +11,15 @@ import { useGetRates } from '@/hooks/useGetRates'
 
 import { onSnapshot, doc,  } from 'firebase/firestore'
 import { db } from '@/firebase.config'
+import useGetBalance from '@/hooks/useGetBalance'
 
 export default function page() {
   const [rates, setRates] = useState({});
   const [depositRate, setDepositRate] = useState("")
   const [withdrawRate, setWithdrawRate] = useState("")
 
+
+  const balanceAlertModal = useGetBalance()
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -62,6 +65,7 @@ export default function page() {
   return (
   
 <PageLayout>
+      {balanceAlertModal}
      <WalletCard />
      <Transactions />
      <DepositModal depositRate={depositRate} rates={rates}/>

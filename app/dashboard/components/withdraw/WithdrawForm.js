@@ -1,4 +1,4 @@
-import { Card, TextField, Typography, Box, Button, Stack, CircularProgress} from "@mui/material";
+import { Card, TextField, Typography, Box, Button, Stack, CircularProgress, Alert} from "@mui/material";
 import React, { useContext, useState } from "react";
 import MpesaLogo from "../../../../public/images/lipanampesa.png"
 import Image from "next/image";
@@ -7,7 +7,7 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 
 
 
-export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, amount, setAmount}) {
+export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, amount, setAmount, isSuccess, isError}) {
   const {isMobile} = useContext(ColorModeContext)
   const {userProfile} = useContext(AppContext)
 
@@ -59,6 +59,8 @@ export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, a
             </Box>
             
         </Stack>
+       {isError &&  <Alert severity="error">Invalid or Expired Code --Try Again!</Alert>}
+       {isSuccess &&  <Alert severity="success">Withdrawal was successful!</Alert>}
       <TextField
         label="Amount in USD"
         placeholder="Enter amount to withdraw"

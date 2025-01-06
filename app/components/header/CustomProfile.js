@@ -1,11 +1,14 @@
 import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
-import { Button, Divider, Stack, Box, Avatar, Typography, IconButton } from "@mui/material";
+import { Button, Divider, Stack, Box, Avatar, Typography, IconButton, Tooltip} from "@mui/material";
 import React, { useContext } from "react";
 import { BiBell, BiSolidDownArrow } from "react-icons/bi";
 import { FiBell } from "react-icons/fi";
 import MenuDropDown from "./MenuDropDown";
 import { usdFormatter, truncateString } from "@/util/LogicFunctions";
+import ThemeToggleButton from "./ThemeToggleButton";
+import { MdOutlineDarkMode } from "react-icons/md";
+
 
 
 
@@ -25,15 +28,20 @@ export default function CustomProfile() {
 
   return (
     <Stack direction={"row"} gap={2} height={"100%"} alignItems={'center'} >
+      <ThemeToggleButton />
+      {!isMobile && (
       <IconButton
-        sx={{
-          width: 40,
-          height: 40,
-          borderRadius: 25,
-        }}
-      >
-        <FiBell />
-      </IconButton>
+      sx={{
+        width: 40,
+        height: 40,
+        borderRadius: 25,
+        
+      }}
+    >
+      <FiBell />
+    </IconButton>
+      )}
+       
       <Box height={"60px"} width={"1px"} bgcolor={"divider"}></Box>
 
      <Box>
