@@ -7,6 +7,7 @@ import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
 
 export const useTokenHandler = async () => {
   const router = useRouter();
+  if (typeof window === undefined) return
 
   try {
     const url = window.location.href;

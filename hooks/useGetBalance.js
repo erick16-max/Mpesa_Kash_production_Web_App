@@ -16,6 +16,7 @@ export default function useGetBalance() {
 
 
   useEffect(() => {
+   if(typeof window !== undefined){
     const unsub = onSnapshot(
       doc(db, 'users', auth?.currentUser?.uid),
       (snapshot) => {
@@ -71,6 +72,7 @@ export default function useGetBalance() {
       }
     );
     return unsub;
+   }
   }, [refreshing]);
 
  
