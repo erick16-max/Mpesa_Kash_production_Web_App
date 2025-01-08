@@ -11,6 +11,7 @@ import { AiFillTikTok } from "react-icons/ai";
 
 export default function Footer() {
   const { isTablet, isMobile} = useContext(ColorModeContext)
+  const date = new Date()
 
   return (
     <Stack
@@ -50,7 +51,7 @@ export default function Footer() {
           >
             <MdCopyright fontSize={15} />
             <Typography variant="body2" color={'divider'} fontWeight={400} fontSize={11} mt={"1px"}>
-            2024 · Binary Mpesa Services Ltd · All rights reserved
+            {date.getFullYear()} · Binary Mpesa Services Ltd · All rights reserved
             </Typography>
           </Box>
           <Box
