@@ -79,9 +79,6 @@ export default function useGetBalance() {
    }
   }, [refreshing, router]);
 
-  useEffect(() => {
-    onRefresh()
-  }, [])
 
  
 
