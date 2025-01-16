@@ -109,7 +109,6 @@ export default function SignUpModal() {
                   justifyContent: 'center',
                   borderRadius: 2,
                   alignItems: 'center',
-                  backgroundColor: '#f1f1f1',
                   '&:hover': {
                     backgroundColor: 'divider',
                   }

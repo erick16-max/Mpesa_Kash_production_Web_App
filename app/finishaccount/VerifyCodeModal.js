@@ -104,7 +104,6 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
                 justifyContent: "center",
                 borderRadius: 2,
                 alignItems: "center",
-                backgroundColor: "#f1f1f1",
                 "&:hover": {
                   backgroundColor: "divider",
                 },
