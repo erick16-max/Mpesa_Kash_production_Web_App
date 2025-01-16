@@ -1,9 +1,10 @@
 'use client'; 
 import React, { useContext, useEffect, useState } from 'react';
 import { onSnapshot, doc, updateDoc } from 'firebase/firestore'; 
-import { Box, Button, Typography, Modal } from '@mui/material'; 
+import { Box, Button, Typography, Modal, CircularProgress } from '@mui/material'; 
 import { db, auth } from '@/firebase.config';
 import AppContext from '@/context/AppContext';
+import { useRouter } from 'next/navigation';
 
 export default function useGetBalance() {
   const [user, setUser] = useState(null);
@@ -13,6 +14,7 @@ export default function useGetBalance() {
   const [alertAction, setAlertAction] = useState(() => () => {});
   const {setUserProfile, refreshing, setRefreshing} = useContext(AppContext)
   
+  const router = useRouter()
 
 
   useEffect(() => {
@@ -72,7 +74,7 @@ export default function useGetBalance() {
     );
     return unsub;
    }
-  }, [refreshing]);
+  }, [refreshing, router]);
 
  
 
@@ -102,7 +104,25 @@ export default function useGetBalance() {
             Alert
           </Typography>
           <Typography sx={{ mt: 2 }}>{alertMessage}</Typography>
+         <Box
+          width={'100%'}
+          display={'flex'}
+          alignItems={'center'}
+          justifyContent={'space-between'}
+         >
           <Button
+            variant="contained"
+            color='secondary'
+            onClick={onRefresh}
+            sx={{ mt: 2 }}
+          >
+           {
+            refreshing ? (
+              <CircularProgress size={18} thickness={4} sx={{color: '#f5f5f5'}} />
+            ): "Refresh"
+           }
+          </Button>
+           <Button
             variant="contained"
             onClick={() => {
               
@@ -112,6 +132,7 @@ export default function useGetBalance() {
           >
             Login
           </Button>
+         </Box>
         </Box>
       </Modal>
     </>
