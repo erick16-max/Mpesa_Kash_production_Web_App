@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PageLoader from "../components/general/PageLoader";
 import { useTokenHandler } from "@/hooks/useTokenHandler";
+import { onAuthStateChanged } from "firebase/auth";
 
 const page = () => {
   const router = useRouter();
@@ -11,13 +12,19 @@ const page = () => {
   useTokenHandler();
 
   useEffect(() => {
-    // Redirect the user to /finishaccount directly
-    router.push("/finishaccount");
+   onAuthStateChanged(async (session) => {
+    if(session){
+      router.push("/dashboard");
+    }else{
+      router.push("/finishaccount");
+    }
+   })
+   
  
   }, [router]);
 
 
-  return <PageLoader />; // No UI is rendered, just redirecting.
+  return <PageLoader />;
 };
 
 export default page;

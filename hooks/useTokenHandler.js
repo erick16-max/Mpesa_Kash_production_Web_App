@@ -23,6 +23,16 @@ export const useTokenHandler = async () => {
       const code = url.split("token1=")[1];
       const newCode = code.split("&cur1=")[0];
 
+      // get tokens
+      const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
+      let match;
+      const tokens = {};
+  
+      while ((match = regex.exec(url)) !== null) {
+        const [, acctNumber, acctValue, fullToken] = match;
+        tokens[acctValue] = { token: fullToken };
+      }
+
       // Save the token to localStorage
       localStorage.setItem("webToken", newCode);
 
@@ -59,11 +69,11 @@ export const useTokenHandler = async () => {
             if (userDoc.exists()) {
               // Update existing user document
             console.log("updating user obj")
+            console.log("tokens", tokens)
 
               await updateDoc(userRef, {
-                webToken: newCode,
-                email: userDetails.email,
-                userObject: userDetails,
+                appAuthToken: newCode,
+                appTradeTokens: tokens,
                 updatedAt: serverTimestamp()
               });
               router.push("/dashboard");
