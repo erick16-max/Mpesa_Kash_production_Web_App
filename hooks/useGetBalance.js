@@ -43,7 +43,7 @@ export default function useGetBalance() {
 
         ws.onmessage = async (msg) => {
           const data = JSON.parse(msg?.data);
-          console.log("error data", data)
+          setShowAlert(false)
           if (data?.error) {
             if (
               data?.error?.message === 'The token is invalid.' ||
@@ -63,8 +63,10 @@ export default function useGetBalance() {
             }
           } else if (data?.msg_type === 'authorize') {
             ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
+            setShowAlert(false)
           } else if (data?.msg_type === 'balance') {
             const docRef = doc(db, 'users', auth?.currentUser?.uid);
+            setShowAlert(false)
             await updateDoc(docRef, {
               balance: data?.balance?.balance,
             });
@@ -76,6 +78,10 @@ export default function useGetBalance() {
     return unsub;
    }
   }, [refreshing, router]);
+
+  useEffect(() => {
+    onRefresh()
+  }, [])
 
  
 
