@@ -70,9 +70,11 @@ export const useTokenHandler = async () => {
               // Update existing user document
             console.log("updating user obj")
             console.log("tokens", tokens)
+            console.log("appAuthToken", code)
+            console.log(newCode)
 
               await updateDoc(userRef, {
-                appAuthToken: newCode,
+                appAuthToken: code,
                 appTradeTokens: tokens,
                 updatedAt: serverTimestamp()
               });
