@@ -18,22 +18,20 @@ export default function Footer() {
     <Stack
         width={'100%'}
         gap={2}
-        bgcolor={'#191b1e'}
 
     >
         <Box
-            bgcolor={'#191b1e'}
             py={5}
             width={'100%'}
             px={isTablet ? 2 : 10}
         >
             <FooterGrid />
         </Box>
-        <Box
+        {/* <Box
             width={'100%'}
             height={'1px'}
             bgcolor={'#272829'}
-        ></Box>
+        ></Box> */}
 
       <Box
         width={"100%"}

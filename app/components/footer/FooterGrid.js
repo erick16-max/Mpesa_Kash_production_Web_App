@@ -17,7 +17,6 @@ export default function FooterGrid() {
                <Typography
                      variant={isMobile ? "h5" : "h4"}
                      fontWeight={700}
-                     color={"#f5f5f5"}
                      className="interFont"
                      gutterBottom
                      textAlign={isMobile ? 'center' : ''}
@@ -29,13 +28,11 @@ export default function FooterGrid() {
                 direction={'row'}
               >
                 <CustomDownloadChip 
-                    textColor={'#eeeeee'}
-                    bgColor={'#222325'}
+                    
                     
                 />
                 <CustomChipWithRating
-                    textColor={'#eeeeee'}
-                    bgColor={'#222325'}
+                   
 
                 />
               </Stack>
