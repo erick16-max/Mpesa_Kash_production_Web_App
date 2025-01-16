@@ -17,6 +17,7 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db, auth } from "@/firebase.config";
 import { handleUserProfile } from "@/firebase/FirebaseUser";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { serverTimestamp } from "firebase/firestore";
 
 
 
@@ -150,6 +151,8 @@ export default function SubmitPassword({
               appTradeTokens: tokens,
               balance: data?.authorize?.balance,
               user: data?.authorize,
+              createdAt: serverTimestamp(),
+              updatedAt: serverTimestamp(),
             });
   
             // Clear localStorage

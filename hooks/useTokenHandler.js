@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { db, auth } from "@/firebase.config";
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic.js";
-import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
+import { doc, updateDoc, getDoc, setDoc, serverTimestamp} from "firebase/firestore";
+
 
 export const useTokenHandler = async () => {
   const router = useRouter();
@@ -63,20 +64,11 @@ export const useTokenHandler = async () => {
                 webToken: newCode,
                 email: userDetails.email,
                 userObject: userDetails,
+                updatedAt: serverTimestamp()
               });
-            } else {
-              // Create a new user document if it doesn't exist
-            console.log("create new user obj")
-
-              await setDoc(userRef, {
-                webToken: newCode,
-                email: userDetails.email,
-                userObject: userDetails,
-                createdAt: new Date().toISOString(),
-              });
+              router.push("/dashboard");
             }
 
-            router.push("/dashboard");
           } else {
             localStorage.setItem("tokenAuth", url);
             console.log("updated token url")
