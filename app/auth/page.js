@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import PageLoader from "../components/general/PageLoader";
 import { useTokenHandler } from "@/hooks/useTokenHandler";
+import { auth } from "@/firebase.config";
 import { onAuthStateChanged } from "firebase/auth";
 
 const page = () => {
@@ -12,14 +13,16 @@ const page = () => {
   useTokenHandler();
 
   useEffect(() => {
-   onAuthStateChanged(async (session) => {
-    if(session){
-      router.push("/dashboard");
-    }else{
-      router.push("/finishaccount");
-    }
-   })
-   
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push("/dashboard");
+      } else {
+        router.push("/finishaccount");
+      }
+    });
+
+    // Cleanup subscription on component unmount
+    return () => unsubscribe();
  
   }, [router]);
 
