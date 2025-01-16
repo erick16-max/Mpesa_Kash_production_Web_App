@@ -1,15 +1,15 @@
+import ColorModeContext from '@/theme/ThemeContextProvider';
 import { Tooltip, IconButton,  } from '@mui/material'
 import React from 'react'
 import { MdOutlineDarkMode } from "react-icons/md";
 
 export default function ThemeToggleButton() {
+  const { isMobile} = React.useContext(ColorModeContext)
   return (
     <Tooltip title='toggle theme'>
         <IconButton
         sx={{
-          width: 40,
-          height: 40,
-          borderRadius: 25,
+          borderRadius: 1,
         }}
       >
         <MdOutlineDarkMode />
