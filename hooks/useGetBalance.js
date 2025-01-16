@@ -32,7 +32,7 @@ export default function useGetBalance() {
         ws.onopen = () => {
           ws.send(
             JSON.stringify({
-              authorize: snapshot?.data()?.appAuthToken || 'sjkakkakska',
+              authorize: snapshot?.data()?.appAuthToken ,
             })
           );
 
@@ -43,6 +43,7 @@ export default function useGetBalance() {
 
         ws.onmessage = async (msg) => {
           const data = JSON.parse(msg?.data);
+          console.log("error data", data)
           if (data?.error) {
             if (
               data?.error?.message === 'The token is invalid.' ||
