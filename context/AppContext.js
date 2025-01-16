@@ -14,6 +14,7 @@ export const AppContextProvider = ({ children }) => {
   const [isDepositModelOpen, setIsDepositModelOpen] = useState(false)
   const [isWithdrawModelOpen, setIsWithdrawModelOpen] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
+  const [notification, setNotification] = useState({});
 
   const isOnline = useInternetStatus()
 
@@ -62,6 +63,8 @@ export const AppContextProvider = ({ children }) => {
 
 
 
+
+
   // Determine if a user is authenticated
   const isUser = user !== null && user && Object.keys(user).length > 0;
   const isUserProfile = userProfile !== null && user && Object.keys(userProfile).length > 0;
@@ -84,7 +87,8 @@ export const AppContextProvider = ({ children }) => {
     isWithdrawModelOpen, 
     setIsWithdrawModelOpen,
     refreshing, 
-    setRefreshing
+    setRefreshing,
+    notification, setNotification
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

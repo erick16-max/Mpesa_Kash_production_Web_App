@@ -14,7 +14,7 @@ export default function LogoBrand() {
         textDecoration: 'none',
       }}
      >
-         <span className='logoFont' style={{fontSize: isMobile ? '16px' : '28px', fontWeight: 900}}>
+         <span className='logoFont' style={{fontSize: isMobile ? '16px' : '24px', fontWeight: 900}}>
              Binary Mpesa <br></br> <span>Services</span>
         </span>
      </Link>
