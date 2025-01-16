@@ -17,11 +17,11 @@ export default function Footer() {
     <Stack
         width={'100%'}
         gap={2}
-        bgcolor={'secondary.dark'}
+        bgcolor={'#191b1e'}
 
     >
         <Box
-            bgcolor={'secondary.dark'}
+            bgcolor={'#191b1e'}
             py={5}
             width={'100%'}
             px={isTablet ? 2 : 10}
@@ -37,7 +37,7 @@ export default function Footer() {
       <Box
         width={"100%"}
         py={1}
-        bgcolor={"secondary.dark"}
+        bgcolor={"#191b1e"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
@@ -50,7 +50,7 @@ export default function Footer() {
             justifyContent={"center"}
           >
             <MdCopyright fontSize={15} />
-            <Typography variant="body2" color={'divider'} fontWeight={400} fontSize={11} mt={"1px"}>
+            <Typography variant="body2" color={'#eeeeee'} fontWeight={400} fontSize={11} mt={"1px"}>
             {date.getFullYear()} · Binary Mpesa Services Ltd · All rights reserved
             </Typography>
           </Box>

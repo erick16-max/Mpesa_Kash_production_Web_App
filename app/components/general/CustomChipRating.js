@@ -1,10 +1,12 @@
 import React, { useContext } from 'react';
-import { Chip, Box, Rating } from '@mui/material';
+import { Chip, Box, Rating, useTheme } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 import ColorModeContext from '@/theme/ThemeContextProvider';
+import { LIGHT_MODE } from '@/Constants';
 
 export default function CustomChipWithRating({bgColor, textColor}) {
   const {isMobile} = useContext(ColorModeContext)
+  const theme = useTheme()
 
   return (
     <Chip
@@ -28,8 +30,8 @@ export default function CustomChipWithRating({bgColor, textColor}) {
       }
       sx={{
         padding: '4px 8px',
-        backgroundColor: bgColor ? bgColor : '#f5f5f5',
-        color: textColor ? textColor : '#333',
+        color: textColor && theme?.palette.mode === LIGHT_MODE ? textColor : '',
+         backgroundColor: bgColor  && theme.palette.mode === LIGHT_MODE? bgColor : '',
         fontWeight: 500,
         fontSize: 14,
         borderRadius: 4,

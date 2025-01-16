@@ -4,6 +4,7 @@ import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import { deepOrange, amber, grey } from "@mui/material/colors";
 import CssBaseline from "@mui/material/CssBaseline";
 import { AppContextProvider } from "@/context/AppContext";
+import { LIGHT_MODE, DARK_MODE } from "@/Constants";
 
 const ColorModeContext = React.createContext();
 
@@ -13,6 +14,12 @@ export function CustomThemeProvider({ children }) {
   const isExtraTablet = useMediaQuery("(max-width:1088px)");
   const isTablet = useMediaQuery("(max-width:900px)");
   const isMobile = useMediaQuery("(max-width:682px)");
+
+  // theme modes
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)')
+  const prefersLightMode = useMediaQuery('(prefers-color-scheme: dark)')
+  
+  const [mode, setMode] = React.useState(prefersLightMode ? LIGHT_MODE : DARK_MODE);
 
   // login modal
   const [openLoginModal, setOpenLoginModal] = useState(false);
@@ -29,7 +36,7 @@ export function CustomThemeProvider({ children }) {
       toggleColorMode: () => {
         setMode((prevMode) =>
           // always to be light mode unless ui update
-          prevMode === LIGHT_MODE ? LIGHT_MODE : LIGHT_MODE
+          prevMode === LIGHT_MODE ? DARK_MODE : LIGHT_MODE
         );
       },
     }),
@@ -62,6 +69,62 @@ export function CustomThemeProvider({ children }) {
     },
   });
 
+  // choose btween dark and light theme
+  const getDesignTokens = (mode) => ({
+    palette: {
+      mode,
+      ...(mode === LIGHT_MODE
+        ?{
+          primary: {
+            light: "#346b73",
+            main: "#014650",
+            dark: "#013840",
+          },
+          secondary: {
+            main: "#232425",
+            dark: "#1c1d1e",
+          },
+          background: {
+            default: "#ffffff",
+            paper: "#ffffff",
+          },
+          text: {
+            primary: grey[900],
+            secondary: grey[700],
+          },
+          success: {
+            main: "#26c3a6",
+          },
+          divider: "#eeeeee",
+        }
+        :{
+          primary: {
+            light: "#5d898f",
+            main: "#487a81",
+            dark: "#013840",
+          },
+          secondary: {
+            main: '#eeeeee'
+          },
+          background: {
+            default: '#1c1e21',
+            paper: '#1c1e21',
+          },
+          text: {
+            primary: grey[200],
+            secondary: grey[400],
+          },
+          success: {
+            main: '#26c3a6',
+          },
+          divider: '#242526',
+        }),
+    },
+  });
+
+   // Update the theme only if the mode changes
+   const customTheme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode]);
+
   const themeData = {
     colorMode,
     isExtraTablet,
@@ -81,7 +144,7 @@ export function CustomThemeProvider({ children }) {
   return (
     <AppContextProvider>
       <ColorModeContext.Provider value={themeData}>
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={customTheme}>
           <CssBaseline />
           {children}
         </ThemeProvider>

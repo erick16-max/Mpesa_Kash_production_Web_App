@@ -110,9 +110,9 @@ export default function NotificationButton() {
           >
             <Typography
               variant="body2"
-              color={"primary"}
               fontWeight={500}
               gutterBottom
+              sx={{color: 'primary.light'}}
             >
               Notification
             </Typography>

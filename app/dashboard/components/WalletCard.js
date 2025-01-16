@@ -1,4 +1,4 @@
-import { Box, Button, Card, CircularProgress, Stack, Typography, Skeleton } from '@mui/material'
+import { Box, Button, Card, CircularProgress, Stack, Typography, Skeleton, useTheme } from '@mui/material'
 import React, { useContext } from 'react'
 import {  MdAccountBalanceWallet  } from "react-icons/md";
 import { IoRefreshCircleOutline } from "react-icons/io5";
@@ -10,25 +10,25 @@ import { usdFormatter } from '@/util/LogicFunctions';
 import { MdWavingHand } from "react-icons/md";
 import Image from 'next/image';
 import HandWavingImage from "../../../public/images/handwaving.png"
+import { DARK_MODE } from '@/Constants';
 
 
 export default function WalletCard() {
     const {isTablet, isMobile} = useContext(ColorModeContext)
     const {userProfile, setIsDepositModelOpen, setIsWithdrawModelOpen, refreshing, setRefreshing} = useContext(AppContext)
-
+    const theme = useTheme()
     const handleRefresh = () =>{
         setRefreshing(true)
     }
     return (
-    <Card
+    <Box
        component={'div'}
-    //    variant='outlined'
        sx={{
         width: '100%',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        // backgroundColor: '#f5f5f5',
+        backgroundColor: theme.palette.mode === DARK_MODE ? '#1c1e21' : '#ffffff',
         boxShadow: 0,
         flexDirection: 'column',
         gap: 4,
@@ -57,9 +57,7 @@ export default function WalletCard() {
                         width={isMobile ? 30 : 40}
                         height={isMobile ? 30 : 40}
                         alt='waving hand'
-                        style={{
-                            backgroundColor: '#fff'
-                        }}
+                        
                     />
 
                 </Box>
@@ -77,7 +75,7 @@ export default function WalletCard() {
                 // maxWidth: 600,
                 height: isMobile ? 180 : 220,
                 p: 3,
-                backgroundColor: 'primary.main',
+                backgroundColor: theme.palette.mode === DARK_MODE ? 'primary.dark' : 'primary.main',
                 justifyContent: 'space-between',
                 flexDirection: 'column',
                 display: 'flex',
@@ -95,7 +93,7 @@ export default function WalletCard() {
                     <Stack>
                         <Typography
                             variant='body1'
-                            color={'divider'}
+                            color={'#eeeeee'}
                             fontWeight={600}
                             component={'div'}
                             sx={{
@@ -132,7 +130,7 @@ export default function WalletCard() {
                             borderRadius: '12px',
                             textTransform: 'none',
                             fontWeight: 400,
-                            backgroundColor: '#1a5962',
+                            backgroundColor: theme.palette.mode === DARK_MODE ? 'primary.dark' : '#1a5962',
                         }}
                         endIcon={<BiRefresh style={{display: refreshing ? 'none' : 'block'}}/>}
                         onClick={handleRefresh}
@@ -151,14 +149,14 @@ export default function WalletCard() {
                     <Typography
                         variant='body2'
                         fontWeight={500}
-                        color={'divider'}
+                        color={'#eeeeee'}
                     >
                        {userProfile?.user?.loginid} - {userProfile?.user?.country}
                     </Typography>
                     <Typography
                          variant='body2'
                          fontWeight={500}
-                         color={'divider'}
+                         color={'#eeeeee'}
                     >
                         Phone: {userProfile?.phoneNumber}
                     </Typography>
@@ -179,7 +177,10 @@ export default function WalletCard() {
                     height: 50,
                     borderRadius: '12px',
                     textTransform: 'none',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    backgroundColor: theme.palette.mode === DARK_MODE ? 'primary.dark' : 'primary.main'
+                    
+                    
                 }}
                 startIcon={<FaArrowTrendUp />}
                 onClick={() => setIsDepositModelOpen(true)}
@@ -193,7 +194,8 @@ export default function WalletCard() {
                     height: 50,
                     borderRadius: '12px',
                     textTransform: 'none',
-                    fontWeight: 600
+                    fontWeight: 600,
+                    color: theme.palette.mode === DARK_MODE ? 'primary.light' : 'primary.main'
                 }}
                 startIcon={<FaArrowTrendDown />}
                 onClick={() => setIsWithdrawModelOpen(true)}
@@ -201,6 +203,6 @@ export default function WalletCard() {
                 Withdraw
             </Button>
         </Box>
-    </Card>
+    </Box>
   )
 }

@@ -20,6 +20,7 @@ import CustomDownloadChip from "../general/CustomDownloadChip";
 import Link from "next/link";
 import AppContext from "@/context/AppContext";
 import { useRouter } from "next/navigation";
+import { useTheme } from "@emotion/react";
 
 export default function HeroSection() {
   const {user, setUser, isUser} = useContext(AppContext);
@@ -28,6 +29,7 @@ export default function HeroSection() {
   const { isMobile, setOpenRegisterModal} = useContext(ColorModeContext);
 
   const router = useRouter()
+  const theme = useTheme()
 
   return (
     <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
@@ -45,7 +47,7 @@ export default function HeroSection() {
                 variant="h4"
                 textAlign={isExtraTablet ? "center" : ""}
                 sx={{
-                  color: "#014650",
+                  color: "primary.main",
                   fontWeight: 700,
                   fontSize: isExtraMobile ? 22 : isMobile ? 26 : 44,
                   height: 50,
@@ -137,7 +139,7 @@ export default function HeroSection() {
               sx={{
                 // boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
                 overflow: "hidden",
-                backgroundColor: "#ffffff",
+                // backgroundColor: "#ffffff",
                 width: "100%",
                 justifyContent: "center",
                 alignItems: "center",

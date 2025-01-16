@@ -35,7 +35,6 @@ export default function AccountCard() {
         variant="outlined"
         sx={{
             p: 3,
-            backgroundColor: '#ffffff',
             width: isMobile ? '100%' : '80%',
             my: 3
         }}

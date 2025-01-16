@@ -8,7 +8,7 @@ import { FcGoogle } from "react-icons/fc";
 import { VscEye, VscEyeClosed  } from "react-icons/vsc";
 import ColorModeContext from '@/theme/ThemeContextProvider';
 import Link from 'next/link';
-import DerivImage from "../../../public/images/deriv.png"
+import DerivImage from "../../../public/images/deriv2.png"
 import Image from 'next/image';
 
 

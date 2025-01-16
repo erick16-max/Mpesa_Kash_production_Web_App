@@ -37,8 +37,9 @@ export default function OnboardingSteps() {
             key={index}
           >
             <Card
+              variant='outlined'
               sx={{
-                backgroundColor: '#f5f5f5',
+                // backgroundColor: '#f5f5f5',
                 padding: 3,
                 borderRadius: '16px',
                 boxShadow: 0,
@@ -49,10 +50,10 @@ export default function OnboardingSteps() {
             >
               <Box sx={{ marginRight: 2 }}>{step.icon}</Box>
               <Box>
-                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#014650' }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'primary.main' }}>
                   {step.title}
                 </Typography>
-                <Typography variant="body2" sx={{ color: '#555' }}>
+                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   {step.description}
                 </Typography>
               </Box>

@@ -29,10 +29,13 @@ export default function FooterGrid() {
                 direction={'row'}
               >
                 <CustomDownloadChip 
-                    textColor={'#242423'}
+                    textColor={'#eeeeee'}
+                    bgColor={'#222325'}
+                    
                 />
                 <CustomChipWithRating
-                    textColor={'#242423'}
+                    textColor={'#eeeeee'}
+                    bgColor={'#222325'}
 
                 />
               </Stack>

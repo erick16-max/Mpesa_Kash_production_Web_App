@@ -6,6 +6,7 @@ import {
   IconButton,
   Stack,
   Typography,
+  useTheme,
 } from "@mui/material";
 import React, { useContext } from "react";
 import { FcTodoList } from "react-icons/fc";
@@ -13,6 +14,7 @@ import { TiTick } from "react-icons/ti";
 import WhyUsImage from "../../../public/images/whyus.svg"
 import Image from "next/image";
 import ColorModeContext from "@/theme/ThemeContextProvider";
+import { LIGHT_MODE } from "@/Constants";
 
 
 
@@ -26,10 +28,10 @@ const whyUsList = [
 export default function WhyUs() {
   const { isMobile, isTablet, setOpenRegisterModal} = useContext(ColorModeContext)
 
-
+const theme = useTheme()
 
   return (
-    <Box width={"100%"} bgcolor={"#e6edee"} px={isTablet ? 2 : 10} py={3}>
+    <Box width={"100%"} bgcolor={ theme.palette.mode === LIGHT_MODE ? "#e6edee" : '#1c1e21'} px={isTablet ? 2 : 10} py={3}>
       <Grid container spacing={isMobile ? 10 : 2} py={3}>
         <Grid item lg={6} md={12} sm={12} xs={12}>
           <Stack>
@@ -52,7 +54,7 @@ export default function WhyUs() {
                 >
                   <IconButton
                     sx={{
-                      backgroundColor: "#ffffff",
+                      backgroundColor: "divider",
                       width: 50,
                       height: 50,
                       borderRadius: 25,
