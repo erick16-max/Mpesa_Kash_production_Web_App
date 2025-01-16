@@ -7,10 +7,16 @@ import { doc, updateDoc, getDoc, setDoc } from "firebase/firestore";
 
 export const useTokenHandler = async () => {
   const router = useRouter();
-  if (typeof window === undefined) return
+  if (typeof window === undefined){
+    console.log("window still not available...")
+    return
+  }
+
+  console.log("we passed, lets keep running")
 
   try {
     const url = window.location.href;
+    console.log("url", url)
 
     if (url.includes("token1=") && url.includes("&cur1=")) {
       const code = url.split("token1=")[1];
@@ -47,9 +53,12 @@ export const useTokenHandler = async () => {
           if (session) {
             const userRef = doc(db, "users", session?.uid);
             const userDoc = await getDoc(userRef);
+            console.log("updating authenticated user")
 
             if (userDoc.exists()) {
               // Update existing user document
+            console.log("updating user obj")
+
               await updateDoc(userRef, {
                 webToken: newCode,
                 email: userDetails.email,
@@ -57,6 +66,8 @@ export const useTokenHandler = async () => {
               });
             } else {
               // Create a new user document if it doesn't exist
+            console.log("create new user obj")
+
               await setDoc(userRef, {
                 webToken: newCode,
                 email: userDetails.email,
@@ -68,6 +79,7 @@ export const useTokenHandler = async () => {
             router.push("/dashboard");
           } else {
             localStorage.setItem("tokenAuth", url);
+            console.log("updated token url")
           }
         });
       }
