@@ -8,7 +8,7 @@ export default function AuthButtons() {
   return (
     <Stack
         direction={'row'}
-        gap={isMobile ? 0 : 1}
+        gap={1}
     >
       <ThemeToggleButton />
         <Button
