@@ -10,6 +10,7 @@ import ColorModeContext from '@/theme/ThemeContextProvider';
 import Link from 'next/link';
 import DerivImage from "../../../public/images/deriv2.png"
 import Image from 'next/image';
+import CopyRight from '../footer/CopyRight';
 
 
 
@@ -179,6 +180,8 @@ export default function SignUpModal() {
                     sx={{textDecoration: 'underline'}}>Log in here</Typography>
                   </Link>
                 </Box>
+
+                 <CopyRight bgColor={'#ffffff'} />
                
             </Stack>
           

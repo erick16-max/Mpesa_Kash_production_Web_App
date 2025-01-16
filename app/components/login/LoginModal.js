@@ -13,6 +13,7 @@ import { db, auth } from '@/firebase.config';
 import { useRouter } from 'next/navigation';
 import AppContext from '@/context/AppContext';
 import { signIn } from '@/firebase/Firebase';
+import CopyRight from '../footer/CopyRight';
 
 
 
@@ -254,6 +255,8 @@ useEffect(() => {
                     sx={{textDecoration: 'underline'}}>Sign up here</Typography>
                   </Link>
                 </Box>
+
+                <CopyRight bgColor={'#ffffff'} />
                
             </Stack>
           

@@ -31,7 +31,6 @@ export default function FinishAccountCard() {
         variant='outlined'
         sx={{
             p: 3,
-            backgroundColor: '#ffffff',
             width: isMobile ? '96vw' : 500,
             display: 'flex',
             alignItems: 'center',

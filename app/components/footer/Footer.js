@@ -7,6 +7,7 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 import { FaSquareFacebook } from "react-icons/fa6";
 import { FaInstagramSquare } from "react-icons/fa";
 import { AiFillTikTok } from "react-icons/ai";
+import CopyRight from "./CopyRight";
 
 
 export default function Footer() {
@@ -69,6 +70,7 @@ export default function Footer() {
                   <AiFillTikTok style={{fontSize: 20, color: '#dedede'}}/>
               </IconButton>
           </Box>
+          <CopyRight />
         </Stack>
       </Box>
     </Stack>
