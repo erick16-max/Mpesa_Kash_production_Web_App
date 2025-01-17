@@ -5,6 +5,7 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 import WithdrawForm from "./WithdrawForm";
 import VerifyCodeModal from "@/app/finishaccount/VerifyCodeModal";
 import VerifyWithdrawModal from "./VerifyModal";
+import CopyRight from "@/app/components/footer/CopyRight";
 
 export default function WithdrawModal({ withdrawRate, rates }) {
   const { isWithdrawModelOpen, setIsWithdrawModelOpen, userProfile, setRefreshing } =
@@ -139,7 +140,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
       <Slide direction="up" in={isWithdrawModelOpen}>
         <Box
           sx={{
-            backgroundColor: "#ffffff",
+            backgroundColor: "background.paper",
             height: isMobile ? "90vh" : "96vh",
             width: "100vw",
             position: "fixed", // Ensures it stays at the bottom
@@ -166,7 +167,6 @@ export default function WithdrawModal({ withdrawRate, rates }) {
             </Typography>
             <IconButton
               sx={{
-                background: "#f5f5f5",
                 width: 34,
                 height: 34,
                 borderRadius: 1,
@@ -182,6 +182,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
             alignItems={"center"}
             display={"flex"}
             py={2}
+            flexDirection={'column'}
           >
             <WithdrawForm 
               makeWithdraw={makeWithdraw}
@@ -193,6 +194,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
               isError={isError}
               isSuccess={isSuccess}
              />
+             <CopyRight bgColor={'#ffffff'} />
             <VerifyWithdrawModal
               handleVerify={completeWithdrawal}
               show={visible}

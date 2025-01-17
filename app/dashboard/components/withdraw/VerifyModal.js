@@ -39,7 +39,7 @@ export default function VerifyWithdrawModal({
           <Box
             p={3}
             width={300}
-            bgcolor={'#ffffff'}
+            bgcolor={'background.paper'}
             borderRadius={'12px'}
             display={'flex'}
             flexDirection={'column'}

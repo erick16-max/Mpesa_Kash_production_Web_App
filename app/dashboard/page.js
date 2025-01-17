@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { Alert, Box, useMediaQuery, Stack, useTheme, Typography } from '@mui/material'
 import PageLayout from '../layout/PageLayout'
 import Link from 'next/link'
@@ -12,6 +12,8 @@ import { useGetRates } from '@/hooks/useGetRates'
 import { onSnapshot, doc,  } from 'firebase/firestore'
 import { db } from '@/firebase.config'
 import useGetBalance from '@/hooks/useGetBalance'
+import SuccessSnackbarAlert from '../components/general/CustomSnackbarAlert'
+import AppContext from '@/context/AppContext'
 
 export default function page() {
   const [rates, setRates] = useState({});
@@ -20,6 +22,7 @@ export default function page() {
 
 
   const balanceAlertModal = useGetBalance()
+  const {openSuccessAlert} = useContext(AppContext)
 
   useEffect(() => {
     const unsub = onSnapshot(
@@ -70,6 +73,7 @@ export default function page() {
      <Transactions />
      <DepositModal depositRate={depositRate} rates={rates}/>
      <WithdrawModal withdrawRate={withdrawRate} rates={rates} />
+     <SuccessSnackbarAlert message={"Enter your mpesa pin on mobile stk popup!"} />
 </PageLayout>
   )
 }

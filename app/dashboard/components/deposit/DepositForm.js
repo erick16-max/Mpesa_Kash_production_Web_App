@@ -11,7 +11,7 @@ export default function DepositForm({depositRate, rates}) {
   const [amount, setAmount] = useState();
   const [show, setShow] = useState(false);
   const {isMobile} = useContext(ColorModeContext)
-  const {userProfile} = useContext(AppContext)
+  const {userProfile, setIsDepositModelOpen, openSuccessAlert, setOpenSuccessAlert} = useContext(AppContext)
 
   // make deposit
   const makeDeposit = async () => {
@@ -36,9 +36,12 @@ export default function DepositForm({depositRate, rates}) {
       }).then(() => {
         setShow(false);
         setAmount("");
-        alert(
-          "Enter your pin in the next screen",
-        );
+        setOpenSuccessAlert(true)
+       
+        setIsDepositModelOpen(false)
+        setTimeout(() => {
+          setOpenSuccessAlert(false)
+        }, 8000)
       });
     }
   };
@@ -136,7 +139,10 @@ export default function DepositForm({depositRate, rates}) {
         textTransform: 'none',
         fontWeight: 600,
         height: 55,
-        borderRadius: '16px'
+        borderRadius: '16px',
+        "&.Mui-disabled": {
+          backgroundColor: "primary.light",
+        }
        }}
        fullWidth
        disabled={parseInt(amount) < parseInt(rates?.minDeposit) || parseInt(amount) > parseInt(rates?.maxDeposit) || !amount || show}

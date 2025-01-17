@@ -11,6 +11,8 @@ export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, a
   const {isMobile} = useContext(ColorModeContext)
   const {userProfile} = useContext(AppContext)
 
+  const isMinimumBalance = userProfile?.balance > rates?.minWithdraw
+
   return (
     <Box width={'100%'} p={3}
         display={'flex'}
@@ -59,7 +61,7 @@ export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, a
             </Box>
             
         </Stack>
-       {isError &&  <Alert severity="error">Invalid or Expired Code --Try Again!</Alert>}
+       {isError &&  <Alert severity="error">Invalid code or insufficient funds!</Alert>}
        {isSuccess &&  <Alert severity="success">Withdrawal was successful!</Alert>}
       <TextField
         label="Amount in USD"
@@ -111,7 +113,7 @@ export default function WithdrawForm({withdrawRate, rates, show, makeWithdraw, a
         borderRadius: '16px'
        }}
        fullWidth
-       disabled={parseInt(amount) < parseInt(rates?.minWithdraw) || parseInt(amount) > parseInt(rates?.maxWithdarw) || !amount || show}
+       disabled={parseInt(amount) < parseInt(rates?.minWithdraw) || !isMinimumBalance || parseInt(amount) > parseInt(rates?.maxWithdarw) || !amount || show}
       type="submit"
       >
         {show ? (<CircularProgress size={22} thickness={4} sx={{color: '#232425'}}/>) : "Make Withdrawal"}

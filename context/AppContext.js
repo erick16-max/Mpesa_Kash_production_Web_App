@@ -15,6 +15,7 @@ export const AppContextProvider = ({ children }) => {
   const [isWithdrawModelOpen, setIsWithdrawModelOpen] = useState(false)
   const [refreshing, setRefreshing] = useState(false);
   const [notification, setNotification] = useState({});
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false)
 
   const isOnline = useInternetStatus()
 
@@ -88,7 +89,8 @@ export const AppContextProvider = ({ children }) => {
     setIsWithdrawModelOpen,
     refreshing, 
     setRefreshing,
-    notification, setNotification
+    notification, setNotification,
+    openSuccessAlert, setOpenSuccessAlert
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

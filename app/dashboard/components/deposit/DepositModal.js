@@ -3,6 +3,7 @@ import { Box, IconButton, Modal, Slide, Typography } from "@mui/material";
 import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import DepositForm from "./DepositForm";
+import CopyRight from '../../../components/footer/CopyRight'
 
 export default function DepositModal({depositRate, rates}) {
   const { isDepositModelOpen, setIsDepositModelOpen } = useContext(AppContext);
@@ -17,7 +18,7 @@ export default function DepositModal({depositRate, rates}) {
       <Slide direction="up" in={isDepositModelOpen}>
         <Box
           sx={{
-            backgroundColor: "#fefefe",
+            backgroundColor: "background.paper",
             height: isMobile ? '90vh' : "96vh",
             width: "100vw",
             position: "fixed", // Ensures it stays at the bottom
@@ -45,7 +46,6 @@ export default function DepositModal({depositRate, rates}) {
             </Typography>
             <IconButton
                 sx={{
-                    background: '#f5f5f5',
                     width: 34,
                     height: 34,
                     borderRadius: 1
@@ -61,8 +61,10 @@ export default function DepositModal({depositRate, rates}) {
             alignItems={'center'}
             display={'flex'}
             py={2}
+            flexDirection={'column'}
           >
             <DepositForm depositRate={depositRate} rates={rates}/>
+            <CopyRight bgColor={'#ffffff'}/>
           </Box>
         </Box>
       </Slide>
