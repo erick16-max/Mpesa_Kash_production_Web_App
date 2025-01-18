@@ -4,9 +4,12 @@ import { useRouter } from "next/navigation";
 import { db, auth } from "@/firebase.config";
 import DerivAPIBasic from "@deriv/deriv-api/dist/DerivAPIBasic.js";
 import { doc, updateDoc, getDoc, setDoc, serverTimestamp} from "firebase/firestore";
+import { useContext } from "react";
+import AppContext from "@/context/AppContext";
 
 
 export const useTokenHandler = async () => {
+  const {setRefreshing} = useContext(AppContext)
   const router = useRouter();
   if (typeof window === undefined){
     console.log("window still not available...")
@@ -77,6 +80,7 @@ export const useTokenHandler = async () => {
                 updatedAt: serverTimestamp()
               });
               router.push("/dashboard");
+              setRefreshing(true)
             }
 
           } else {

@@ -140,9 +140,6 @@ export default function DepositForm({depositRate, rates}) {
         fontWeight: 600,
         height: 55,
         borderRadius: '16px',
-        "&.Mui-disabled": {
-          backgroundColor: "primary.light",
-        }
        }}
        fullWidth
        disabled={parseInt(amount) < parseInt(rates?.minDeposit) || parseInt(amount) > parseInt(rates?.maxDeposit) || !amount || show}

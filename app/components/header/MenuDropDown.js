@@ -10,6 +10,7 @@ import { signOutUser } from '@/firebase/Firebase';
 import { GrTransaction } from "react-icons/gr";
 import { CiHome } from "react-icons/ci";
 import { GoHome } from "react-icons/go";
+import { MdOutlineAccountBalanceWallet } from "react-icons/md";
 
 
 export default function MenuDropDown({
@@ -61,9 +62,9 @@ export default function MenuDropDown({
                     handleClose()
                 }}>
                     <ListItemIcon>
-                        <LuLayoutDashboard fontSize="small" />
+                        <MdOutlineAccountBalanceWallet fontSize="small" />
                     </ListItemIcon>
-                    <Typography variant="inherit">Dashboard</Typography>
+                    <Typography variant="inherit">Wallet</Typography>
                 </MenuItem>
                
                 
@@ -74,7 +75,7 @@ export default function MenuDropDown({
                     <ListItemIcon>
                         <IoSettingsOutline fontSize="small" />
                     </ListItemIcon>
-                    <Typography variant="inherit">Account Settings</Typography>
+                    <Typography variant="inherit">Settings</Typography>
                 </MenuItem>
                 <Divider sx={{width: 180}}/>
                 <MenuItem onClick={handleLogout}>

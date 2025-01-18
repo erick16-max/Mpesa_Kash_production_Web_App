@@ -52,9 +52,9 @@ export const signOutUser = async () => {
 export const resetPassword = async (email) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    console.log('Password reset email sent!');
+    return "success"
   } catch (error) {
     console.log('Error sending password reset email:', error);
-    throw error;
+    return error;
   }
 };

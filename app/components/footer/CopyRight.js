@@ -14,7 +14,7 @@ import ColorModeContext from "@/theme/ThemeContextProvider";
 import { MdCopyright } from "react-icons/md";
 import { LIGHT_MODE } from "@/Constants";
 
-export default function CopyRight({ bgColor }) {
+export default function CopyRight({ bgColor, isFooter }) {
   const { isTablet, isMobile } = useContext(ColorModeContext);
   const date = new Date();
   const theme = useTheme();
@@ -29,7 +29,7 @@ export default function CopyRight({ bgColor }) {
       flexDirection={"column"}
     >
       <Box
-        display={"flex"}
+        display={!isFooter ? "none" : "flex"}
         alignItems={"center"}
         color={
           bgColor && theme.palette.mode === LIGHT_MODE

@@ -32,32 +32,7 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    const formatedNumber = phoneNumber.replace(/[+\s]/g, "")
-    localStorage.setItem('phone', formatedNumber)
 
-    // Join the code and validate
-    const code = verificationCode.join("");
-    if (code.length !== 6) {
-      setIsError(true);
-      setLoading(false);
-      return;
-    }
-
-    // Example: Handle your verification logic here
-    try {
-      // Simulate your verification API call here
-      console.log("Verifying code: ", code);
-      setLoading(false);
-      // Redirect or update your UI accordingly
-      router.push("/nextPage");
-    } catch (error) {
-      setIsError(true);
-      setLoading(false);
-    }
-  };
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -76,7 +51,7 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
           justifyContent: "center",
         }}
         component="form"
-        onSubmit={verifyNumber}
+       
       >
         <Card
           variant={isMobile ? "outlined" : ""}
@@ -155,6 +130,7 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
                 borderRadius: "16px",
               }}
               type="submit"
+              onClick={verifyNumber}
             >
               {isVerifyLoading ? (
                 <CircularProgress size={20} thickness={4} sx={{ color: "#f5f5f5" }} />

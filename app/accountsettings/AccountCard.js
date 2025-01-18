@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 
 export default function AccountCard() {
     const {userProfile} = useContext(AppContext)
-    const {isMobile} = useContext(ColorModeContext)
+    const {isMobile, setOpenForgotPasswordModal} = useContext(ColorModeContext)
 
     const router = useRouter()
 
@@ -68,8 +68,9 @@ export default function AccountCard() {
 
                 }}
                 endIcon={<RiLockPasswordLine />}
+                onClick={() => setOpenForgotPasswordModal(true)}
             >
-                Change Password
+                Reset Password
             </Button>
             <Button
                  variant='contained'
@@ -81,6 +82,8 @@ export default function AccountCard() {
  
                  }}
                  endIcon={<MdOutlinePhoneAndroid />}
+                 LinkComponent={Link}
+                 href="/accountsettings/changephonenumber"
             >
                 Change Phone Number
             </Button>
