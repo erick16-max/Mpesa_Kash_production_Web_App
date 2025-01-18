@@ -96,7 +96,7 @@ export default function HeroSection() {
                 }}
                 onClick={() => isUser ? router.push('/dashboard') : setOpenRegisterModal(true)}
               >
-                {isUser ? "Go to Dashboard" : "Get Started"}
+                {isUser ? "Go to Wallet" : "Get Started"}
               </Button>
               
               <Button

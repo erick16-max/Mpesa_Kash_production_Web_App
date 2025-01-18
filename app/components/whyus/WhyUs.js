@@ -15,6 +15,7 @@ import WhyUsImage from "../../../public/images/whyus.svg"
 import Image from "next/image";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import { LIGHT_MODE } from "@/Constants";
+import { useRouter } from "next/navigation";
 
 
 
@@ -29,6 +30,7 @@ export default function WhyUs() {
   const { isMobile, isTablet, setOpenRegisterModal} = useContext(ColorModeContext)
 
 const theme = useTheme()
+const router =useRouter()
 
   return (
     <Box width={"100%"} bgcolor={ theme.palette.mode === LIGHT_MODE ? "#e6edee" : '#1c1e21'} px={isTablet ? 2 : 10} py={3}>
@@ -87,9 +89,9 @@ const theme = useTheme()
                     gap: 1,
                     borderRadius: "16px",
                     }}
-                  onClick={() => setOpenRegisterModal(true)}
+                    onClick={() => isUser ? router.push('/dashboard') : setOpenRegisterModal(true)}
                 >
-                    Get Started
+                    {isUser ? "Go to Wallet" : "Get Started"}
                 </Button>
               </Box>
             </Stack>
