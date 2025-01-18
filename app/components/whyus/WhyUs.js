@@ -16,6 +16,7 @@ import Image from "next/image";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import { LIGHT_MODE } from "@/Constants";
 import { useRouter } from "next/navigation";
+import AppContext from "@/context/AppContext";
 
 
 
@@ -28,6 +29,7 @@ const whyUsList = [
 
 export default function WhyUs() {
   const { isMobile, isTablet, setOpenRegisterModal} = useContext(ColorModeContext)
+  const {isUser} = useContext(AppContext)
 
 const theme = useTheme()
 const router =useRouter()
