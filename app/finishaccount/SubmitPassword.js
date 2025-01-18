@@ -249,7 +249,7 @@ export default function SubmitPassword({
         disabled={show}
       >
         {show ? (
-          <CircularProgress size={20} thickness={4} sx={{ color: "#f5f5f5" }} />
+          <CircularProgress size={20} thickness={4}  />
         ) : (
           "Submit"
         )}

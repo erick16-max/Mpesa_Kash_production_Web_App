@@ -133,9 +133,9 @@ export default function VerifyCodeModal({phoneNumber, verificationCode, setVerif
               onClick={verifyNumber}
             >
               {isVerifyLoading ? (
-                <CircularProgress size={20} thickness={4} sx={{ color: "#f5f5f5" }} />
+                <CircularProgress size={20} thickness={4}  />
               ) : (
-                <Typography variant="body1" textTransform={"none"} fontWeight={500} color={"#f5f5f5"}>
+                <Typography variant="body1" textTransform={"none"} fontWeight={500} >
                   Verify Number
                 </Typography>
               )}
