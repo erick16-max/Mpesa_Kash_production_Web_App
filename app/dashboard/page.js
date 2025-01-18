@@ -14,6 +14,7 @@ import { db } from '@/firebase.config'
 import useGetBalance from '@/hooks/useGetBalance'
 import SuccessSnackbarAlert from '../components/general/CustomSnackbarAlert'
 import AppContext from '@/context/AppContext'
+import PageLoader from '../components/general/PageLoader'
 
 export default function page() {
   const [rates, setRates] = useState({});
@@ -22,8 +23,9 @@ export default function page() {
 
 
   const balanceAlertModal = useGetBalance()
-  const {openSuccessAlert} = useContext(AppContext)
+  const {openSuccessAlert, userProfile} = useContext(AppContext)
 
+  
   useEffect(() => {
     const unsub = onSnapshot(
       doc(db, "new_binary_rates", "O3kIVoXFLIYlafD0yFrm"),
@@ -37,7 +39,7 @@ export default function page() {
     );
     return unsub;
   }, []);
-
+  
   let deposit_rate;
   let withdraw_rate;
   useEffect(() => {
@@ -56,13 +58,16 @@ export default function page() {
       }
       setDepositRate(deposit_rate)
       setWithdrawRate(withdraw_rate.toFixed(2))
-
+      
     };
-  
+    
     fetchRates();
   }, [rates]); 
   
-
+  
+  if(userProfile === null) {
+    return <PageLoader />
+  }
 
   
   return (
