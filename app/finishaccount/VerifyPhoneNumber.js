@@ -86,6 +86,11 @@ export default function VerifyPhoneNumber({
 
   const verifyNumber = async (e) => {
     e.preventDefault();
+    const encryptedData = JSON.parse(localStorage.getItem("connection"));
+          if(!encryptedData){
+            console.log("no data")
+            return
+          }
     try {
       setIsVerifyLoading(true);
       // Get the encrypted data from localStorage
