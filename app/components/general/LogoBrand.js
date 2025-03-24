@@ -29,9 +29,10 @@ export default function LogoBrand() {
 
         />
          <span className='logoFont' style={{
-          fontSize: isMobile ? '16px' : '14px', 
+          fontSize: isMobile ? '14px' : '16px', 
           fontWeight: 900,
-          color: theme.palette.mode === DARK_MODE ? '#9575cd' : '#673ab7'
+          color: theme.palette.mode === DARK_MODE ? '#9575cd' : '#673ab7',
+          display: isMobile ? 'none' : "",
 
           }}>
              Deriva Add<br></br> <span>Pesa</span>
