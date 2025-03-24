@@ -22,7 +22,7 @@ export default function VerifyPhoneNumber({
   setIsNext,
 }) {
   const [error, setError] = useState("");
-  const [phoneError, setPhoneError] = useState("");
+  const [phoneError, setPhoneError] = useState(true);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isVerifyLoading, setIsVerifyLoading] = React.useState(false);
   const [verificationCode, setVerificationCode] = useState([
@@ -116,6 +116,8 @@ export default function VerifyPhoneNumber({
       }, 500);
     }
   };
+ 
+  const isNextDisabled = phoneError || phoneNumber > 4
 
   return (
     <Stack gap={3} width={"100%"}>
@@ -162,7 +164,11 @@ export default function VerifyPhoneNumber({
           fontWeight: 600,
           textTransform: "none",
         }}
-        onClick={() => setIsNext(true)}
+        disabled={phoneError}
+        onClick={() => {
+          localStorage.setItem("phone", JSON.stringify(phoneNumber))
+          setIsNext(true)
+        }}
       >
         {isLoading ? <CircularProgress size={22} thickness={4} /> : "Continue"}
       </Button>

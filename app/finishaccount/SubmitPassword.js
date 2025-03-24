@@ -68,7 +68,8 @@ export default function SubmitPassword({
   // };
   
   const authorizationURL = "https://oauth.deriv.com/oauth2/authorize";
-  const phoneNumber = localStorage.getItem('phone')
+  const phoneNumber = JSON.parse(localStorage.getItem('phone'))
+  const formatedNumber = phoneNumber.replace(/[+\s]/g, "").replace(/\s+/g, '')
 
   const AUTH_URL_EXAMPLE = "https://www.derivaddpesa.com/auth?acct1=CR7522812&token1=a1-xMe9R53Teyr3pYLyIDaWL2CMusFHu&cur1=USD&acct2=VRTC11165978&token2=a1-xaQa3GSQTYEnz6x8edpLRhhanJ21L&cur2=USD"
 
@@ -102,15 +103,7 @@ export default function SubmitPassword({
       return;
     }
   
-    const regex = /acct(\d+)=(\w+)&token\d+=(\w+-\w+)/g;
-    let match;
-    const tokens = {};
-  
-    while ((match = regex.exec(token)) !== null) {
-      const [, acctNumber, acctValue, fullToken] = match;
-      tokens[acctValue] = { token: fullToken };
-    }
-
+    
   
   
     const ws = new WebSocket(
@@ -153,7 +146,7 @@ export default function SubmitPassword({
           if (user?.uid) {
             await setDoc(doc(db, "users", user.uid), {
               email: data?.authorize?.email,
-              phoneNumber: `0${phoneNumber.slice(3)}`,
+              phoneNumber: `0${formatedNumber.slice(3)}`,
               token: code,
               balance: data?.authorize?.balance,
               user: data?.authorize,
