@@ -63,7 +63,7 @@ export default function AuthButtons() {
         startIcon={<CiUser />}
         endIcon={<IoMdArrowDropdown />}
         >
-          {"Account"}
+          {"Login"}
         </Button>
       <ThemeToggleButton />
       <AccountsMenu
