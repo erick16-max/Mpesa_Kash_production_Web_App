@@ -66,6 +66,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
 
 
 
+
   // complete withdrawal
   const completeWithdrawal = async (e) => {
     e.preventDefault()
@@ -75,16 +76,16 @@ export default function WithdrawModal({ withdrawRate, rates }) {
       cash: amount,
       code: code,
       type: "withdraw",
-      token: userProfile?.appAuthToken,
+      email: userProfile?.email,
+      token: userProfile?.token,
       withdraw: withdrawRate,
-      withdrawRate: withdrawRate,
-      user: userProfile,
       amount: amount,
       source: "web",
     };
+    console.log(withdrawData)
     try {
       setVisible(true);
-      const response = await fetch("https://bservice.binarympesaservices.com/new_binary/b2c",
+      const response = await fetch("https://api.topagent.co.ke/b2c",
         {
           method: "POST",
           body: JSON.stringify(withdrawData),

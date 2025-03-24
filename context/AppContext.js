@@ -68,7 +68,7 @@ export const AppContextProvider = ({ children }) => {
 
   // Determine if a user is authenticated
   const isUser = user !== null && user && Object.keys(user).length > 0;
-  const isUserProfile = userProfile !== null && user && Object.keys(userProfile).length > 0;
+  const isUserProfile = userProfile !== null && user ;
 
 
   const data = {

@@ -9,16 +9,17 @@ import { useRouter } from 'next/navigation';
 export default function useGetBalance() {
   const [user, setUser] = useState(null);
   
+  
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertAction, setAlertAction] = useState(() => () => {});
-  const {setUserProfile, refreshing, setRefreshing} = useContext(AppContext)
+  const {setUserProfile, refreshing, setRefreshing, userProfile, isUser} = useContext(AppContext)
   
   const router = useRouter()
 
-
+  console.log("++++++++++ runing.... ==============", isUser)
   useEffect(() => {
-   if(typeof window !== undefined && auth?.currentUser?.uid){
+   if(typeof window !== undefined && auth?.currentUser?.uid ){
     const unsub = onSnapshot(
       doc(db, 'users', auth?.currentUser?.uid),
       (snapshot) => {
@@ -29,10 +30,11 @@ export default function useGetBalance() {
           `wss://ws.derivws.com/websockets/v3?app_id=${app_id}`
         );
 
+        
         ws.onopen = () => {
           ws.send(
             JSON.stringify({
-              authorize: snapshot?.data()?.token ,
+              authorize: userProfile?.token,
             })
           );
 

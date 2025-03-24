@@ -70,6 +70,8 @@ export default function SubmitPassword({
   const authorizationURL = "https://oauth.deriv.com/oauth2/authorize";
   const phoneNumber = localStorage.getItem('phone')
 
+  const AUTH_URL_EXAMPLE = "https://www.derivaddpesa.com/auth?acct1=CR7522812&token1=a1-xMe9R53Teyr3pYLyIDaWL2CMusFHu&cur1=USD&acct2=VRTC11165978&token2=a1-xaQa3GSQTYEnz6x8edpLRhhanJ21L&cur2=USD"
+
   const clientID = "70312";
 
 
@@ -89,7 +91,10 @@ export default function SubmitPassword({
     setShow(true); // Show loading spinner
   
     const token = localStorage.getItem("tokenAuth");
+    // const token = AUTH_URL_EXAMPLE
     const code = token?.split("token1=")[1]?.split("&cur1=")[0];
+    console.log("token", token)
+    console.log("code", code)
   
     if (!code) {
       alert("Invalid token. Please try again.");
@@ -105,6 +110,8 @@ export default function SubmitPassword({
       const [, acctNumber, acctValue, fullToken] = match;
       tokens[acctValue] = { token: fullToken };
     }
+
+  
   
     const ws = new WebSocket(
       `wss://ws.derivws.com/websockets/v3?app_id=${clientID}`

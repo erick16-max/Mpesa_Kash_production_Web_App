@@ -51,7 +51,7 @@ export default function NotificationButton() {
       doc(db, "users", auth?.currentUser?.uid),
       (data) => {
         onSnapshot(
-          doc(db, "notifications", data?.data()?.email),
+          doc(db, "notifications", auth?.currentUser?.email),
           async (info) => {
             if (info.exists()) {
               setNotification({
