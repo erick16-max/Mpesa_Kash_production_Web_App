@@ -147,7 +147,7 @@ export default function Transactions() {
 
   const depositTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Deposit")
   const withdrawTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Withdraw")
-  
+
   return (
     <Box 
     sx={{ 
@@ -169,10 +169,10 @@ export default function Transactions() {
         </Box>
         <CustomTabPanel value={value} index={0}>
           {
-            transactions.length === 0 ? (
+            allTransactions.length === 0 ? (
               <NoTranscations type={'all'}/>
             ):(
-              <TransactionGrid transactionList={transactions}/>
+              <TransactionGrid transactionList={allTransactions}/>
             )
           }
         </CustomTabPanel>
