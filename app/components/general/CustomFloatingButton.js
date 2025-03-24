@@ -40,7 +40,7 @@ export default function CustomFloatingButton() {
           }}
         >
           <Typography variant="button" sx={{ textTransform: 'none' }}>
-            Support
+            Contact Us
           </Typography>
           {Boolean(anchorEl) ? (
             <IoMdArrowDropup style={{ marginLeft: 8, color: '#f5f5f5' }} size={16} />
@@ -65,7 +65,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="tel:+254700849356" // Replace with the actual phone number
+          href="tel:+254708497857" // Replace with the actual phone number
         >
           <FcCallback style={{ marginRight: 8 }} />
           Call Us
@@ -73,7 +73,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="https://wa.me/254700849356" 
+          href="https://wa.me/254708497857" 
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -83,7 +83,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="sms:+254700849356" 
+          href="sms:+254708497857" 
         >
           <FcSms style={{ marginRight: 8 }} />
           Message Us
