@@ -41,7 +41,7 @@ export const useTokenHandler = async () => {
 
       if (newCode) {
         const connection = new WebSocket(
-          "wss://ws.binaryws.com/websockets/v3?app_id=70201"
+          "wss://ws.binaryws.com/websockets/v3?app_id=70312"
         );
         const api = new DerivAPIBasic({ connection });
 

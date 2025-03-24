@@ -116,7 +116,7 @@ export default function AccountCard() {
 
                 }}
                 LinkComponent={Link}
-                href='https://accounts.binarympesaservices.com'
+                href='https://accounts.difaddpesa.co.ke'
                 target='__blank'
             >
                 Delete Account

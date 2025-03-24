@@ -70,7 +70,7 @@ export default function SubmitPassword({
   const authorizationURL = "https://oauth.deriv.com/oauth2/authorize";
   const phoneNumber = localStorage.getItem('phone')
 
-  const clientID = "70201";
+  const clientID = "70312";
 
 
   const signUp = async (e) => {
