@@ -73,7 +73,7 @@ export default function page() {
   return (
   
 <PageLayout>
-      {balanceAlertModal}
+      {/* {balanceAlertModal} */}
      <WalletCard />
      <Transactions />
      <DepositModal depositRate={depositRate} rates={rates}/>

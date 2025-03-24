@@ -2,15 +2,16 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
+
 const firebaseConfig = {
-    apiKey: "AIzaSyADUwjsaEPDQ--dwIqlRyXLbiNEkyfrBCA",
-    authDomain: "deriv-mpesa-services.firebaseapp.com",
-    databaseURL: "https://deriv-mpesa-services-default-rtdb.firebaseio.com",
-    projectId: "deriv-mpesa-services",
-    storageBucket: "deriv-mpesa-services.appspot.com",
-    messagingSenderId: "642379634501",
-    appId: "1:642379634501:web:b487752e7e86b079bb902c"
-  };
+  apiKey: "AIzaSyB79B2LeURUqluxRSAaieP6lic2eHkFvj8",
+  authDomain: "deriva-add-pesa.firebaseapp.com",
+  projectId: "deriva-add-pesa",
+  storageBucket: "deriva-add-pesa.appspot.com",
+  messagingSenderId: "806029103601",
+  appId: "1:806029103601:web:6d4a3acc82e49de1117450",
+  measurementId: "G-LDVRJRE7YT"
+};
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

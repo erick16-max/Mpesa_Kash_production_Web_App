@@ -43,10 +43,10 @@ export default function Home() {
         <CustomAppBar scroll={scroll} />
         <Stack pt={2} mt={"140px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />
-          <StepsSection />
+          {/* <StepsSection />
           <WhyUs />
-          <Partners />
-          <Footer />
+          <Partners /> */}
+          {/* <Footer /> */}
         </Stack>
         <CustomFloatingButton />
       </Box>

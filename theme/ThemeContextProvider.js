@@ -76,9 +76,9 @@ export function CustomThemeProvider({ children }) {
       ...(mode === LIGHT_MODE
         ?{
           primary: {
-            light: "#346b73",
-            main: "#014650",
-            dark: "#013840",
+            light: "#522e92",
+            main: "#673ab7",
+            dark: "#8561c5",
           },
           secondary: {
             main: "#232425",
@@ -99,9 +99,9 @@ export function CustomThemeProvider({ children }) {
         }
         :{
           primary: {
-            light: "#5d898f",
-            main: "#487a81",
-            dark: "#013840",
+            light: "#522e92",
+            main: "#673ab7",
+            dark: "#8561c5",
           },
           secondary: {
             main: '#eeeeee'

@@ -5,9 +5,10 @@ import React, { useContext } from "react";
 import { BiBell, BiSolidDownArrow } from "react-icons/bi";
 import MenuDropDown from "./MenuDropDown";
 import { usdFormatter, truncateString } from "@/util/LogicFunctions";
-import ThemeToggleButton from "./ThemeToggleButton";
+// import ThemeToggleButton from "./ThemeToggleButton";
 import { MdOutlineDarkMode } from "react-icons/md";
 import NotificationButton from "./NotificationButton";
+import ThemeToggleButton from "../general/ToggleThemeButton";
 
 
 

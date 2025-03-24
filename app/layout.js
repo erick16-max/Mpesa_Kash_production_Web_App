@@ -18,7 +18,7 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Binary Mpesa Services",
+  title: "Deriva Add Pesa",
   description: "Deposit and Withdraw from Deriv Account using Mpesa",
 };
 

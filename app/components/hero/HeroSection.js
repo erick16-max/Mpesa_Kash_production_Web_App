@@ -21,6 +21,9 @@ import Link from "next/link";
 import AppContext from "@/context/AppContext";
 import { useRouter } from "next/navigation";
 import { useTheme } from "@emotion/react";
+import { IoCloudDownloadOutline } from "react-icons/io5";
+import { PiAndroidLogoBold } from "react-icons/pi";
+
 
 export default function HeroSection() {
   const {user, setUser, isUser} = useContext(AppContext);
@@ -34,49 +37,48 @@ export default function HeroSection() {
   return (
     <Box px={isExtraMobile ? 1 : isMobile ? 2 : 10} >
       <Grid container spacing={2}>
-        <Grid item lg={8} md={12} sm={12} xs={12}>
+        <Grid item lg={12} md={12} sm={12} xs={12}>
           <Stack
             sx={{
               width: "100%",
               height: "100%",
+              justifyContent: 'center',
+              alignItems: 'center'
             }}
           >
             <Stack>
               <AnimatedTypography />
               <Typography
                 variant="h4"
-                textAlign={isExtraTablet ? "center" : ""}
                 sx={{
-                  color: "primary.main",
+                  color: "text.primary",
                   fontWeight: 700,
                   fontSize: isExtraMobile ? 22 : isMobile ? 26 : 44,
-                  height: 50,
                 }}
                 gutterBottom
+                textAlign={'center'}
               >
-                On Deriv with MPESA
+                on Deriv and MPESA
               </Typography>
             </Stack>
             <Typography
-              textAlign={isExtraTablet ? "center" : ""}
+              textAlign={"center"}
               variant={isMobile ? "body2" : "body1"}
               color={"text.primary"}
               gutterBottom
+              
             >
               With our innovative platform, you can easily fund your Deriv
               account, execute trades using our bots, and withdraw your earnings directly
               through MPESA. Experience fast, secure, and hassle-free
               transactions with friendly exchange rates tailored for traders in Kenya!
             </Typography>
-                <Stack display={'flex'} width={'100%'} direction={'row'} justifyContent={ isExtraTablet ? 'center' : 'flex-start'} py={1} gap={2}>
-                <CustomDownloadChip />
-                <CustomChipWithRating />
-                </Stack>
+                
             <Stack
               mt={8}
               direction={isMobile ? "column" : "row"}
               gap={4}
-              justifyContent={isExtraTablet ? "center" : "flex-start"}
+              justifyContent={"center"}
               width={'100%'}
               alignItems={'center'}
 
@@ -113,53 +115,22 @@ export default function HeroSection() {
                   borderRadius: "16px",
                 }}
                 LinkComponent={Link}
-                href="https://play.google.com/store/apps/details?id=com.binary.mpesaservices"
+                target="__blank"
+                href="https://www.difaddpesa.co.ke/"
               >
-                Download App
-                <Image
+                Try Our Android App
+                {/* <Image
                   src={PlaystoreImage}
                   alt="google playstore"
                   height={20}
-                />
+                /> */}
+                <IoCloudDownloadOutline fontSize={20}/>
               </Button>
 
             </Stack>
           </Stack>
         </Grid>
-        <Grid item lg={4} md={12} sm={12} xs={12}>
-          <Box
-            width={"100%"}
-            justifyContent={"center"}
-            alignItems="center"
-            display={"flex"}
-          >
-            <Box
-              height={400}
-              borderRadius="16px"
-              sx={{
-                // boxShadow: "rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px",
-                overflow: "hidden",
-                // backgroundColor: "#ffffff",
-                width: "100%",
-                justifyContent: "center",
-                alignItems: "center",
-                maxWidth: 360,
-                mt: isExtraTablet ? 8 : 0,
-              }}
-            >
-              <Image
-                src={HeroImage}
-                alt="hero image"
-                height={400}
-                style={{
-                  borderRadius: "16px",
-                  objectFit: "cover",
-                  width: "100%",
-                }}
-              />
-            </Box>
-          </Box>
-        </Grid>
+        
       </Grid>
     </Box>
   );

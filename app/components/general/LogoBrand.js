@@ -3,6 +3,9 @@ import { Stack, useMediaQuery, useTheme } from '@mui/material'
 import Link from 'next/link';
 import React from 'react'
 import { PiGenderNonbinaryFill } from "react-icons/pi";
+import Image from 'next/image';
+import LogoImage from "../../../public/images/logo.png"
+
 
 export default function LogoBrand() {
   
@@ -14,15 +17,24 @@ export default function LogoBrand() {
       href={'/'}
       style={{
         textDecoration: 'none',
+        display: 'flex',
+        alignItems: 'center',
+        width: '100%'
       }}
      >
+        <Image 
+          src={LogoImage}
+          alt='logo'
+          height={40}
+
+        />
          <span className='logoFont' style={{
-          fontSize: isMobile ? '16px' : '24px', 
+          fontSize: isMobile ? '16px' : '14px', 
           fontWeight: 900,
-          color: theme.palette.mode === DARK_MODE ? '#f5f5f5' : '#014650'
+          color: theme.palette.mode === DARK_MODE ? '#9575cd' : '#673ab7'
 
           }}>
-             Binary Mpesa <br></br> <span>Services</span>
+             Deriva Add<br></br> <span>Pesa</span>
         </span>
      </Link>
   )

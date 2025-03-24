@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import Image from "next/image";
-import NoDataImage from "../../../../public/images/nodata.svg";
+import NoDataImage from "../../../../public/images/error-file.png";
 
 export default function NoTranscations({ type }) {
   return (

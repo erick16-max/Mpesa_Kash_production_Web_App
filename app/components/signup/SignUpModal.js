@@ -26,7 +26,7 @@ export default function SignUpModal() {
     // connect with deriv
     const connectWithDeriv = async () => {
       window.open(
-        `https://oauth.binary.com/oauth2/authorize?app_id=66601`,
+        `https://oauth.binary.com/oauth2/authorize?app_id=70201`,
         "_self"
       );
     };

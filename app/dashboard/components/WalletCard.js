@@ -130,7 +130,7 @@ export default function WalletCard() {
                             borderRadius: '12px',
                             textTransform: 'none',
                             fontWeight: 400,
-                            backgroundColor: theme.palette.mode === DARK_MODE ? 'primary.dark' : '#1a5962',
+                            backgroundColor: theme.palette.mode === DARK_MODE ? 'primary.dark' : 'primary.light',
                         }}
                         endIcon={<BiRefresh style={{display: refreshing ? 'none' : 'block'}}/>}
                         onClick={handleRefresh}

@@ -30,26 +30,15 @@ const AnimatedTyping = () => {
         textAlign: isExtraTablet ? 'center' : ''
       }}
       gutterBottom
+      textAlign={'center'}
     >
-      {!isTypingComplete ? (
-        <span style={{ color: "rgb(237, 178, 31)",  }}>
-          <Typewriter
-            words={["Deposit.", "Trade.", "Withdraw."]}
-            loop={1} // Ensures it doesn't repeat
-            cursor
-            cursorStyle="_"
-            typeSpeed={100}
-            deleteSpeed={50}
-            delaySpeed={1000}
-          />
-        </span>
-      ) : (
-        <>
-          <span style={{ color: "#edb21f" }}>Deposit.&nbsp;</span>
-          <span style={{ color: "#00ba75" }}>Trade.&nbsp;</span>
-          <span style={{ color: "#008ad0" }}>Withdraw.</span>
-        </>
-      )}
+     
+     
+         <>
+          <span style={{ color: "#673ab7" }}>Automated&nbsp;</span>
+          <span style={{ color: "#673ab7" }}>Deposit&nbsp;</span>
+          <span style={{ color: "#673ab7" }}>Withdraw.</span>
+        </> 
     </Typography>
   );
 };
