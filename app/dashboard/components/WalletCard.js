@@ -20,6 +20,8 @@ export default function WalletCard() {
     const handleRefresh = () =>{
         setRefreshing(true)
     }
+
+    console.log(userProfile)
     return (
     <Box
        component={'div'}
