@@ -32,7 +32,7 @@ export default function useGetBalance() {
         ws.onopen = () => {
           ws.send(
             JSON.stringify({
-              authorize: snapshot?.data()?.appAuthToken ,
+              authorize: snapshot?.data()?.token ,
             })
           );
 

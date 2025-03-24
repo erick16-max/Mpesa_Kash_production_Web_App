@@ -54,7 +54,7 @@ export const useTokenHandler = async () => {
 
         if (isVirtual) {
           console.log("Virtual accounts are not allowed");
-          router.push("/"); // Redirect to a page for virtual account error
+          router.push("/virtual"); // Redirect to a page for virtual account error
           return;
         }
 
@@ -72,11 +72,9 @@ export const useTokenHandler = async () => {
             if (userDoc.exists()) {
               // Update existing user document
             console.log("updating user obj")
-            console.log("tokens", tokens)
 
               await updateDoc(userRef, {
-                appAuthToken: newCode,
-                appTradeTokens: tokens,
+                token: newCode,
                 updatedAt: serverTimestamp()
               });
               router.push("/dashboard");

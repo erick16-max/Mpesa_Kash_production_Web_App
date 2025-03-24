@@ -147,8 +147,7 @@ export default function SubmitPassword({
             await setDoc(doc(db, "users", user.uid), {
               email: data?.authorize?.email,
               phoneNumber: `0${phoneNumber.slice(3)}`,
-              appAuthToken: code,
-              appTradeTokens: tokens,
+              token: code,
               balance: data?.authorize?.balance,
               user: data?.authorize,
               createdAt: serverTimestamp(),

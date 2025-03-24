@@ -21,7 +21,6 @@ export default function WalletCard() {
         setRefreshing(true)
     }
 
-    console.log(userProfile)
     return (
     <Box
        component={'div'}

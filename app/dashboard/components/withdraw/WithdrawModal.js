@@ -33,7 +33,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
     );
 
     ws.onopen = () => {
-      ws.send(JSON.stringify({ authorize: userProfile?.appAuthToken }));
+      ws.send(JSON.stringify({ authorize: userProfile?.token }));
     };
 
     ws.onmessage = async (msg) => {
