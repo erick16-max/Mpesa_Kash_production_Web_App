@@ -1,5 +1,5 @@
 "use client";
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, useTheme } from "@mui/material";
 import Image from "next/image";
 import CustomAppBar from "./components/header/CustomAppBar";
 import HeroSection from "./components/hero/HeroSection";
@@ -17,6 +17,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [scroll, setScroll] = useState(false);
   const {userProfile} = useContext(AppContext)
+  const theme = useTheme()
 
   const changeNavBg = () => {
     window.scrollY >= 10 ? setScroll(true) : setScroll(false);
@@ -39,7 +40,8 @@ export default function Home() {
   if (loading || userProfile === null) return <PageLoader />;
   return (
     <Suspense fallback={<PageLoader />}>
-      <Box display={"flex"} width={"100%"} flexDirection={"column"} height={'100%'} >
+      <Box display={"flex"} width={"100%"} flexDirection={"column"} height={'100%'} sx={{
+      }}>
         <CustomAppBar scroll={scroll} />
         <Stack pt={2} mt={"140px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />

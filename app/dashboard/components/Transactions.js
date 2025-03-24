@@ -53,8 +53,6 @@ export default function Transactions() {
   const {isTablet} = React.useContext(ColorModeContext)
   const {userProfile} = React.useContext(AppContext)
   const [transactions, setTransactions] = React.useState([])
-  const [withdrawTransactions, setWithdrawTransactions] = React.useState([])
-  const [depositTransactions, setDepositTransactions] = React.useState([])
   const [allTransactions, setAllTransactions] = useState([]); 
 
   // get withdraw transactions
@@ -63,105 +61,82 @@ export default function Transactions() {
       let num = userProfile?.phoneNumber.slice(1);
       let phoneNum = `254${num}`;
       const q = query(
-        collection(db, "withdraws"),
-        where("data.phoneNumber", "==", phoneNum),
-        orderBy("data.time", "desc"),
+        collection(db, "transactionssdsmmdmsqkwkqkwlqklkqwlqklwqw"),
+        where("email", "==", auth?.currentUser?.email),
+        orderBy("time", "desc"),
         limit(12)
       );
       onSnapshot(q, (snapshot) => {
         if (snapshot.empty) {
-          setWithdrawTransactions([]);
+          setAllTransactions([]);
         } else {
           let b = snapshot.docs.map((doc) => ({
             id: doc.id,
-            data: doc.data().data,
+            data: doc.data(),
           }));
-          setWithdrawTransactions(b);
+          setAllTransactions(b);
         }
       });
     }
   }, [userProfile]);
 
  
-// get deposit transactions
-  useEffect(() => {
-    if (Object.keys(userProfile)?.length > 0) {
-      let num = userProfile?.phoneNumber.slice(1);
-      let phoneNum = `254${num}`;
-      const q = query(
-        collection(db, "deposits"),
-        where("data.phoneNumber", "==", phoneNum),
-        orderBy("data.time", "desc"),
-        limit(12)
-      );
-      onSnapshot(q, (snapshot) => {
-        if (snapshot.empty) {
-          setDepositTransactions([]);
-        } else {
-          let b = snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data().data,
-          }));
-          setDepositTransactions(b);
-        }
-      });
-    }
-  }, [userProfile]);
 
 
-//get all transactions
-useEffect(() => {
-  if (Object.keys(userProfile)?.length > 0) {
-    let num = userProfile?.phoneNumber.slice(1);
-    let phoneNum = `254${num}`;
 
-    // Fetch both withdraw and deposit transactions
-    const withdrawQuery = query(
-      collection(db, "withdraws"),
-      where("data.phoneNumber", "==", phoneNum),
-      orderBy("data.time", "desc"),
-      limit(12)
-    );
+// //get all transactions
+// useEffect(() => {
+//   if (Object.keys(userProfile)?.length > 0) {
+//     let num = userProfile?.phoneNumber.slice(1);
+//     let phoneNum = `254${num}`;
 
-    const depositQuery = query(
-      collection(db, "deposits"),
-      where("data.phoneNumber", "==", phoneNum),
-      orderBy("data.time", "desc"),
-      limit(12)
-    );
+//     // Fetch both withdraw and deposit transactions
+//     const withdrawQuery = query(
+//       collection(db, "withdraws"),
+//       where("data.phoneNumber", "==", phoneNum),
+//       orderBy("data.time", "desc"),
+//       limit(12)
+//     );
 
-    const unsubscribeWithdraw = onSnapshot(withdrawQuery, (snapshot) => {
-      const withdraws = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        type: "withdraw",
-        data: doc.data().data,
-      }));
-      updateTransactions(withdraws);
-    });
+//     const depositQuery = query(
+//       collection(db, "deposits"),
+//       where("data.phoneNumber", "==", phoneNum),
+//       orderBy("data.time", "desc"),
+//       limit(12)
+//     );
 
-    const unsubscribeDeposit = onSnapshot(depositQuery, (snapshot) => {
-      const deposits = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        type: "deposit",
-        data: doc.data().data,
-      }));
-      updateTransactions(deposits);
-    });
+//     const unsubscribeWithdraw = onSnapshot(withdrawQuery, (snapshot) => {
+//       const withdraws = snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         type: "withdraw",
+//         data: doc.data().data,
+//       }));
+//       updateTransactions(withdraws);
+//     });
 
-    const updateTransactions = (newData) => {
-      setTransactions((prev) => {
-        const merged = [...prev, ...newData];
-        return merged.sort((a, b) => b.data.time - a.data.time);
-      });
-    };
+//     const unsubscribeDeposit = onSnapshot(depositQuery, (snapshot) => {
+//       const deposits = snapshot.docs.map((doc) => ({
+//         id: doc.id,
+//         type: "deposit",
+//         data: doc.data().data,
+//       }));
+//       updateTransactions(deposits);
+//     });
 
-    // Cleanup subscriptions
-    return () => {
-      unsubscribeWithdraw();
-      unsubscribeDeposit();
-    };
-  }
-}, [userProfile]);
+//     const updateTransactions = (newData) => {
+//       setTransactions((prev) => {
+//         const merged = [...prev, ...newData];
+//         return merged.sort((a, b) => b.data.time - a.data.time);
+//       });
+//     };
+
+//     // Cleanup subscriptions
+//     return () => {
+//       unsubscribeWithdraw();
+//       unsubscribeDeposit();
+//     };
+//   }
+// }, [userProfile]);
 
 
 
@@ -170,6 +145,9 @@ useEffect(() => {
     setValue(newValue);
   };
 
+  const depositTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Deposit")
+  const withdrawTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Withdraw")
+  
   return (
     <Box 
     sx={{ 

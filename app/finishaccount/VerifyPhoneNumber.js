@@ -121,19 +121,29 @@ export default function VerifyPhoneNumber({
     <Stack gap={3} width={"100%"}>
       {error && <Alert severity="error">{error}</Alert>}
       <TextField
+        variant="standard"
         label="Email"
         placeholder="Enter email"
         type="text"
         value={userEmail || ""}
-        required
         fullWidth
         disabled
         sx={{
-          "& .MuiOutlinedInput-root": {
-            borderRadius: "16px",
+          border: 0,
+          '& .MuiInput-root:before': {
+            borderBottom: 'none',
           },
-          "& .MuiOutlinedInput-notchedOutline": {
-            borderRadius: "16px",
+          '& .MuiInput-root:after': {
+            borderBottom: 'none',
+          },
+          '& .MuiInput-root:hover:not(.Mui-disabled):before': {
+            borderBottom: 'none',
+          },
+          '& .MuiInput-root': {
+            borderBottom: 'none',
+          },
+          '& .MuiInputBase-root': {
+            borderBottom: 'none',
           },
         }}
       />
@@ -152,7 +162,7 @@ export default function VerifyPhoneNumber({
           fontWeight: 600,
           textTransform: "none",
         }}
-        onClick={sendVerificationSms}
+        onClick={() => setIsNext(true)}
       >
         {isLoading ? <CircularProgress size={22} thickness={4} /> : "Continue"}
       </Button>

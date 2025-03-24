@@ -23,7 +23,7 @@ export default function CustomAppBar({ scroll }) {
         width: "100%",
 
         boxShadow: scroll ? 0 : 0,
-
+        
         borderBottom:
           scroll && theme.palette.mode === LIGHT_MODE
             ? "1px solid #dedede"

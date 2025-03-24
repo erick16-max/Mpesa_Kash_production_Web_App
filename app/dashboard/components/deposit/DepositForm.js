@@ -27,9 +27,13 @@ export default function DepositForm({depositRate, rates}) {
         deposit: depositRate,
         depositRate: depositRate
       };
-      await fetch("https://bservice.binarympesaservices.com/web/stk", {
+      await fetch("https://api.topagent.co.ke/stk/", {
         method: "POST",
-        body: JSON.stringify(paymentData),
+        body: JSON.stringify({
+          user: userProfile,
+          amount: amount,
+          type: "web"
+        }),
         headers: {
           "Content-Type": "application/json",
         },

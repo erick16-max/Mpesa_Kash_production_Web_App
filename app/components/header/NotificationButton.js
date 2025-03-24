@@ -34,7 +34,7 @@ export default function NotificationButton() {
       const docRef = doc(
         db,
         "notifications",
-        `254${userProfile?.phoneNumber?.slice(1)}`
+        userProfile?.email
       );
       await updateDoc(docRef, {
         read: true,
@@ -51,7 +51,7 @@ export default function NotificationButton() {
       doc(db, "users", auth?.currentUser?.uid),
       (data) => {
         onSnapshot(
-          doc(db, "notifications", `254${data?.data()?.phoneNumber?.slice(1)}`),
+          doc(db, "notifications", data?.data()?.email),
           async (info) => {
             if (info.exists()) {
               setNotification({
@@ -112,7 +112,6 @@ export default function NotificationButton() {
               variant="body2"
               fontWeight={500}
               gutterBottom
-              sx={{color: 'primary.light'}}
             >
               Notification
             </Typography>
