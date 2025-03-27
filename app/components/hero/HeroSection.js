@@ -116,7 +116,7 @@ export default function HeroSection() {
                 }}
                 LinkComponent={Link}
                 target="__blank"
-                href="https://www.difaddpesa.co.ke/"
+                href="https://download.dmpesakash.co.ke/"
               >
                 Try Our Android App
                 {/* <Image
