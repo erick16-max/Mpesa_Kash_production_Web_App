@@ -65,7 +65,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="tel:+254708497857" // Replace with the actual phone number
+          href="tel:+254704393007" // Replace with the actual phone number
         >
           <FcCallback style={{ marginRight: 8 }} />
           Call Us
@@ -73,7 +73,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="https://wa.me/254708497857" 
+          href="https://wa.me/254704393007" 
           target="_blank"
           rel="noopener noreferrer"
         >
@@ -83,7 +83,7 @@ export default function CustomFloatingButton() {
         <MenuItem
           onClick={handleClose}
           component="a"
-          href="sms:+254708497857" 
+          href="sms:+254704393007" 
         >
           <FcSms style={{ marginRight: 8 }} />
           Message Us
