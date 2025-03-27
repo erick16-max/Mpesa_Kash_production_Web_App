@@ -28,7 +28,7 @@ export default function page() {
   
   useEffect(() => {
     const unsub = onSnapshot(
-      doc(db, "ratessnnansjjnansnasnkaksankansknaksakskaksa", "anajnsnansnakksamksamkmskmkasmasmk"),
+      doc(db, "rates", "eCP58xedSkdD3cpIodF5"),
       (snapshot) => {
         if (snapshot.exists()) {
           setRates(snapshot?.data());
@@ -43,8 +43,8 @@ export default function page() {
   useEffect(() => {
     
    
-      setDepositRate(rates?.depositRate)
-      setWithdrawRate(rates?.withdrawRate)
+      setDepositRate(rates?.deposit)
+      setWithdrawRate(rates?.withdraw)
     
   }, [rates]); 
   
