@@ -25,7 +25,7 @@ export default function useGetBalance() {
       (snapshot) => {
         setUserProfile(snapshot?.data());
 
-        const app_id = 70312;
+        const app_id = 70471;
         const ws = new WebSocket(
           `wss://ws.derivws.com/websockets/v3?app_id=${app_id}`
         );

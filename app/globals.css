@@ -194,7 +194,7 @@ body {
 .loader {
   width: 60px;
   aspect-ratio: 4;
-  --_g: no-repeat radial-gradient(circle closest-side,#673ab7 90%,#0000);
+  --_g: no-repeat radial-gradient(circle closest-side,#4caf50 90%,#0000);
   background: 
     var(--_g) 0%   50%,
     var(--_g) 50%  50%,

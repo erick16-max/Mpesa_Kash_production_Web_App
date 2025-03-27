@@ -45,7 +45,7 @@ export default function CopyRight({ bgColor, isFooter }) {
           {date.getFullYear()} · Binary Mpesa Services Ltd · All rights reserved
         </Typography>
       </Box>
-      <Typography
+      {/* <Typography
         variant="body2"
         color={
           bgColor && theme.palette.mode === LIGHT_MODE
@@ -78,7 +78,7 @@ export default function CopyRight({ bgColor, isFooter }) {
         >
           gegerick.com
         </Link>
-      </Typography>
+      </Typography> */}
     </Box>
   );
 }

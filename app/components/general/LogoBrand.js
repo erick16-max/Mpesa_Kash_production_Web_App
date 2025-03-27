@@ -31,11 +31,11 @@ export default function LogoBrand() {
          <span className='logoFont' style={{
           fontSize: isMobile ? '14px' : '16px', 
           fontWeight: 900,
-          color: theme.palette.mode === DARK_MODE ? '#9575cd' : '#673ab7',
+          color: theme.palette.mode === DARK_MODE ? '#4caf50' : '#4caf50',
           display: isMobile ? 'none' : "",
 
           }}>
-             Deriva Add<br></br> <span>Pesa</span>
+             Mpesa Kash
         </span>
      </Link>
   )

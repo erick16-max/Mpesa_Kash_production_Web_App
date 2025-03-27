@@ -46,9 +46,9 @@ export function CustomThemeProvider({ children }) {
   const theme = createTheme({
     palette: {
       primary: {
-        light: "#346b73",
-        main: "#014650",
-        dark: "#013840",
+        light: "#70bf73",
+        main: "#4caf50",
+        dark: "#3d8c40",
       },
       secondary: {
         main: "#232425",
@@ -76,9 +76,9 @@ export function CustomThemeProvider({ children }) {
       ...(mode === LIGHT_MODE
         ?{
           primary: {
-            light: "#522e92",
-            main: "#673ab7",
-            dark: "#8561c5",
+            light: "#70bf73",
+            main: "#4caf50",
+            dark: "#3d8c40",
           },
           secondary: {
             main: "#232425",
@@ -99,9 +99,9 @@ export function CustomThemeProvider({ children }) {
         }
         :{
           primary: {
-            light: "#522e92",
-            main: "#673ab7",
-            dark: "#8561c5",
+            light: "#70bf73",
+            main: "#4caf50",
+            dark: "#3d8c40",
           },
           secondary: {
             main: '#eeeeee'

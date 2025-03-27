@@ -26,7 +26,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
     
     e.preventDefault();
     setShow(!show);
-    const app_id = 70312;
+    const app_id = 70471;
 
     const ws = new WebSocket(
       "wss://ws.derivws.com/websockets/v3?app_id=" + app_id
@@ -76,16 +76,18 @@ export default function WithdrawModal({ withdrawRate, rates }) {
       cash: amount,
       code: code,
       type: "withdraw",
-      email: userProfile?.email,
       token: userProfile?.token,
       withdraw: withdrawRate,
       amount: amount,
       source: "web",
+      user: userProfile
     };
-    console.log(withdrawData)
+    
+    
+
     try {
       setVisible(true);
-      const response = await fetch("https://api.topagent.co.ke/b2c",
+      const response = await fetch("https://kash.instantpesa.co.ke/kash/b2c",
         {
           method: "POST",
           body: JSON.stringify(withdrawData),

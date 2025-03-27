@@ -73,7 +73,7 @@ export default function SubmitPassword({
 
   const AUTH_URL_EXAMPLE = "https://www.derivaddpesa.com/auth?acct1=CR7522812&token1=a1-xMe9R53Teyr3pYLyIDaWL2CMusFHu&cur1=USD&acct2=VRTC11165978&token2=a1-xaQa3GSQTYEnz6x8edpLRhhanJ21L&cur2=USD"
 
-  const clientID = "70312";
+  const clientID = "70471";
 
 
   const signUp = async (e) => {

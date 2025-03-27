@@ -43,9 +43,9 @@ export default function CustomFloatingButton() {
             Contact Us
           </Typography>
           {Boolean(anchorEl) ? (
-            <IoMdArrowDropup style={{ marginLeft: 8, color: '#f5f5f5' }} size={16} />
+            <IoMdArrowDropup style={{ marginLeft: 8}} size={16} />
           ) : (
-            <IoMdArrowDropdown style={{ marginLeft: 8, color: '#f5f5f5' }} size={16} />
+            <IoMdArrowDropdown style={{ marginLeft: 8}} size={16} />
           )}
         </Fab>
       </Tooltip>

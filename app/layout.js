@@ -18,8 +18,8 @@ const geistMono = localFont({
 });
 
 export const metadata = {
-  title: "Deriva Add Pesa",
-  description: "Deposit/Add to deriv trading platform from mpesa and Withdraw from your Deriv Account to your Mpesa wallet",
+  title: "Mpesa Kash",
+  description: "Deposit funds to deriv trading platform from mpesa and Withdraw from your Deriv Account to your Mpesa wallet",
 };
 
 export default function RootLayout({ children  }) {

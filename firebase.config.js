@@ -4,13 +4,12 @@ import { getFirestore } from 'firebase/firestore';
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB79B2LeURUqluxRSAaieP6lic2eHkFvj8",
-  authDomain: "deriva-add-pesa.firebaseapp.com",
-  projectId: "deriva-add-pesa",
-  storageBucket: "deriva-add-pesa.appspot.com",
-  messagingSenderId: "806029103601",
-  appId: "1:806029103601:web:6d4a3acc82e49de1117450",
-  measurementId: "G-LDVRJRE7YT"
+  apiKey: "AIzaSyA69n5GtDvqTD4b8h1wMHj8WCP30zh1I-k",
+  authDomain: "deriv-mpesa-cash.firebaseapp.com",
+  projectId: "deriv-mpesa-cash",
+  storageBucket: "deriv-mpesa-cash.appspot.com",
+  messagingSenderId: "962663119317",
+  appId: "1:962663119317:web:0ed033318ecb730ce1255c",
 };
 
 const app = initializeApp(firebaseConfig);

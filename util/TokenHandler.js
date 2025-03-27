@@ -16,7 +16,7 @@ const TokenHandler = () => {
       try {
         // Establish WebSocket connection
         const connection = new WebSocket(
-          "wss://ws.binaryws.com/websockets/v3?app_id=70312"
+          "wss://ws.binaryws.com/websockets/v3?app_id=70471"
         );
         const api = new DerivAPIBasic({ connection });
 

@@ -27,13 +27,10 @@ export default function DepositForm({depositRate, rates}) {
         deposit: depositRate,
         depositRate: depositRate
       };
-      await fetch("https://api.topagent.co.ke/stk/", {
+      
+      await fetch("https://kash.instantpesa.co.ke/stk", {
         method: "POST",
-        body: JSON.stringify({
-          user: userProfile,
-          amount: amount,
-          type: "web"
-        }),
+        body: JSON.stringify(paymentData),
         headers: {
           "Content-Type": "application/json",
         },
