@@ -174,7 +174,7 @@ export default function HeroSection() {
               justifyContent: "center",
               background:
                 theme.palette.mode === DARK_MODE
-                  ? `linear-gradient(135deg, #242526 0%, #272829 100%)`
+                  ? `linear-gradient(135deg, #1c1e21 0%, #1c1e21 100%)`
                   : `linear-gradient(135deg, #F3F4F6 0%, #E5E7EB 100%)`,
               overflow: "hidden",
             }}
@@ -186,7 +186,7 @@ export default function HeroSection() {
                 width: 250,
                 height: 250,
                 borderRadius: "50%",
-                background: "rgba(255, 255, 255, 0.4)",
+                background: "rgba(255, 255, 255, 0.1)",
                 filter: "blur(80px)",
                 top: -30,
                 right: -50,
