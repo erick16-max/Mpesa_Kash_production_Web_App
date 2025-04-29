@@ -48,7 +48,7 @@ const router =useRouter()
                 borderRadius: '16px',
               }}
             >
-              <Grid container  >
+              <Grid container spacing={2} >
                 <Grid item lg={4} md={12} sm={12} xs={12}>
                   <Stack gap={2}>
                     <Typography
@@ -68,7 +68,7 @@ const router =useRouter()
                    >
                    <Rating name="size-small" defaultValue={4} size="small" />
                    <Typography variant="body2">
-                    <b>4/5</b> from over <b>340</b> reviews
+                    <b>4/5</b> rating from over <b>340</b> reviews
                    </Typography>
                    </Box>
                   </Stack>
