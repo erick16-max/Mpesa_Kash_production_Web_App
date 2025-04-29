@@ -4,9 +4,6 @@ import React, { useContext } from "react";
 import { MdCopyright } from "react-icons/md";
 import FooterGrid from "./FooterGrid";
 import ColorModeContext from "@/theme/ThemeContextProvider";
-import { FaSquareFacebook } from "react-icons/fa6";
-import { FaInstagramSquare } from "react-icons/fa";
-import { AiFillTikTok } from "react-icons/ai";
 import CopyRight from "./CopyRight";
 
 
@@ -36,38 +33,25 @@ export default function Footer() {
       <Box
         width={"100%"}
         py={1}
-        bgcolor={"#191b1e"}
+       
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
-        color={"#f5f5f5"}
+       
       >
         <Stack>
           <Box
             display={"flex"}
             alignItems={"center"}
             justifyContent={"center"}
+            color={'text.secondary'}
           >
             <MdCopyright fontSize={15} />
-            <Typography variant="body2" color={'#eeeeee'} fontWeight={400} fontSize={11} mt={"1px"}>
-            {date.getFullYear()} · Binary Mpesa Services Ltd · All rights reserved
+            <Typography variant="body2" color={'text.secondary'} fontWeight={400} fontSize={11} mt={"1px"}>
+            {date.getFullYear()} ·Deriv Mpesa Kash · All rights reserved
             </Typography>
           </Box>
-          <Box
-             display={"flex"}
-             alignItems={"center"}
-             justifyContent={"center"}
-          >
-              <IconButton>
-                  <FaSquareFacebook style={{fontSize: 20, color: '#dedede'}}/>
-              </IconButton>
-              <IconButton>
-                  <FaInstagramSquare style={{fontSize: 20, color: '#dedede'}}/>
-              </IconButton>
-              <IconButton>
-                  <AiFillTikTok style={{fontSize: 20, color: '#dedede'}}/>
-              </IconButton>
-          </Box>
+         
           <CopyRight />
         </Stack>
       </Box>

@@ -50,7 +50,7 @@ export default function Home() {
           <Disclaimer />
           <Partners /> 
           
-          {/* <Footer /> */}
+          <Footer />
         </Stack>
         <CustomFloatingButton />
       </Box>
