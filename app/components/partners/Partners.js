@@ -5,6 +5,7 @@ import Image from 'next/image'
 import DerivLogoImage from '../../../public/images/deriv2.png'
 import MpesaLogoImage from '../../../public/images/mpesa.png'
 import ColorModeContext from '@/theme/ThemeContextProvider'
+import { FaArrowRightArrowLeft } from "react-icons/fa6";
 
 export default function Partners() {
     const { isMobile, isTablet} = useContext(ColorModeContext)
@@ -44,6 +45,7 @@ export default function Partners() {
                         alt='deriv logo'
                         
                     />
+                    <FaArrowRightArrowLeft fontSize={40} />
                     <Image 
 
                         src={MpesaLogoImage}
@@ -57,13 +59,12 @@ export default function Partners() {
 
             <Typography
                 variant='body1'
-                color={'text.secondary'}
+                color={'text.primary'}
                 fontWeight={500}
                 textAlign={'center'}
                 px={ isMobile ? 6 : 16}
             >
-                At, Binary Mpesa Services, Our platform partner with Deriv and M-Pesa to facilitate seamless deposits,
-                 withdrawals, and trading by leveraging their APIs for efficient and secure transactions.
+                Deposit to your Deriv trading account, trade and withdraw your winnings to your MPESA Wallet
             </Typography>
     </Box>
   )

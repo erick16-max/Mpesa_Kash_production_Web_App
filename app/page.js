@@ -46,8 +46,10 @@ export default function Home() {
         <Stack pt={0} mt={"100px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />
           <WhyUs />
+          <Partners /> 
           {/* <StepsSection />
-          <Partners /> */}
+          */
+          }
           {/* <Footer /> */}
         </Stack>
         <CustomFloatingButton />
