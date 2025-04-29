@@ -2,6 +2,7 @@
 import {
   Box,
   Button,
+  Card,
   Grid,
   IconButton,
   Stack,
@@ -28,92 +29,26 @@ const whyUsList = [
 ];
 
 export default function WhyUs() {
-  const { isMobile, isTablet, setOpenRegisterModal} = useContext(ColorModeContext)
+  const { isMobile, isTablet, setOpenRegisterModal, isExtraMobile} = useContext(ColorModeContext)
   const {isUser} = useContext(AppContext)
 
 const theme = useTheme()
 const router =useRouter()
 
   return (
-    <Box width={"100%"} bgcolor={ theme.palette.mode === LIGHT_MODE ? "#e6edee" : '#1c1e21'} px={isTablet ? 2 : 10} py={3}>
-      <Grid container spacing={isMobile ? 10 : 2} py={3}>
-        <Grid item lg={6} md={12} sm={12} xs={12}>
-          <Stack>
-            <Typography
-              variant="h4"
-              fontWeight={700}
-              color={"text.primary"}
-              className="interFont"
-              gutterBottom
+    <Box width={"100%"} px={isExtraMobile ? 1 : isMobile ? 2 : 10} py={3}>
+        <Grid container spacing={isMobile ? 10 : 2} py={3}>
+            <Card
+              variant={'outlined'}
+              sx={{
+                boxShadow: 0,
+                width: '100%',
+                p: 3,
+              }}
             >
-              Why Choose Binary Mpesa Services?
-            </Typography>
-            <Stack gap={2} mt={3}>
-              {whyUsList.map((item, index) => (
-                <Stack
-                  direction={"row"}
-                  gap={2}
-                  alignItems={"center"}
-                  key={index}
-                >
-                  <IconButton
-                    sx={{
-                      backgroundColor: "divider",
-                      width: 50,
-                      height: 50,
-                      borderRadius: 25,
-                    }}
-                  >
-                    <TiTick />
-                  </IconButton>
-                  <Typography
-                    variant="body1"
-                    fontWeight={500}
-                    color={"text.primary"}
-                  >
-                    {item}
-                  </Typography>
-                </Stack>
-              ))}
-              <Box
-                pl={8}
-              >
-                <Button
-                    variant="contained"
-                    sx={{
-                    height: 50,
-                    textTransform: "none",
-                    px: 3,
-                    fontWeight: 600,
-                    width: 220,
-                    display: "flex",
-                    alignItems: "center",
-                    gap: 1,
-                    borderRadius: "16px",
-                    }}
-                    onClick={() => isUser ? router.push('/dashboard') : setOpenRegisterModal(true)}
-                >
-                    {isUser ? "Go to Wallet" : "Get Started"}
-                </Button>
-              </Box>
-            </Stack>
-          </Stack>
-        </Grid>
-        <Grid item lg={6} md={12} sm={12} xs={12} >
-          <Box
-            display={'flex'}
-            justifyContent={'center'}
-            alignItems={'center'}
-            width={'100%'}
-          >
-            <Image 
-              src={WhyUsImage}
-              alt="why us image"
-              height={300}
-            />
-          </Box>
-        </Grid>
-      </Grid>
+                
+            </Card>
+          </Grid>
     </Box>
   );
 }

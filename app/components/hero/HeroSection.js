@@ -227,8 +227,8 @@ export default function HeroSection() {
               sx={{
                 position: "absolute",
                 bottom: 0,
-                left: "35%",
-                zIndex: 2,
+                left: "25%",
+                zIndex: 10,
                 borderRadius: "12px",
                 overflow: "hidden",
                 boxShadow: "0 6px 18px rgba(0,0,0,0.1)",
@@ -240,7 +240,7 @@ export default function HeroSection() {
             >
               <Image
                 src={HeroImageTwo}
-                height={200}
+                height={isMobile ? 150 : 200}
                 alt="Hero Image Two"
                 style={{
                   display: "block",

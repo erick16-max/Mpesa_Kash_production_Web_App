@@ -14,6 +14,7 @@ export function CustomThemeProvider({ children }) {
   const isExtraTablet = useMediaQuery("(max-width:1088px)");
   const isTablet = useMediaQuery("(max-width:900px)");
   const isMobile = useMediaQuery("(max-width:682px)");
+    const isExtraMobile = useMediaQuery("(max-width:348px)");
 
   // theme modes
   const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)')
@@ -128,6 +129,7 @@ export function CustomThemeProvider({ children }) {
     isExtraTablet,
     isTablet,
     isMobile,
+    isExtraMobile,
     toggleOpenDrawer,
     openDrawer,
     setOpenDrawer,
