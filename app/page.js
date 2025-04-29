@@ -12,6 +12,7 @@ import WhyUs from "./components/whyus/WhyUs";
 import Partners from "./components/partners/Partners";
 import Footer from "./components/footer/Footer";
 import AppContext from "@/context/AppContext";
+import Disclaimer from "./components/disclaimer/Disclaimer";
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -46,10 +47,9 @@ export default function Home() {
         <Stack pt={0} mt={"100px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />
           <WhyUs />
+          <Disclaimer />
           <Partners /> 
-          {/* <StepsSection />
-          */
-          }
+          
           {/* <Footer /> */}
         </Stack>
         <CustomFloatingButton />
