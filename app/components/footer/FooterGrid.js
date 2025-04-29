@@ -37,7 +37,7 @@ export default function FooterGrid() {
               <Button
                 variant="contained"
                 sx={{
-                  height: 50,
+                  height: '40px',
                   textTransform: "none",
                   px: 3,
                   fontWeight: 600,
@@ -45,21 +45,16 @@ export default function FooterGrid() {
                   display: "flex",
                   alignItems: "center",
                   gap: 1,
-                  borderRadius: "16px",
+                  borderRadius: "20px",
                   backgroundColor: "primary.light",
                   boxShadow: 0,
-                  ml: 2,
                 }}
                 LinkComponent={Link}
                 target="__blank"
                 href="https://download.dmpesakash.co.ke/"
               >
                 Download App
-                <Image
-                  src={PlaystoreImage}
-                  alt="google playstore"
-                  height={20}
-                />
+               
               </Button>
             </Stack>
           </Stack>
@@ -67,7 +62,7 @@ export default function FooterGrid() {
           <Stack
 
           >
-            <LogoBrand />
+            <LogoBrand display={true}/>
             <Box
              display={"flex"}
              alignItems={"center"}

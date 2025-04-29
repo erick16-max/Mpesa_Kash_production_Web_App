@@ -18,17 +18,11 @@ export default function Footer() {
 
     >
         <Box
-            py={5}
             width={'100%'}
             px={isTablet ? 2 : 10}
         >
             <FooterGrid />
         </Box>
-        {/* <Box
-            width={'100%'}
-            height={'1px'}
-            bgcolor={'#272829'}
-        ></Box> */}
 
       <Box
         width={"100%"}

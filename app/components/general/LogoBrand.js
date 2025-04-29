@@ -7,7 +7,7 @@ import Image from 'next/image';
 import LogoImage from "../../../public/images/logo.png"
 
 
-export default function LogoBrand() {
+export default function LogoBrand({display}) {
   
   const isMobile = useMediaQuery('(max-width:682px)')
   const theme = useTheme()
@@ -32,7 +32,7 @@ export default function LogoBrand() {
           fontSize: isMobile ? '14px' : '16px', 
           fontWeight: 900,
           color: theme.palette.mode === DARK_MODE ? '#4caf50' : '#4caf50',
-          display: isMobile ? 'none' : "",
+          display:display ? "block" : isMobile ? 'none' : "",
 
           }}>
              Mpesa Kash
