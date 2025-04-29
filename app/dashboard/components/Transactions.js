@@ -61,9 +61,9 @@ export default function Transactions() {
       let num = userProfile?.phoneNumber.slice(1);
       let phoneNum = `254${num}`;
       const q = query(
-        collection(db, "transactionssdsmmdmsqkwkqkwlqklkqwlqklwqw"),
-        where("email", "==", auth?.currentUser?.email),
-        orderBy("time", "desc"),
+        collection(db, "payments"),
+        where("data.phoneNumber", "==", phoneNum),
+        orderBy("data.time", "desc"),
         limit(12)
       );
       onSnapshot(q, (snapshot) => {

@@ -22,22 +22,20 @@ const AnimatedTyping = () => {
 
   return (
     <Typography
-      variant="h4"
+      variant="h5"
       sx={{
-        color: "#014650",
+        color: "text.primary",
         fontWeight: 700,
         fontSize: isExtraMobile ? 22 : isMobile ? 26 : 44,
-        textAlign: isExtraTablet ? 'center' : ''
       }}
       gutterBottom
-      textAlign={'center'}
     >
      
      
          <>
-          <span style={{ color: "#4caf50" }}>Automated&nbsp;</span>
-          <span style={{ color: "#4caf50" }}>Deposit&nbsp;</span>
-          <span style={{ color: "#4caf50" }}>Withdraw.</span>
+          <span style={{ color: "inherit" }}>Automated&nbsp;</span>
+          <span style={{ color: "inherit" }}>Deposit&nbsp;&&nbsp;</span>
+          <span style={{ color: "inherit" }}>Withdraw</span>
         </> 
     </Typography>
   );

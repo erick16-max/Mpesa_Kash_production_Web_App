@@ -7,6 +7,9 @@ import { IoChatboxEllipsesOutline } from "react-icons/io5";
 import { FaWhatsapp } from "react-icons/fa";
 import { FcSms } from "react-icons/fc";
 import { FcCallback } from "react-icons/fc";
+import { MdContactSupport } from "react-icons/md";
+
+
 
 export default function CustomFloatingButton() {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,7 +26,7 @@ export default function CustomFloatingButton() {
     <>
       <Tooltip title="Call or Message us" arrow>
         <Fab
-          color="primary"
+          color="secondary"
           aria-label="chat"
           onClick={handleClick}
           sx={{
@@ -31,22 +34,15 @@ export default function CustomFloatingButton() {
             bottom: 16,
             right: 16,
             zIndex: 1000,
-            width: 120,
-            height: 48,
+            width: '40px',
+            height: '40px',
             borderRadius: 4,
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
           }}
         >
-          <Typography variant="button" sx={{ textTransform: 'none' }}>
-            Contact Us
-          </Typography>
-          {Boolean(anchorEl) ? (
-            <IoMdArrowDropup style={{ marginLeft: 8}} size={16} />
-          ) : (
-            <IoMdArrowDropdown style={{ marginLeft: 8}} size={16} />
-          )}
+          <MdContactSupport fontSize={18}/>
         </Fab>
       </Tooltip>
       <Menu

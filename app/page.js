@@ -43,7 +43,7 @@ export default function Home() {
       <Box display={"flex"} width={"100%"} flexDirection={"column"} height={'100%'} sx={{
       }}>
         <CustomAppBar scroll={scroll} />
-        <Stack pt={2} mt={"140px"} gap={2} component={'div'} width={'100%'}>
+        <Stack pt={0} mt={"100px"} gap={2} component={'div'} width={'100%'}>
           <HeroSection />
           {/* <StepsSection />
           <WhyUs />

@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
 
 
 body {
@@ -10,7 +11,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow-x: hidden;
-    font-family: "Roboto", sans-serif;
+    font-family: "Rubik", sans-serif;
     font-style: normal;
  
    
@@ -61,6 +62,13 @@ body {
  }
  }
 
+
+ .heroCardGradient {
+  background: #70bf73;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #4caf50, #70bf73);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #4caf50, #70bf73); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+ }
 
 
  /* loading css */

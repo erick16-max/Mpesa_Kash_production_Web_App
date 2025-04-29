@@ -29,19 +29,17 @@ export function CustomThemeProvider({ children }) {
   const toggleOpenDrawer = () => {
     setOpenDrawer(!openDrawer);
   };
-
   const colorMode = React.useMemo(
     () => ({
-      // The dark mode switch would invoke this method
       toggleColorMode: () => {
-        setMode((prevMode) =>
-          // always to be light mode unless ui update
-          prevMode === LIGHT_MODE ? DARK_MODE : LIGHT_MODE
-        );
+        setMode((prevMode) => prevMode === LIGHT_MODE ? DARK_MODE : LIGHT_MODE);
       },
+      setLightMode: () => setMode(LIGHT_MODE),
+      setDarkMode: () => setMode(DARK_MODE),
     }),
     []
   );
+
 
   const theme = createTheme({
     palette: {
@@ -85,7 +83,7 @@ export function CustomThemeProvider({ children }) {
             dark: "#1c1d1e",
           },
           background: {
-            default: "#ffffff",
+            default: "#f3f5f8",
             paper: "#ffffff",
           },
           text: {

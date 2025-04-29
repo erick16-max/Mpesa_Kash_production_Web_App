@@ -1,81 +1,111 @@
 "use client";
 
-import React from "react";
-import { styled, useTheme } from "@mui/material/styles";
-import { Switch, Box } from "@mui/material";
-import ColorModeContext from "@/theme/ThemeContextProvider";
+import React, { useContext } from "react";
+import { Button, useTheme, MenuItem, Menu, Fade, useMediaQuery, IconButton } from "@mui/material";
+import { MdOutlineLightMode, MdOutlineDarkMode } from "react-icons/md";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import ColorModeContext from "@/theme/ThemeContextProvider.js";
+import { DARK_MODE, LIGHT_MODE } from "@/Constants";
 
-const ThemeSwitch = styled(Switch)(({ theme }) => ({
-  width: 90,
-  height: 40,
-  padding: 0,
-  "& .MuiSwitch-switchBase": {
-    padding: 0,
-    margin: 2,
-    transition: "0.3s",
-    "&.Mui-checked": {
-      transform: "translateX(50px)",
-      "& + .MuiSwitch-track": {
-        backgroundColor: theme.palette.mode === "light" ? "#999" : "#eeeeee", // Dark mode = gray, light mode = white/gray
-      },
-    },
-  },
-  "& .MuiSwitch-thumb": {
-    width: 36,
-    height: 36,
-    borderRadius: "50%",
-    backgroundColor: theme.palette.mode === "dark" ? "#1c1e21" : "#ffffff",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 10,
-    fontWeight: 700,
-    color: theme.palette.mode === "dark" ? "#000" : "#fff",
-  },
-  "& .MuiSwitch-track": {
-    borderRadius: 20,
-    backgroundColor: theme.palette.mode === "dark" ? "#fff" : "#1c1e21",
-    opacity: 1,
-    position: "relative",
-    "&::before": {
-      content: '"Light"', // <- Change this text
-      position: "absolute",
-      left: 12,
-      top: "50%",
-      transform: "translateY(-50%)",
-      fontSize: 10,
-      fontWeight: 600,
-      color: theme.palette.mode === "dark" ? "#333" : "#fff", // light mode: white, dark mode: gray
-      opacity: 1,
-      transition: "0.3s",
-    },
-    "&::after": {
-      content: '"Dark"', // <- Change this text
-      position: "absolute",
-      right: 12,
-      top: "50%",
-      transform: "translateY(-50%)",
-      fontSize: 10,
-      fontWeight: 600,
-      color: theme.palette.mode === "dark" ? "#1c1e21" : "#fff", // dark mode: gray, light mode: white
-      opacity: 1,
-      transition: "0.3s",
-    },
-  },
-}));
 
-export default function ThemeToggleButton() {
- const {colorMode} = React.useContext(ColorModeContext)
+
+export default function ToggleThemeButton() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const isMobile = useMediaQuery("(max-width:564px)");
+
+  const handleButtonClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
+  const {colorMode} = useContext(ColorModeContext);
   const theme = useTheme();
-  const isDark = theme.palette.mode === "dark";
+
+  const handleToggleMode = () => {
+    const currentMode = theme.palette.mode === DARK_MODE ? LIGHT_MODE : DARK_MODE
+    
+    colorMode.setDarkMode();
+    handleCloseMenu(); 
+  };
+  
+  const handleToggleLightMode = () => {
+    const currentMode = theme.palette.mode === DARK_MODE ? LIGHT_MODE : DARK_MODE
+    
+    colorMode.setLightMode()
+    handleCloseMenu(); 
+  };
+
+  const themeText  = theme.palette.mode !== DARK_MODE ? "Light" : "Dark"
 
   return (
-    <Box display="flex" alignItems="center" gap={1}>
-      <ThemeSwitch
-        checked={isDark}
-        onChange={colorMode.toggleColorMode}
-        inputProps={{ "aria-label": "theme toggle" }}
-      />
-    </Box>
+    <>
+    {isMobile ? (
+      <IconButton onClick={colorMode.toggleColorMode} >
+          {
+            theme.palette.mode === DARK_MODE ? (
+              <MdOutlineDarkMode />
+            ) : (
+              <MdOutlineLightMode />
+            )
+          }
+      </IconButton>
+    ) : (
+      <Button
+      onClick={handleButtonClick}
+      color="secondary"
+      startIcon={
+        theme.palette.mode === DARK_MODE ? (
+          <MdOutlineDarkMode />
+        ) : (
+          <MdOutlineLightMode />
+        )
+      }
+      endIcon={isMobile ? undefined : <MdOutlineKeyboardArrowDown />}
+      sx={{
+        borderRadius: "20px",
+        height: '40px',
+        px: isMobile ? 1 : 3,
+        textTransform: "none",
+        fontWeight: 600,
+        minWidth: 70,
+      }}
+    >
+      {!isMobile ? themeText : ""}
+    </Button>
+    )}
+    <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleCloseMenu}
+        TransitionComponent={Fade}  // ✨ Here is the Fade animation!
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        PaperProps={{
+          elevation: 3,
+          sx: {
+            minWidth: 140,
+            mt: 1,
+            borderRadius: 2,
+          },
+        }}
+      >
+        <MenuItem onClick={handleToggleLightMode}>
+          <MdOutlineLightMode style={{ marginRight: 8 }} /> Light
+        </MenuItem>
+        <MenuItem onClick={handleToggleMode}>
+          <MdOutlineDarkMode style={{ marginRight: 8 }} /> Dark
+        </MenuItem>
+      </Menu>
+    </>
+    
   );
 }
