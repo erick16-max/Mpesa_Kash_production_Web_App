@@ -42,7 +42,6 @@ export default function Home() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Box display={"flex"} width={"100%"} flexDirection={"column"} height={'100%'} sx={{
-        overflowX: 'hidden'
       }}>
         <CustomAppBar scroll={scroll} />
         <Stack pt={0} mt={"100px"} gap={2} component={'div'} width={'100%'}>
