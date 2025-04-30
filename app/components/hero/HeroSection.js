@@ -199,7 +199,7 @@ export default function HeroSection() {
               sx={{
                 position: "absolute",
                 bottom: 20,
-                left: "2%",
+                left: "25%",
                 zIndex: 3,
                 borderRadius: "12px",
                 overflow: "hidden",
@@ -227,7 +227,7 @@ export default function HeroSection() {
               sx={{
                 position: "absolute",
                 bottom: 0,
-                left: "25%",
+                right: "25%",
                 zIndex: 10,
                 borderRadius: "12px",
                 overflow: "hidden",
