@@ -13,6 +13,7 @@ import ThemeToggleButton from "../general/ToggleThemeButton";
 
 
 
+
 export default function CustomProfile() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const {user, isUser, isUserProfile, userProfile, refreshing} = useContext(AppContext)
@@ -65,7 +66,7 @@ export default function CustomProfile() {
           minWidth={80}
         >
           <Typography variant="body2" color={"text.primary"} fontWeight={500}>
-            { isMobile && isUserProfile ? truncateString(userProfile?.user?.fullname, 10) :  truncateString(userProfile?.user?.fullname, 30)}
+            {truncateString(userProfile?.user?.fullname, 10)}
           </Typography>
           {
             refreshing ? (

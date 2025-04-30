@@ -64,7 +64,7 @@ export default function Transactions() {
         collection(db, "payments"),
         where("data.phoneNumber", "==", phoneNum),
         orderBy("data.time", "desc"),
-        limit(12)
+        limit(6)
       );
       onSnapshot(q, (snapshot) => {
         if (snapshot.empty) {
@@ -83,70 +83,15 @@ export default function Transactions() {
  
 
 
-
-// //get all transactions
-// useEffect(() => {
-//   if (Object.keys(userProfile)?.length > 0) {
-//     let num = userProfile?.phoneNumber.slice(1);
-//     let phoneNum = `254${num}`;
-
-//     // Fetch both withdraw and deposit transactions
-//     const withdrawQuery = query(
-//       collection(db, "withdraws"),
-//       where("data.phoneNumber", "==", phoneNum),
-//       orderBy("data.time", "desc"),
-//       limit(12)
-//     );
-
-//     const depositQuery = query(
-//       collection(db, "deposits"),
-//       where("data.phoneNumber", "==", phoneNum),
-//       orderBy("data.time", "desc"),
-//       limit(12)
-//     );
-
-//     const unsubscribeWithdraw = onSnapshot(withdrawQuery, (snapshot) => {
-//       const withdraws = snapshot.docs.map((doc) => ({
-//         id: doc.id,
-//         type: "withdraw",
-//         data: doc.data().data,
-//       }));
-//       updateTransactions(withdraws);
-//     });
-
-//     const unsubscribeDeposit = onSnapshot(depositQuery, (snapshot) => {
-//       const deposits = snapshot.docs.map((doc) => ({
-//         id: doc.id,
-//         type: "deposit",
-//         data: doc.data().data,
-//       }));
-//       updateTransactions(deposits);
-//     });
-
-//     const updateTransactions = (newData) => {
-//       setTransactions((prev) => {
-//         const merged = [...prev, ...newData];
-//         return merged.sort((a, b) => b.data.time - a.data.time);
-//       });
-//     };
-
-//     // Cleanup subscriptions
-//     return () => {
-//       unsubscribeWithdraw();
-//       unsubscribeDeposit();
-//     };
-//   }
-// }, [userProfile]);
-
-
-
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  const depositTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Deposit")
-  const withdrawTransactions = allTransactions?.filter(transaction => transaction?.data?.type === "Withdraw")
+  const depositTransactions = allTransactions?.filter(transaction => transaction?.data?.data?.type.toLowerCase() === "deposit")
+  const withdrawTransactions = allTransactions?.filter(transaction => transaction?.data?.data?.type.toLowerCase() === "withdraw")
+
+
+ 
 
   return (
     <Box 
@@ -159,7 +104,7 @@ export default function Transactions() {
         flexDirection: 'column',
      }}
     >
-        <Box sx={{ width: isTablet ? '100%' : '80%' }}>
+       <Box sx={{ width: isTablet ? '100%' : '80%' }}>
             <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="All Transactions" {...a11yProps(0)} sx={{textTransform: 'none'}} />
@@ -195,6 +140,7 @@ export default function Transactions() {
           }
         </CustomTabPanel>
         </Box>
+       
     </Box>
   );
 }

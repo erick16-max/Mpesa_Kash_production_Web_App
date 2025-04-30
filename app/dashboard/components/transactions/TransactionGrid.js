@@ -12,7 +12,7 @@ export default function TransactionGrid({transactionList}) {
                 transactionList?.map(transaction => {
                     return(
                         <Grid item xs={12} key={transaction?.id}>
-                        <TransactionCard transaction={transaction} />
+                        <TransactionCard transaction={transaction?.data} />
                         </Grid>
                     )
                 })
