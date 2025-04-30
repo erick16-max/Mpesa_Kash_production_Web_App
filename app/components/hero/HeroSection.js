@@ -240,7 +240,7 @@ export default function HeroSection() {
             >
               <Image
                 src={HeroImageTwo}
-                height={isMobile ? 150 : 200}
+                height={isMobile ? 200 : 250}
                 alt="Hero Image Two"
                 style={{
                   display: "block",
