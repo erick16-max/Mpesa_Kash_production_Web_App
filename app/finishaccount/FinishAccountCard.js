@@ -259,7 +259,7 @@ export default function FinishAccountCard() {
               />
               <Button
                 variant="contained"
-                onClick={crVerified ? () => setStep(1) : handleVerifyCr}
+                onClick={!crVerified ? () => setStep(1) : handleVerifyCr}
                 disabled={verifyLoading || !editableCr || !editableNickname}
                 sx={{ height: 50, borderRadius: "12px", bgcolor: crVerified ? "#00c853" : "primary.main", "&:hover": { bgcolor: crVerified ? "#009624" : "primary.dark" } }}
               >

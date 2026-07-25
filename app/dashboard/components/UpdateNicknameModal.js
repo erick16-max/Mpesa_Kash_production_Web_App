@@ -25,24 +25,24 @@ export default function UpdateNicknameModal({
   const [loading, setLoading] = useState(false);
 
  const saveNickname = async () => {
-  if (!nickname.trim()) return;
+  if (!nickname?.trim()) return;
 
   try {
     setLoading(true);
 
-    console.log("Current user:", auth.currentUser);
+    console.log("Current user:", auth?.currentUser);
 
-    const ref = doc(db, "users", auth.currentUser.uid);
+    const ref = doc(db, "users", auth?.currentUser?.uid);
 
     console.log("Updating document:", ref.path);
 
     await updateDoc(ref, {
-      nickname: nickname.trim(),
+      nickname: nickname?.trim(),
     });
 
     console.log("Nickname updated successfully.");
 
-    onUpdated?.(nickname.trim());
+    onUpdated?.(nickname?.trim());
     onClose?.();
   } catch (err) {
     console.error("Update failed:", err);

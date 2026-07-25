@@ -39,10 +39,10 @@ export default function CustomProfile() {
   };
   const { isMobile } = useContext(ColorModeContext);
 
-  const firstLetter =
-    userProfile?.fullName.trim().charAt(0) ||
-    userProfile?.user?.fullname.trim().charAt(0) ||
-    "";
+ const firstLetter =
+  userProfile?.fullName?.trim()?.charAt(0) ||
+  userProfile?.user?.fullname?.trim()?.charAt(0) ||
+  "";
 
   const getDisplayBalance = () => {
     if (!isBalanceVisible) return "********";
