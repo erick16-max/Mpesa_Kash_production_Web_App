@@ -211,7 +211,7 @@ export default function WithdrawModal({ withdrawRate, rates }) {
              <CopyRight bgColor={'#ffffff'} />
             <VerifyWithdrawModal
               handleVerify={completeWithdrawal}
-              show={visible}
+              show={otpSubmitting}
               code={code}
               setCode={setCode}
               isVerifyModelOpen={isVerifyModelOpen}
