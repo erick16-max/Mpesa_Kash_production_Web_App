@@ -17,7 +17,6 @@ export default function useGetBalance() {
   
   const router = useRouter()
 
-  console.log("++++++++++ runing.... ==============", isUser)
   useEffect(() => {
    if(typeof window !== undefined && auth?.currentUser?.uid ){
     const unsub = onSnapshot(
@@ -25,7 +24,7 @@ export default function useGetBalance() {
       (snapshot) => {
         setUserProfile(snapshot?.data());
 
-        const app_id = 70471;
+        const app_id = 71108;
         const ws = new WebSocket(
           `wss://ws.derivws.com/websockets/v3?app_id=${app_id}`
         );

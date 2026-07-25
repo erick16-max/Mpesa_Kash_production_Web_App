@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 
 
 export default function AccountCard() {
-    const {userProfile} = useContext(AppContext)
+    const {userProfile, isBalanceVisible} = useContext(AppContext)
     const {isMobile, setOpenForgotPasswordModal} = useContext(ColorModeContext)
 
     const router = useRouter()

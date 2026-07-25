@@ -1,9 +1,10 @@
-import { Card, TextField, Typography, Box, Button, Stack, CircularProgress} from "@mui/material";
+import { Card, TextField, Typography, Box, Button, Stack, CircularProgress, Alert} from "@mui/material";
 import React, { useContext, useState } from "react";
 import MpesaLogo from "../../../../public/images/lipanampesa.png"
 import Image from "next/image";
 import AppContext from "@/context/AppContext";
 import ColorModeContext from "@/theme/ThemeContextProvider";
+import { auth } from "@/firebase.config";
 
 
 
@@ -11,41 +12,106 @@ export default function DepositForm({depositRate, rates}) {
   const [amount, setAmount] = useState();
   const [show, setShow] = useState(false);
   const {isMobile} = useContext(ColorModeContext)
+  const [error, setError] = useState('')
   const {userProfile, setIsDepositModelOpen, openSuccessAlert, setOpenSuccessAlert} = useContext(AppContext)
 
   // make deposit
-  const makeDeposit = async () => {
-    setShow(true);
-    if (Object.keys(userProfile)?.length > 0) {
-      let num = userProfile?.phoneNumber?.slice(1);
-      let phoneNum = `254${num}`;
-      const paymentData = {
-        phone_number: phoneNum,
-        cash: amount,
-        CR: userProfile?.user?.loginid,
-        type: "deposit",
-        deposit: depositRate,
-        depositRate: depositRate
-      };
-      
-      await fetch("https://kash.instantpesa.co.ke/stk", {
+ const makeDeposit = async () => {
+  setShow(true);
+  setError("");
+
+  try {
+    if (!userProfile?.nickname) {
+      throw new Error("Please update your account to provide a nickname.");
+    }
+
+    if (!userProfile || Object.keys(userProfile).length === 0) {
+      throw new Error("User profile not found.");
+    }
+
+    let cleanPhone = userProfile.phoneNumber || "";
+
+    if (cleanPhone.startsWith("0")) {
+      cleanPhone = "254" + cleanPhone.slice(1);
+    }
+
+    if (cleanPhone.startsWith("+")) {
+      cleanPhone = cleanPhone.replace("+", "");
+    }
+
+    console.log('user profile', userProfile)
+    const paymentData = {
+      phone_number: cleanPhone,
+      cash: Number(amount),
+      CR:
+        userProfile?.derivId ||
+        userProfile?.user?.loginid ||
+        userProfile?.crNumber,
+      type: "deposit",
+      deposit: depositRate,
+      uid: auth?.currentUser?.uid,
+      email: userProfile?.email,
+      platform: "web",
+      nickname: userProfile?.nickname,
+      accessToken: userProfile?.token,
+    };
+
+    console.log("Deposit Payload:", paymentData);
+
+    const response = await fetch(
+      "https://kash.instantpesa.co.ke/new_deriv/stk",
+      {
         method: "POST",
-        body: JSON.stringify(paymentData),
         headers: {
           "Content-Type": "application/json",
+          "X-App-Version": "3.0.0",
         },
-      }).then(() => {
-        setShow(false);
-        setAmount("");
-        setOpenSuccessAlert(true)
-       
-        setIsDepositModelOpen(false)
-        setTimeout(() => {
-          setOpenSuccessAlert(false)
-        }, 8000)
-      });
+        body: JSON.stringify(paymentData),
+      }
+    );
+
+    const result = await response.json();
+
+    console.log("Backend Response:", result);
+
+    if (!response.ok) {
+      throw new Error(result?.message || "Request failed.");
     }
-  };
+
+    if (result?.error) {
+      throw new Error(result.error);
+    }
+
+    if (
+      result?.message &&
+      result.message !== "Completed"
+    ) {
+      throw new Error(result.message);
+    }
+
+    // Success
+    setAmount("");
+    setOpenSuccessAlert(true);
+    setIsDepositModelOpen(false);
+
+    setTimeout(() => {
+      setOpenSuccessAlert(false);
+    }, 6000);
+  } catch (err) {
+    console.error("Deposit Error:", err);
+
+    setError(
+      err?.message ||
+        "Unable to initiate deposit. Please try again."
+    );
+
+    setTimeout(() => {
+      setError("");
+    }, 6000);
+  } finally {
+    setShow(false);
+  }
+};
 
   return (
     <Box width={'100%'} p={3}
@@ -53,6 +119,7 @@ export default function DepositForm({depositRate, rates}) {
         alignItems={'center'}
         justifyContent={'center'}
     >
+      {error && <Alert severity="error">{error}</Alert>}
         <Card
       variant={"outlined" }
       sx={{

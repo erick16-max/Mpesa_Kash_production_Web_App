@@ -16,6 +16,8 @@ export const AppContextProvider = ({ children }) => {
   const [refreshing, setRefreshing] = useState(false);
   const [notification, setNotification] = useState({});
   const [openSuccessAlert, setOpenSuccessAlert] = useState(false)
+  const [ isBalanceVisible,
+    setIsBalanceVisible] = useState(false)
 
   const isOnline = useInternetStatus()
 
@@ -90,7 +92,9 @@ export const AppContextProvider = ({ children }) => {
     refreshing, 
     setRefreshing,
     notification, setNotification,
-    openSuccessAlert, setOpenSuccessAlert
+    openSuccessAlert, setOpenSuccessAlert,
+     isBalanceVisible,
+    setIsBalanceVisible,
   };
 
   return <AppContext.Provider value={data}>{children}</AppContext.Provider>;

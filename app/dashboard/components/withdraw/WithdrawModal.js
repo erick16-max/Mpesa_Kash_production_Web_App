@@ -7,6 +7,9 @@ import VerifyCodeModal from "@/app/finishaccount/VerifyCodeModal";
 import VerifyWithdrawModal from "./VerifyModal";
 import CopyRight from "@/app/components/footer/CopyRight";
 
+
+const BACKEND_URL = "https://kash.instantpesa.co.ke/new_deriv/withdraw";
+
 export default function WithdrawModal({ withdrawRate, rates }) {
   const { isWithdrawModelOpen, setIsWithdrawModelOpen, userProfile, setRefreshing } =
     useContext(AppContext);
@@ -17,123 +20,130 @@ export default function WithdrawModal({ withdrawRate, rates }) {
   const [amount, setAmount] = useState();
   const [isError, setIsError] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
+   const [referenceKey, setReferenceKey] = useState("");
+  const [otpSubmitting, setOtpSubmitting] = useState(false);
   
 
   const { isMobile } = useContext(ColorModeContext);
 
-  // verify code
-  const makeWithdraw = (e) => {
-    
-    e.preventDefault();
-    setShow(!show);
-    const app_id = 70471;
+  const isMinimumBalance = userProfile?.balance > rates?.minWithdraw
 
-    const ws = new WebSocket(
-      "wss://ws.derivws.com/websockets/v3?app_id=" + app_id
-    );
 
-    ws.onopen = () => {
-      ws.send(JSON.stringify({ authorize: userProfile?.token }));
-    };
 
-    ws.onmessage = async (msg) => {
-      const data = JSON.parse(msg?.data);
-      if (data?.error !== undefined) {
-        setShow(show);
-        if (
-          data?.error?.message === "The token is invalid." ||
-          data?.error?.message === "Token is not valid for current app ID."
-        ) {
-          alert("Your Deriv token has expired");
-          return;
-        } else {
-          alert(data?.error?.message);
-          console.log(data?.error?.message);
-        }
-      } else if (data?.msg_type === "authorize") {
-        ws.send(
-          JSON.stringify({
-            type: "paymentagent_withdraw",
-            verify_email: userProfile?.email,
-          })
-        );
-      } else if (data?.msg_type === "verify_email") {
-        setShow(show);
+
+  // ── STEP 1: user confirms amount → register intent ────────────────────────
+  const makeWithdraw = async (e) => {
+    e?.preventDefault();
+    console.log(amount, Number(isMinimumBalance ))
+
+    if (!amount || Number(amount) < Number(isMinimumBalance )) return;
+
+    setShow(true)
+
+    let phone = userProfile?.phoneNumber || "";
+    if (phone.startsWith("+")) phone = phone.slice(1);
+    if (phone.startsWith("0")) phone = `254${phone.slice(1)}`;
+    if (!phone.startsWith("254")) phone = `254${phone}`;
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/register-intent`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: userProfile?.uid,
+          phone_number: phone,
+          cash: amount,
+          withdraw_rate: withdrawRate,
+          access_token: userProfile?.token,
+          email: userProfile?.email,
+          platform: "web",
+          client_cr:
+            userProfile?.derivId ||
+            userProfile?.loginid ||
+            userProfile?.crNumber,
+        }),
+      });
+      const data = await res.json();
+
+      console.log('withdraw res data', data?.details)
+
+      if (res.ok && data.success) {
+        setReferenceKey(data.reference_key);
         setIsVerifyModelOpen(true);
+        setShow(false)
+      } else {
+        alert(data.message || "Failed to initiate withdrawal.");
+        setShow("");
       }
-    };
+    } catch (err) {
+      console.error(err);
+      alert("Network error while requesting OTP.");
+      setLoadingText("");
+    } 
   };
 
 
 
 
-  // complete withdrawal
-  const completeWithdrawal = async (e) => {
-    e.preventDefault()
-    const formattedPhone = userProfile?.phoneNumber.slice(1)
-    const withdrawData = {
-      phone_number: `254${formattedPhone}`,
-      cash: amount,
-      code: code,
-      type: "withdraw",
-      token: userProfile?.token,
-      withdraw: withdrawRate,
-      amount: amount,
-      source: "web",
-      user: userProfile
-    };
+   // complete withdrawal
+ const completeWithdrawal = async (e) => {
+    // Prevent the form from reloading the page and clearing your state
+    e?.preventDefault();
     
-    
-
     try {
-      setVisible(true);
-      const response = await fetch("https://kash.instantpesa.co.ke/kash/b2c",
-        {
-          method: "POST",
-          body: JSON.stringify(withdrawData),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+      setOtpSubmitting(true);
+      
+      if (!referenceKey) {
+        alert('Reference key required. Please restart the withdrawal.');
+        return;
+      }
 
-      const data = await response.json()
-      console.log(response)
-      console.log(data)
+      if (!code) {
+        alert('OTP code required');
+        return;
+      }
+  
+      const payload = {
+        reference_key: referenceKey,
+        otp_code: code,
+      };
 
-      if(response.ok){
+      const response = await fetch(`${BACKEND_URL}/execute-client-withdrawal`, {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      const result = await response.json();
+      console.log("Execute Withdrawal Result:", result);
+
+      if (!response.ok) {
+        alert(result.message || "Invalid OTP or execution failed.");
+        setCode(""); // Clear the input field for the user to try again
+        return;
+      }
+
+      if (result.success) {
+        // Clear state and push to the success screen
         setAmount("");
         setCode("");
         setVisible(false);
         setIsVerifyModelOpen(false);
         setShow(false);
         setIsSuccess(true)
-        setRefreshing(true)
-      }else{
-          setAmount("");
-          setCode("");
-          setVisible(false);
-          setIsVerifyModelOpen(false);
-          setShow(false);
-          // setIsError(true)
+        
+      } else {
+        alert(result.message || "Invalid OTP or execution failed.");
       }
     } catch (error) {
-      setVisible(false)
-      setIsVerifyModelOpen(false)
-      console.log(error)
-      setIsError(true)
-      
-    }finally{
-      setIsVerifyModelOpen(false)
-      setVisible(false)
-      setCode("")
-      setTimeout(() => {
-        setIsError(false)
-        setIsSuccess(false)
-      }, 4000)
+      console.error(error);
+      alert("Network error. Please try again.");
+    } finally {
+      setOtpSubmitting(false);
     }
-
-  
   }
 
   return (

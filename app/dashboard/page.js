@@ -16,7 +16,7 @@ import SuccessSnackbarAlert from '../components/general/CustomSnackbarAlert'
 import AppContext from '@/context/AppContext'
 import PageLoader from '../components/general/PageLoader'
 
-export default function page() {
+export default function DashboardPage() {
   const [rates, setRates] = useState({});
   const [depositRate, setDepositRate] = useState("")
   const [withdrawRate, setWithdrawRate] = useState("")
