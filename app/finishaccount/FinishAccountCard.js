@@ -32,7 +32,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/firebase.config";
 
-const BACKEND_URL = "https://dpesa.dmapesa.co.ke"; // Your API domain
+const BACKEND_URL = "https://kash.instantpesa.co.ke"; // Your API domain
 const STEPS = ["Verify CR", "Profile Details", "Security Keys"];
 
 export default function FinishAccountCard() {

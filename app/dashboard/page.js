@@ -11,7 +11,6 @@ import { useGetRates } from '@/hooks/useGetRates'
 
 import { onSnapshot, doc,  } from 'firebase/firestore'
 import { db } from '@/firebase.config'
-import useGetBalance from '@/hooks/useGetBalance'
 import SuccessSnackbarAlert from '../components/general/CustomSnackbarAlert'
 import AppContext from '@/context/AppContext'
 import PageLoader from '../components/general/PageLoader'
@@ -22,7 +21,7 @@ export default function DashboardPage() {
   const [withdrawRate, setWithdrawRate] = useState("")
 
 
-  const balanceAlertModal = useGetBalance()
+  c
   const {openSuccessAlert, userProfile} = useContext(AppContext)
 
   
@@ -57,7 +56,7 @@ export default function DashboardPage() {
   return (
   
 <PageLayout>
-      {balanceAlertModal}
+     
      <WalletCard />
      <Transactions />
      <DepositModal depositRate={depositRate} rates={rates}/>
