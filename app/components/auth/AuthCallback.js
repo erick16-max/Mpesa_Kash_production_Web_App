@@ -80,6 +80,8 @@ export default function AuthCallback() {
             derivBalance: realAccount.balance || "0.00",
             fullName: profileObj.fullName || "",
             email: profileObj.email || "",
+            nickname: profileObj.nickname || "",
+
           };
 
           localStorage.setItem("@token", tokenData.accessToken);

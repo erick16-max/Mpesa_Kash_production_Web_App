@@ -2,25 +2,29 @@ import {
   Box,
   Button,
   Card,
+  CircularProgress,
   Stack,
   Typography,
   Skeleton,
-  useTheme,
   IconButton,
+  useTheme,
 } from "@mui/material";
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdAccountBalanceWallet } from "react-icons/md";
+import { IoRefreshCircleOutline } from "react-icons/io5";
 import { BiRefresh } from "react-icons/bi";
 import { FaArrowTrendUp, FaArrowTrendDown } from "react-icons/fa6";
 import ColorModeContext from "@/theme/ThemeContextProvider";
 import AppContext from "@/context/AppContext";
 import { usdFormatter } from "@/util/LogicFunctions";
+import { MdWavingHand } from "react-icons/md";
 import Image from "next/image";
 import HandWavingImage from "../../../public/images/handwaving.png";
 import { DARK_MODE } from "@/Constants";
-import { useNewDerivBalance } from "../../../hooks/useGetNewBalance";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNewDerivBalance } from "@/hooks/useGetNewBalance";
 import UpdateNicknameModal from "./UpdateNicknameModal";
+import { useDerivBalance } from "@/hooks/useGetBalance";
 
 export default function WalletCard() {
   const { isTablet, isMobile } = useContext(ColorModeContext);
@@ -30,38 +34,36 @@ export default function WalletCard() {
     setIsWithdrawModelOpen,
     isBalanceVisible,
     setIsBalanceVisible,
-    setUserProfile,
   } = useContext(AppContext);
-
   const theme = useTheme();
-  
-  // Custom Hook for balance fetching & Firebase token updating
-  const { balance, loading, fetchBalance } = useNewDerivBalance();
 
-  // Boolean state for modal open status
-  const [nicknameModalOpen, setNicknameModalOpen] = useState(false);
+  const [nicknameModalOpen, setNicknameModalOpen] = useState(
+    userProfile?.nickname,
+  );
+
+  const {refreshBalance, refreshing, balance} = useDerivBalance()
+
+  console.log('user profile', userProfile)
+
+
 
   const handleRefresh = async () => {
-    await fetchBalance();
+    await refreshBalance();
   };
 
   const getDisplayBalance = () => {
     if (!isBalanceVisible) return "********";
-    if (loading) return "Loading...";
-    
-    // Priority: hook live balance -> profile context balance -> fallback 0.00
-    const currentVal = balance !== null ? balance : userProfile?.balance || 0.00;
-    return usdFormatter.format(currentVal);
+    if (refreshing) return "Loading...";
+    // Use hook balance if available, otherwise fallback to profile
+    return usdFormatter.format(
+      balance !== null ? balance : userProfile?.balance || 0.0,
+    );
   };
 
-  console.log(userProfile)
-
   useEffect(() => {
-    // Open modal if user hasn't set a nickname yet
-    if (userProfile && !userProfile?.nickname) {
-      setNicknameModalOpen(true);
-    }
+    setNicknameModalOpen(!userProfile?.nickname);
   }, [userProfile]);
+
 
   return (
     <Box
@@ -79,7 +81,6 @@ export default function WalletCard() {
         py: 2,
       }}
     >
-      {/* Greeting Section */}
       <Box
         width={isMobile ? "100%" : isTablet ? "100%" : "80%"}
         display={"flex"}
@@ -94,8 +95,9 @@ export default function WalletCard() {
             gap={1}
           >
             <Typography variant={isMobile ? "body1" : "h6"} fontWeight={700}>
-              Hi, {userProfile?.fullName || userProfile?.user?.fullname || "Client"}
+              Hi, {userProfile?.fullName || userProfile?.user?.fullname}
             </Typography>
+            {/* <MdWavingHand style={{color: '#4A3228', fontSize: 28}}/> */}
             <Image
               src={HandWavingImage}
               width={isMobile ? 30 : 40}
@@ -108,11 +110,10 @@ export default function WalletCard() {
           </Typography>
         </Stack>
       </Box>
-
-      {/* Main Wallet Balance Card */}
       <Card
         sx={{
           width: isMobile ? "100%" : isTablet ? "100%" : "80%",
+          // maxWidth: 600,
           height: isMobile ? 180 : 220,
           p: 3,
           backgroundColor:
@@ -141,6 +142,7 @@ export default function WalletCard() {
             >
               Deriv Balance
               <MdAccountBalanceWallet fontSize={20} />
+              {/* Toggle Visibility Button */}
               <IconButton
                 size="small"
                 onClick={() => setIsBalanceVisible(!isBalanceVisible)}
@@ -154,13 +156,8 @@ export default function WalletCard() {
               </IconButton>
             </Typography>
 
-            {loading ? (
-              <Skeleton
-                variant="rectangular"
-                width={120}
-                height={32}
-                sx={{ borderRadius: "8px", mt: 1 }}
-              />
+            {refreshing ? (
+              <Skeleton variant="rectangular" width={100} height={26} />
             ) : (
               <Typography variant="h6" color={"#ffffff"} fontWeight={700}>
                 {getDisplayBalance()}
@@ -181,12 +178,11 @@ export default function WalletCard() {
             }}
             endIcon={<BiRefresh />}
             onClick={handleRefresh}
-            disabled={loading}
+            disabled={refreshing}
           >
-            {loading ? "Refreshing..." : "Refresh"}
+            {refreshing ? "Refreshing..." : "Refresh"}
           </Button>
         </Box>
-
         <Box
           display={"flex"}
           alignItems={"center"}
@@ -195,16 +191,13 @@ export default function WalletCard() {
           gap={2}
         >
           <Typography variant="body2" fontWeight={500} color={"#eeeeee"}>
-            {userProfile?.derivId || userProfile?.loginid || userProfile?.user?.loginid}
-            {` | ${userProfile?.nickname || "deriv_nickname"}`}
+            {`${userProfile?.nickname || 'deriv_nickname'}`}
           </Typography>
           <Typography variant="body2" fontWeight={500} color={"#eeeeee"}>
-            Phone: {userProfile?.phoneNumber || userProfile?.phone || "N/A"}
+            Phone: {userProfile?.phoneNumber}
           </Typography>
         </Box>
       </Card>
-
-      {/* Action Buttons */}
       <Box
         width={isTablet ? "100%" : "80%"}
         display={"flex"}
@@ -249,19 +242,14 @@ export default function WalletCard() {
           Withdraw
         </Button>
       </Box>
-
-      {/* Nickname Modal */}
-      <UpdateNicknameModal
+      {/* <UpdateNicknameModal
         open={nicknameModalOpen}
         userProfile={userProfile}
         onClose={() => setNicknameModalOpen(false)}
         onUpdated={(nickname) => {
-          if (setUserProfile) {
-            setUserProfile((prev) => ({ ...prev, nickname }));
-          }
-          setNicknameModalOpen(false);
+          userProfile.nickname = nickname; // or preferably update your context state
         }}
-      />
+      /> */}
     </Box>
   );
 }

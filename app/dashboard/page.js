@@ -21,8 +21,7 @@ export default function DashboardPage() {
   const [withdrawRate, setWithdrawRate] = useState("")
 
 
-  c
-  const {openSuccessAlert, userProfile} = useContext(AppContext)
+  const { userProfile } = useContext(AppContext)
 
   
   useEffect(() => {

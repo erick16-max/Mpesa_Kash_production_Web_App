@@ -1,145 +1,145 @@
-'use client'; 
-import React, { useContext, useEffect, useState } from 'react';
-import { onSnapshot, doc, updateDoc } from 'firebase/firestore'; 
-import { Box, Button, Typography, Modal, CircularProgress } from '@mui/material'; 
+import { useState, useCallback, useEffect } from 'react';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from '@/firebase.config';
-import AppContext from '@/context/AppContext';
-import { useRouter } from 'next/navigation';
 
-export default function useGetBalance() {
+/**
+ * Custom hook to check token validity, re-authenticate if expired, 
+ * fetch live balance, and update Firestore and local state.
+ * @param {string} uid - The user's Firestore document ID.
+ * @param {string} backendUrl - Your backend API base URL.
+ * @param {Function} [triggerOAuthFlow] - Optional callback to launch Deriv OAuth login if token is dead.
+
+*/
+export const useDerivBalance = (triggerOAuthFlow) => {
+  const backendUrl = 'https://kash.instantpesa.co.ke/new_deriv/web'
   const [user, setUser] = useState(null);
-  
-  
-  const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
-  const [alertAction, setAlertAction] = useState(() => () => {});
-  const {setUserProfile, refreshing, setRefreshing, userProfile, isUser} = useContext(AppContext)
-  
-  const router = useRouter()
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+  const [error, setError] = useState(null);
+  const [balance, setBalance] = useState(null)
 
-  useEffect(() => {
-   if(typeof window !== undefined && auth?.currentUser?.uid ){
-    const unsub = onSnapshot(
-      doc(db, 'users', auth?.currentUser?.uid),
-      (snapshot) => {
-        setUserProfile(snapshot?.data());
-
-        const app_id = 71108;
-        const ws = new WebSocket(
-          `wss://ws.derivws.com/websockets/v3?app_id=${app_id}`
-        );
-
-        
-        ws.onopen = () => {
-          ws.send(
-            JSON.stringify({
-              authorize: userProfile?.token,
-            })
-          );
-
-          setInterval(() => {
-            ws.send(JSON.stringify({ ping: 1 }));
-          }, 30000);
-        };
-
-        ws.onmessage = async (msg) => {
-          const data = JSON.parse(msg?.data);
-          setShowAlert(false)
-          if (data?.error) {
-            if (
-              data?.error?.message === 'The token is invalid.' ||
-              data?.error?.message === 'Token is not valid for current app ID.'
-            ) {
-              setRefreshing(false);
-              setAlertMessage(
-                'Your Deriv token has expired. You will need to re-login again with your Deriv account.'
-              );
-              setAlertAction(() => () => {
-                const url = `https://oauth.deriv.com/oauth2/authorize?app_id=${app_id}`;
-                window.open(url, '_blank');
-              });
-              setShowAlert(true);
-            }else{
-                setShowAlert(false)
-            }
-          } else if (data?.msg_type === 'authorize') {
-            ws.send(JSON.stringify({ balance: 1, subscribe: 1 }));
-            setShowAlert(false)
-          } else if (data?.msg_type === 'balance') {
-            const docRef = doc(db, 'users', auth?.currentUser?.uid);
-            setShowAlert(false)
-            await updateDoc(docRef, {
-              balance: data?.balance?.balance,
-            });
-            setRefreshing(false);
-          }
-        };
-      }
-    );
-    return unsub;
-   }
-  }, [refreshing, router]);
+  const uid = auth?.currentUser?.uid
 
 
- 
-
-  const onRefresh = () => {
-    setRefreshing(true);
+  const fetchUserRecordFromDb = async () => {
+    const recordRef = doc(db, 'users', uid);
+    const snapshot = await getDoc(recordRef);
+    if (!snapshot.exists()) throw new Error('User record not found in database');
+    return snapshot.data();
   };
 
- 
+  const fetchAndSyncBalance = useCallback(async (isRefresh = false) => {
+    if (!uid) return;
 
-  return (
-    <>
-      <Modal open={showAlert} >
-        <Box
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            width: 400,
-            bgcolor: 'background.paper',
-            border: '2px solid #000',
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography variant="h6" component="h2">
-            Alert
-          </Typography>
-          <Typography sx={{ mt: 2 }}>{alertMessage}</Typography>
-         <Box
-          width={'100%'}
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-         >
-          <Button
-            variant="contained"
-            color='secondary'
-            onClick={onRefresh}
-            sx={{ mt: 2 }}
-          >
-           {
-            refreshing ? (
-              <CircularProgress size={18} thickness={4} sx={{color: '#f5f5f5'}} />
-            ): "Refresh"
-           }
-          </Button>
-           <Button
-            variant="contained"
-            onClick={() => {
-              
-              alertAction();
-            }}
-            sx={{ mt: 2 }}
-          >
-            Login
-          </Button>
-         </Box>
-        </Box>
-      </Modal>
-    </>
-  );
-}
+    if (isRefresh) {
+      setRefreshing(true);
+    } else {
+      setLoading(true);
+    }
+    setError(null);
+
+    try {
+      // 1. Retrieve current user record & token from Firestore
+      let userData = await fetchUserRecordFromDb();
+      let accessToken = userData.token;
+
+      if (!accessToken) {
+        throw new Error('No active access token available');
+      }
+
+      // 2. Request profile and live balance from backend
+      let response = await fetch(`${backendUrl}/user-profile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ accessToken }),
+      });
+
+      let data = await response.json();
+
+      // 3. Check for Token Expiration (401 or explicit token error message)
+      if (response.status === 401 || (data.message && data.message.toLowerCase().includes('token'))) {
+        console.warn('Deriv token expired or invalid. Initiating re-authentication...');
+
+        if (typeof triggerOAuthFlow === 'function') {
+          // Launch your OAuth PKCE flow to get a new code and exchange it via /claim-token
+          accessToken = await triggerOAuthFlow();
+          
+          if (!accessToken) {
+            throw new Error('Re-authentication cancelled or failed');
+          }
+
+          // Retry fetching profile with the brand new access token
+          response = await fetch(`${backendUrl}/user-profile`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ accessToken }),
+          });
+          data = await response.json();
+        } else {
+          throw new Error('Session expired. Please log in again.');
+        }
+      }
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to fetch live balance');
+      }
+
+
+      const liveBalance = data.userData?.live_balance 
+      const primaryAccount = data.userData || null;
+
+      setBalance(liveBalance)
+
+      // 4. Update Firestore user document with the fresh token and latest details
+      const recordRef = doc(db, 'users', uid);
+      await updateDoc(recordRef, {
+        token: accessToken,
+        accountStatus: 'active',
+        lastRefreshedAt: new Date().toISOString(),
+        balance: liveBalance,
+      });
+
+      // 5. Update local unified user state object
+      const updatedUserObject = {
+        uid,
+        fullName: userData.fullName,
+        email: userData.email,
+        phoneNumber: userData.phoneNumber,
+        derivId: userData.derivId,
+        nickname: data.nickname || userData.nickname,
+        token: accessToken,
+        accountStatus: 'active',
+        loginid: data.loginid || '',
+        accounts: data.data || [],
+        primaryAccount: primaryAccount,
+        liveBalance: liveBalance,
+        currency: primaryAccount?.currency || 'USD',
+      };
+
+   
+
+      setUser(updatedUserObject);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }, [uid, backendUrl, triggerOAuthFlow]);
+
+  // Initial fetch on mount
+  useEffect(() => {
+    if (uid) {
+      fetchAndSyncBalance(false);
+    }
+  }, [uid, fetchAndSyncBalance]);
+
+  return {
+    user,
+    loading,
+    refreshing,
+    error,
+    balance,
+    refreshBalance: () => fetchAndSyncBalance(true),
+  };
+};

@@ -33,7 +33,7 @@ import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db } from "@/firebase.config";
 
 const BACKEND_URL = "https://kash.instantpesa.co.ke"; // Your API domain
-const STEPS = ["Verify CR", "Profile Details", "Security Keys"];
+const STEPS = ["Nickname", "Profile Details", "Security Keys"];
 
 export default function FinishAccountCard() {
   const router = useRouter();
@@ -48,42 +48,47 @@ export default function FinishAccountCard() {
   const [crNumber, setCrNumber] = useState("");
   const [derivBalance, setDerivBalance] = useState("0.00");
 
-  // Step 1: Verification State
-  const [editableCr, setEditableCr] = useState("");
+  // Step 0: Nickname State
   const [editableNickname, setEditableNickname] = useState("");
-  const [crVerified, setCrVerified] = useState(false);
-  const [verifyLoading, setVerifyLoading] = useState(false);
 
-  // Step 2: Identity State
+  // Step 1: Identity State
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
 
-  // Step 3: Security State
+  // Step 2: Security State
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  // Load from LocalStorage on mount
+  // Load from LocalStorage and fetch Nickname on mount
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem("@pending_registration");
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        setDerivToken(parsed.token || "");
-        setDerivBalance(parsed.derivBalance || "0.00");
-        setFullName(parsed.fullName || parsed.profile?.fullName || "");
-        setEmail(parsed.email || parsed.profile?.email || "");
+    const initializeData = async () => {
+      try {
+        const raw = localStorage.getItem("@pending_registration");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          const token = parsed.token || "";
+          setDerivToken(token);
+          setDerivBalance(parsed.derivBalance || "0.00");
+          setFullName(parsed.fullName || parsed.profile?.fullName || "");
+          setEmail(parsed.email || parsed.profile?.email || "");
+          
+          if (parsed.loginid) {
+            setCrNumber(parsed.loginid);
+          }
 
-        if (parsed.loginid) {
-          setCrNumber(parsed.loginid);
-          setEditableCr(parsed.loginid);
-          setCrVerified(true); // Auto-verify if provided by the backend
+          // If nickname is already present in storage, use it
+          if (parsed.nickname) {
+            setEditableNickname(parsed.nickname);
+          } 
         }
+      } catch (err) {
+        console.error("Storage parse error:", err);
       }
-    } catch (err) {
-      console.error("Storage parse error:", err);
-    }
+    };
+
+    initializeData();
   }, []);
 
   const showError = (msg) => {
@@ -91,44 +96,13 @@ export default function FinishAccountCard() {
     setTimeout(() => setError(""), 6000);
   };
 
-  // ── Step 0: Verify CR ──────────────────────────────────────────────
-  const handleVerifyCr = async () => {
-    const trimmedCr = editableCr.trim().toUpperCase();
-    if (!trimmedCr) return showError("Please enter a valid account sequence.");
-    if (!trimmedCr.startsWith("CR")) return showError("Identifier key syntax must begin with 'CR'.");
-
-    setVerifyLoading(true);
-    setCrVerified(false);
+  // ── Step 0: Verify Nickname ──────────────────────────────────────
+  const handleVerifyNickname = () => {
+    const trimmedNick = editableNickname.trim();
+    if (!trimmedNick) return showError("Deriv nickname is required.");
+    
     setError("");
-
-    try {
-      const res = await fetch(`${BACKEND_URL}/new_deriv/verify-cr`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cr: trimmedCr, accessToken: derivToken }),
-      });
-
-      const payload = await res.json();
-      
-      if (payload.valid) {
-        setCrVerified(true);
-        setCrNumber(trimmedCr);
-
-        const derivedName = payload.fullName || payload.profile?.fullName || fullName;
-        const derivedEmail = payload.email || payload.profile?.email || email;
-
-        if (derivedName) setFullName(derivedName);
-        if (derivedEmail) setEmail(derivedEmail);
-
-        setStep(1); // Move to next step automatically
-      } else {
-        showError(payload.message || "Failed node validation processing sequence.");
-      }
-    } catch (err) {
-      showError("Communication timeout with verification server node.");
-    } finally {
-      setVerifyLoading(false);
-    }
+    setStep(1); // Move directly to personal details
   };
 
   // ── Step 1: Validate Identity ──────────────────────────────────────
@@ -143,7 +117,7 @@ export default function FinishAccountCard() {
   const handleFinalizeRegistration = async (e) => {
     e.preventDefault();
     if (!phoneNumber.trim()) return showError("Active phone identifier sequence required.");
-    if (password.length < 6) return showError("Encryption key must contain at least 6 tokens.");
+    if (password.length < 6) return showError("Encryption key must contain at least 6 characters.");
     if (password !== confirmPassword) return showError("Security string parity error. Strings must match.");
 
     setLoading(true);
@@ -165,10 +139,10 @@ export default function FinishAccountCard() {
         fullName: fullName.trim(),
         email: email.trim().toLowerCase(),
         phoneNumber: `+${cleanPhone}`,
-        derivId: editableCr ||crNumber,
-        nickname: editableNickname,
+        derivId: crNumber || "CR0000000",
+        nickname: editableNickname.trim() || "Deriv Nickname",
         token: derivToken,
-        balance: derivBalance, // Saving the initially detected balance
+        balance: derivBalance,
         createdAt: serverTimestamp(),
         updatedAt: serverTimestamp(),
         accountStatus: "active",
@@ -220,50 +194,36 @@ export default function FinishAccountCard() {
 
         <Box component="form" onSubmit={step === 2 ? handleFinalizeRegistration : (e) => e.preventDefault()}>
           
-          {/* STEP 0: VERIFY CR */}
+          {/* STEP 0: NICKNAME */}
           {step === 0 && (
             <Stack spacing={3}>
               <TextField
                 label="Deriv Nickname"
                 placeholder="client_nickname"
                 value={editableNickname}
-                onChange={(e) => {
-                  setEditableNickname(e.target.value);
-                }}
-                disabled={verifyLoading}
+                onChange={(e) => setEditableNickname(e.target.value)}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start"><IoCubeOutline size={20} /></InputAdornment>
                   ),
-                  endAdornment: crVerified && (
+                  endAdornment: editableNickname && (
                     <InputAdornment position="end"><IoCheckmarkCircleOutline color="#00c853" size={22} /></InputAdornment>
                   ),
                 }}
               />
-              <TextField
-                label="Deriv Account (CR ID)"
-                placeholder="CR000000"
-                value={editableCr}
-                onChange={(e) => {
-                  setEditableCr(e.target.value);
-                }}
-                disabled={verifyLoading}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start"><IoCubeOutline size={20} /></InputAdornment>
-                  ),
-                  endAdornment: crVerified && (
-                    <InputAdornment position="end"><IoCheckmarkCircleOutline color="#00c853" size={22} /></InputAdornment>
-                  ),
-                }}
-              />
+              
               <Button
                 variant="contained"
-                onClick={!crVerified ? () => setStep(1) : handleVerifyCr}
-                disabled={verifyLoading || !editableCr || !editableNickname}
-                sx={{ height: 50, borderRadius: "12px", bgcolor: crVerified ? "#00c853" : "primary.main", "&:hover": { bgcolor: crVerified ? "#009624" : "primary.dark" } }}
+                onClick={handleVerifyNickname}
+                disabled={!editableNickname}
+                sx={{ 
+                  height: 50, 
+                  borderRadius: "12px", 
+                  bgcolor: editableNickname ? "#00c853" : "primary.main", 
+                  "&:hover": { bgcolor: editableNickname ? "#009624" : "primary.dark" } 
+                }}
               >
-                {verifyLoading ? <CircularProgress size={24} color="inherit" /> : crVerified ? "Continue to Identity" : "Verify Account ID"}
+                Continue
               </Button>
             </Stack>
           )}
